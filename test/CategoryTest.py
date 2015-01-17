@@ -8,7 +8,7 @@ class  CategoryTestCase(unittest.TestCase):
         self.db = DataBlock("TEST", parent=self.cf)
         self.ct = Category("_foo", parent=self.db)
         str(self.ct)
-        
+
 #    def tearDown(self):
 #        self.foo.dispose()
 #        self.foo = None

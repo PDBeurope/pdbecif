@@ -74,7 +74,7 @@ class  CIFWrapperTableTestCase(unittest.TestCase):
         self.assertEqual(cif_wrapper._test_category_1.test_value_3, ["Bundy",], "Dot-notation attribute setting failed to overwrite or gave inconsistent results")
 
 
-    
+
     def test_wrapperTable_setattr_setitem(self):
         cif_wrapper = CIFWrapper(self.raw_dictionary['TEST_BLOCK_2'], "NEW_ID")
 #        # dot notation access
@@ -94,7 +94,7 @@ class  CIFWrapperTableTestCase(unittest.TestCase):
         ]
         rows_out = [row for row in cif_wrapper._test_category_2]
         self.assertEqual(rows_out, rows_in, "Row iteration failed or gave inconsistent results")
-        
+
     def test_search(self):
         cif_wrapper = CIFWrapper(self.raw_dictionary['TEST_BLOCK_1'])
         check_row = {'test_value_3': 'C ->\nLINE = C', 'test_value_2': 'Bashful', 'test_value_1': 3}
@@ -106,6 +106,12 @@ class  CIFWrapperTableTestCase(unittest.TestCase):
         check_row = {'test_value_3': 'C ->\nLINE = C', 'test_value_2': 'Bashful', 'test_value_1': 3}
         result = [row for row in cif_wrapper._test_category_2.searchiter('test_value_1', 3)]
         self.assertEqual(result[0], check_row, "Row iteration failed or gave inconsistent results")
+
+    def test_listContents(self):
+        cif_wrapper = CIFWrapper(self.raw_dictionary['TEST_BLOCK_1'])
+        items = cif_wrapper._test_category_1.contents()
+        items.sort()
+        self.assertEqual(items, ['test_value_1', 'test_value_2', 'test_value_3'], "Item list for the category is incorrect")
 
 
 if __name__ == '__main__':

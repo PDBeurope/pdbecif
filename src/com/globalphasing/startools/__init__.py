@@ -38,8 +38,8 @@
 
 import mmap
 import re
-import star_regex
-import star_token_types
+from . import star_regex
+from . import star_token_types
 
 _star_pattern = re.compile(star_regex.REGEX, re.UNICODE)
 
@@ -72,12 +72,15 @@ class StarTokeniser(object):
         return self
     
     def next(self):
+        return self.__next__()
+
+    def __next__(self):
         """
         Returns a StarToken instance representing the next token in the matched data.
         Raises StopIteration if there are no further tokens in the data.
         """
         assert self.__map is not None
-        m = self.__iterator.next()
+        m = next(self.__iterator)
         return StarToken( m.lastindex, m.group(m.lastindex) )
         
      

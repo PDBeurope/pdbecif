@@ -1,2 +1,8 @@
-__author__="glen"
-__date__ ="$08-Oct-2012 14:56:01$"
+__author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
+__date__ = "$30-Jun-2012 18:23:30$"
+
+__all__ = ['CIFWrapperTableTest', 'CIFWrapperTest', 'ItemTest',
+    'CategoryTest', 'SaveFrameTest', 'DataBlockTest',
+    'CifFileTest', 'CifFileIOTest'
+    ]
+

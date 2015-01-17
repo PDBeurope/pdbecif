@@ -57,46 +57,46 @@ class CIFWrapperTable(object):
     notation.
     """
 
-    _TABLE = {}
+    _DATA = {}
 
     def __init__(self, d):
-        self._TABLE = d
+        self._DATA = d
 
     def __getattr__(self, attr_in):
-        return self._TABLE.get(attr_in)
+        return self._DATA.get(attr_in)
 
     def __setattr__(self, itemName, itemValue):
-        if itemName != "_TABLE":
+        if itemName != "_DATA":
             self.__setitem__(itemName, itemValue)
         else:
-            self.__dict__['_TABLE'] = copy.deepcopy(itemValue)
+            self.__dict__['_DATA'] = copy.deepcopy(itemValue)
 
     def __iter__(self):
         """CIFWrapperTable row iterator which makes row access available"""
-        numRows = len(self._TABLE.values()[0])
+        numRows = len(list(self._DATA.values())[0])
         idx = 0
         while idx < numRows:
-            yield dict((k, v[idx]) for k, v in self._TABLE.items())
+            yield dict((k, v[idx]) for k, v in list(self._DATA.items()))
             idx += 1
 
     def __contains__(self, itemNameIn):
         """Support for 'in' operator"""
-        return itemNameIn in self._TABLE
+        return itemNameIn in self._DATA
 
     def __getitem__(self, itemNameIn):
-        return self._TABLE.get(itemNameIn)
+        return self._DATA.get(itemNameIn)
 
     def __setitem__(self, itemName, itemValue):
         if not isinstance(itemValue, list):
             itemValue = [itemValue, ]
-        if itemName not in self._TABLE:
-            self._TABLE.setdefault(itemName, itemValue)
+        if itemName not in self._DATA:
+            self._DATA.setdefault(itemName, itemValue)
         else:
-            self._TABLE[itemName] = copy.deepcopy(itemValue)
+            self._DATA[itemName] = copy.deepcopy(itemValue)
 
     def __delitem__(self, itemName):
-        if itemName in self._TABLE:
-            del self._TABLE[itemName]
+        if itemName in self._DATA:
+            del self._DATA[itemName]
 
     def search(self, item, value):
         """return list Rows in table where item contain has value"""
@@ -104,17 +104,17 @@ class CIFWrapperTable(object):
         try:
             results.update([
                        (
-                       idx, dict((k, v[idx]) for k, v in self._TABLE.items())
+                       idx, dict((k, v[idx]) for k, v in list(self._DATA.items()))
                        )
-                       for idx, el in enumerate(self._TABLE[item])
+                       for idx, el in enumerate(self._DATA[item])
                        if value.match(el)
                        ])
         except AttributeError:
             results.update([
                        (
-                       idx, dict((k, v[idx]) for k, v in self._TABLE.items())
+                       idx, dict((k, v[idx]) for k, v in list(self._DATA.items()))
                        )
-                       for idx, el in enumerate(self._TABLE[item])
+                       for idx, el in enumerate(self._DATA[item])
                        if el == value
                        ])
         return results
@@ -126,16 +126,19 @@ class CIFWrapperTable(object):
         return list Rows in table where item contain has value
 
         """
-        for idx, el in enumerate(self._TABLE[item]):
+        for idx, el in enumerate(self._DATA[item]):
             try:
                 if value.match(el):
-                    yield dict((k, v[idx]) for k, v in self._TABLE.items())
+                    yield dict((k, v[idx]) for k, v in list(self._DATA.items()))
             except AttributeError:
                 if el == value:
-                    yield dict((k, v[idx]) for k, v in self._TABLE.items())
-                    
+                    yield dict((k, v[idx]) for k, v in list(self._DATA.items()))
+
+    def contents(self):
+        return list(self._DATA.keys())
+
 #    def __repr__(self):
-#        return str(self._TABLE)
+#        return str(self._DATA)
 
 
 class CIFWrapper(object):
@@ -160,9 +163,9 @@ class CIFWrapper(object):
                 #   {
                 #       DATABLOCK_ID: { CATEGORY: { ITEM: VALUE } }
                 #   }
-                (datablock_id, datablock) = __dictionary.items()[0]
-                category = datablock.values()[0]
-                item = category.values()[0]
+                (datablock_id, datablock) = list(__dictionary.items())[0]
+                category = list(datablock.values())[0]
+                item = list(category.values())[0]
                 # Extract data block id from dictionary
                 self.data_id = datablock_id
                 self._DATA = datablock
@@ -182,9 +185,9 @@ class CIFWrapper(object):
 
     def __convertDictToCIFWrapperTable(self):
         """Converter for mmCIF-like dictionaries or MMCIF2Dict parser output"""
-        for k in self._DATA.keys():
+        for k in list(self._DATA.keys()):
             j = {}
-            for k2, v2 in self._DATA[k].items():
+            for k2, v2 in list(self._DATA[k].items()):
                 if isinstance(v2, list):
                     j[k2] = v2
                 else:
@@ -196,9 +199,9 @@ class CIFWrapper(object):
         """
         # TODO: Might have to copy.deepcopy to ensure clean references
         cleaned_map = {}
-        for k, v in self._DATA.items():
+        for k, v in list(self._DATA.items()):
             cleaned_map.setdefault(k, {})
-            for k2, v2 in v._TABLE.items():
+            for k2, v2 in list(v._DATA.items()):
                 cleaned_map[k][k2] = v2
         if self.data_id is not None and self.data_id != '':
             return {self.data_id: cleaned_map}
@@ -225,6 +228,9 @@ class CIFWrapper(object):
         if tableName in self._DATA:
             del self._DATA[tableName]
 
+    def contents(self):
+        return list(self._DATA.keys())
+
             
 class Item(object):
 
@@ -242,7 +248,6 @@ class Item(object):
         self.isColumn = False
         self.id = item_name
         self.name = self.id
-        self.lineno = -1
 
         self.parent = parent
         self.parent.items[self.id] = self
@@ -251,30 +256,29 @@ class Item(object):
         """"""
         return self.id
 
-    def setValue(self, item_value, item_type='DEFAULTSTRING', lineno=-1):
+    def setValue(self, item_value, item_type='DEFAULTSTRING'):
         """"""
         if self.value is None and self.isColumn is False:
             if isinstance(item_value, list) and len(item_value) == 1:
                 self.value = item_value[0]
+                self.type = [item_type,]
             elif isinstance(item_value, list) and len(item_value) > 1:
                 self.value = item_value
                 self.isColumn = True
                 self.parent.isTable = True
+                self.type = [item_type for it in item_value]
             else:
                 self.value = item_value
                 self.type = item_type
-                self.lineno = lineno
 
         elif self.value is not None and self.isColumn is False:
             self.value = [self.value, item_value]
             self.type = [self.type, item_type]
-            self.lineno = [self.lineno, lineno]
             self.isColumn = True
             self.parent.isTable = True
         else:
             self.value.append(item_value)
             self.type.append(item_type)
-            self.lineno.append(lineno)
 
     def getRawValue(self):
         """Raw value is the unformatted value stored by the item"""
@@ -283,9 +287,9 @@ class Item(object):
     def getFormattedValue(self):
         """Return the value as it should appear (formatted) in the CIF file"""
         if isinstance(self.value, list):
-            formatted_value = [_formatVal(v) if v is not None else "." for v in self.value]
+            formatted_value = [_formatVal(v) if v else "." for v in self.value]
         else:
-            formatted_value = _formatVal(self.value) if self.value is not None else "."
+            formatted_value = _formatVal(self.value) if self.value else "."
         return formatted_value
 
     def remove(self):
@@ -360,11 +364,11 @@ class Category(object):
 
     def getItemNames(self):
         """List the Items (by name) stored by Category"""
-        return self.items.keys()
+        return list(self.items.keys())
 
     def getItems(self):
         """Retrieve all Item objects"""
-        return self.items.values()
+        return list(self.items.values())
 
     def remove(self):
         """Remove Category from SaveFrame or DataBlock and add Category to
@@ -432,11 +436,11 @@ class SaveFrame(object):
 
     def getCategoryIds(self):
         """List the Categories (by ID) stored by SaveFrame"""
-        return self.categories.keys()
+        return list(self.categories.keys())
 
     def getCategories(self):
         """Retrieve all Category objects"""
-        return self.categories.values()
+        return list(self.categories.values())
 
     def remove(self):
         """Remove SaveFrame from DataBlock and add SaveFrame to DataBlock
@@ -502,11 +506,11 @@ class DataBlock(object):
 
     def getCategoryIds(self):
         """List the Categories (by ID) stored by SaveFrame"""
-        return self.categories.keys()
+        return list(self.categories.keys())
 
     def getCategories(self):
         """Retrieve all Category objects"""
-        return self.categories.values()
+        return list(self.categories.values())
 
     # SAVEFRAMES
     def setSaveFrame(self, saveFrame):
@@ -525,11 +529,11 @@ class DataBlock(object):
 
     def getSaveFrameIds(self):
         """List the SaveFrames (by ID) stored by DataBlock"""
-        return self.saveFrames.keys()
+        return list(self.saveFrames.keys())
 
     def getSaveFrames(self):
         """Retrieve all SaveFrame objects stored by DataBlock"""
-        return self.saveFrames.values()
+        return list(self.saveFrames.values())
 
     def remove(self):
         """Remove DataBlock from CifFile and add DataBlock to CifFile
@@ -562,8 +566,8 @@ class DataBlock(object):
                 removed.append("saveFrames")
 
             if len(removed) > 0:
-                print "Warning: '%s' removed from %s" % \
-                    (child, " and ".join(removed))
+                print("Warning: '%s' removed from %s" % \
+                    (child, " and ".join(removed)))
                 return True
             else:
                 return False
@@ -605,11 +609,11 @@ class CifFile(object):
 
     def getDataBlockIds(self):
         """List the DataBlocks (by ID) stored by CifFile"""
-        return self.data_blocks.keys()
+        return list(self.data_blocks.keys())
 
     def getDataBlocks(self):
         """Retrieve all DataBlock objects stored by CifFile"""
-        return self.data_blocks.values()
+        return list(self.data_blocks.values())
 
     def import_mmcif_data_map(self, mmcif_data_map):
         """Populates all objects necessary to represent mmCIF data files.
@@ -620,20 +624,18 @@ class CifFile(object):
         """
         if isinstance(mmcif_data_map, dict) and mmcif_data_map != {}:
             for datablock_id, categories_items_and_values in \
-                    mmcif_data_map.items():
+                    list(mmcif_data_map.items()):
                 data_block_obj = self.setDataBlock(datablock_id)
                 for category, items_and_values in \
-                        categories_items_and_values.items():
+                        list(categories_items_and_values.items()):
                     category_obj = data_block_obj.setCategory(category)
-                    try:
-                        for item, value in items_and_values.items():
-                            item = category_obj.setItem(item).setValue(value)
-                    except AttributeError as attr_err:
-                        print attr_err
-                        print items_and_values
-
+                    for item, value in list(items_and_values.items()):
+                        item = category_obj.setItem(item).setValue(value)
         else:
-            print "Data import was unsuccessful. No data was supplied"
+            if not isinstance(mmcif_data_map, dict):
+                print("Data import was unsuccessful. Data was not supplied as mmCIF-like dictionary")
+            elif mmcif_data_map == {}:
+                pass
 
     def removeChild(self, child):
         """Remove DataBlock from the CifFile using

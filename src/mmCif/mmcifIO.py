@@ -153,12 +153,16 @@ class CifFileWriter(object):
         self._handle = openGzip(
             file_path,
             'w') if file_path is not None else file_path
+#        if self._handle is None:
+#            from exceptions import IOError
+#            raise IOError("Unable to open file for writing")
         self.verbose = False  # TODO: Not implemented
 
     def __del__(self):
         """Make sure any open file objects are closed when CifFileWriter is
         destroyed by the garbage collector"""
         if self._handle:
+            self._handle.flush()
             self._handle.close()
             self._handle = None
 
@@ -175,7 +179,7 @@ class CifFileWriter(object):
                 cif_file.import_mmcif_data_map(cif_data)
                 self._writeCifObj(cif_file, compress, mode)
             else:
-                print "Cannot write CifFile as no path/filename was provided"
+                print("Cannot write CifFile as no path/filename was provided")
         elif isinstance(cifObjIn, dict):
             if self._handle is not None and cifObjIn != {}:
                 cif_file = CifFile(self._handle.name)
@@ -186,9 +190,9 @@ class CifFileWriter(object):
                 #   }
                 datablock_id = ''
                 try:
-                    (datablock_id, datablock) = cifObjIn.items()[0]
-                    category = datablock.values()[0]
-                    item = category.values()[0]
+                    (datablock_id, datablock) = list(cifObjIn.items())[0]
+                    category = list(datablock.values())[0]
+                    item = list(category.values())[0]
                     cif_file.import_mmcif_data_map(cifObjIn)
                 except AttributeError:
                     # ... but can also handle
@@ -203,9 +207,9 @@ class CifFileWriter(object):
 
                 self._writeCifObj(cif_file, compress, mode)
             else:
-                print "Cannot write CifFile as no path/filename was provided"
+                print("Cannot write CifFile as no path/filename was provided")
         else:
-            print "Could not write CIF file (object provided not supported)"
+            print("Could not write CIF file (object provided not supported)")
 
     def _writeCifObj(self, cifObjIn, compress=False, mode='w'):
         """"""
@@ -216,10 +220,9 @@ class CifFileWriter(object):
                 else:
                     self._handle = openGzip(cifObjIn.file_path, mode)
             except Exception as err:
-                print "CifFileWriter error:", err
-                print "Could not write mmCIF file (No output path/filename specified)"
+                print("CifFileWriter error: %s" % str(err))
+                print("Could not write mmCIF file (No output path/filename specified)")
                 return
-
         for datablock in cifObjIn.getDataBlocks():
             self._handle.write(self.DATABLOCK % datablock.getId())
             for category in datablock.getCategories():
@@ -275,8 +278,9 @@ class CifFileWriter(object):
                                 " ".join([col[rI] for col in table]) + "\n")
                     self._handle.write(self.NEWLINE)
                 self._handle.write(self.SAVEFRAMEEND)
-        self._handle.close()
-        self._handle = None
+        self._handle.flush()
+        # self._handle.close()
+        # self._handle = None
 
 
 class CifFileReader(object):
@@ -299,7 +303,7 @@ class CifFileReader(object):
             if output == 'cif_dictionary':
                 return mmcif_dict
             elif output == 'cif_wrapper':
-                return dict(((block_id, CIFWrapper(block_data, data_id=block_id)) for block_id, block_data in mmcif_dict.items()))
+                return dict(((block_id, CIFWrapper(block_data, data_id=block_id)) for block_id, block_data in list(mmcif_dict.items())))
                 # return CIFWrapper(mmcif_dict, data_id=datablock_id)
             elif output == 'cif_file':
                 return CifFile(file_path, mmcif_data_map=mmcif_dict)
@@ -461,7 +465,7 @@ class MMCIF2Dict():
         if os.path.exists(file_path) and os.path.isfile(file_path):
             return self._parseFile(file_path, ignoreCategories)
         else:
-            print "The file provided does not exist or is not a file."
+            print("The file provided does not exist or is not a file.")
             return None
 
     def _tokenizeData(self, line):
@@ -497,7 +501,10 @@ class MMCIF2Dict():
                     if skipCategory:
                         flag = False
                         while line:
-                            check = line.strip().startswith('_') or self.loopRE.match(line.strip()[:5])
+                            check = (line.strip().startswith('_') or
+                                self.loopRE.match(line.strip()[:5]) or
+                                self.saveRE.match(line.strip()[:5]) or
+                                self.dataRE.match(line.strip()[:5]))
                             if flag:
                                 if check:
                                     isLoop = False
@@ -505,10 +512,14 @@ class MMCIF2Dict():
                             else:
                                 if not check:
                                     flag = True
-                            try:
-                                line = f1.next()
-                                line_num+=1
-                            except StopIteration:
+                            if not (self.saveRE.match(line.strip()[:5]) or
+                                self.dataRE.match(line.strip()[:5])):
+                                try:
+                                    line = next(f1)
+                                    line_num+=1
+                                except StopIteration:
+                                    break
+                            else:
                                 break
                         skipCategory = False
 
@@ -539,7 +550,7 @@ class MMCIF2Dict():
                     if line.startswith(';'):
                         while '\n;' not in line:
                             try:
-                                line += f1.next()
+                                line += next(f1)
                                 line_num+=1
                             except StopIteration:
                                 break
@@ -561,7 +572,7 @@ class MMCIF2Dict():
                     elif self.saveRE.match(line):
                         while line.strip() != 'save_':
                             try:
-                                line = f1.next()
+                                line = next(f1)
                                 line_num+=1
                             except StopIteration:
                                 break
@@ -600,7 +611,7 @@ class MMCIF2Dict():
                                 # For cases where values are on the following
                                 # line
                                 try:
-                                    line = f1.next()
+                                    line = next(f1)
                                     line_num +=1
                                 except StopIteration:
                                     break
@@ -608,7 +619,7 @@ class MMCIF2Dict():
                                 char_start = 1 if line.startswith(';') else 0
                                 while line.startswith(';') and not line.rstrip().endswith('\n;'):
                                     try:
-                                        line += f1.next()
+                                        line += next(f1)
                                         line_num+=1
                                     except StopIteration:
                                         break
@@ -617,10 +628,13 @@ class MMCIF2Dict():
                                     value = (line[char_start:line.rfind('\n;')]).strip()
                                 else:
                                     value = self._tokenizeData(" "+line)
-                            if category in data_block:
-                                data_block[category].update({item: value if len(value) > 1 else value[0]})
+                            if ignoreCategories and category in ignoreCategories:
+                                pass
                             else:
-                                data_block.setdefault(category, {item: value if len(value) > 1 else value[0]})
+                                if category in data_block:
+                                    data_block[category].update({item: value if len(value) > 1 else value[0]})
+                                else:
+                                    data_block.setdefault(category, {item: value if len(value) > 1 else value[0]})
                         else:
                             if ignoreCategories and category in ignoreCategories:
                                 skipCategory = True
@@ -650,9 +664,9 @@ class MMCIF2Dict():
                     mmcif_like_file[data_heading] = data_block
             return mmcif_like_file
         except KeyError as key_err:
-            print "KeyError [line %i]: %s" %(line_num, str(key_err))
+            print("KeyError [line %i]: %s" %(line_num, str(key_err)))
         except IOError as io_err:
-            print "IOException [line %i]: %s" % (line_num, str(io_err))
+            print("IOException [line %i]: %s" % (line_num, str(io_err)))
 #        except StopIteration as gen_err:
 #            print mmcif_like_file
 #            print "StopIteration [line %i]: %s" % (line_num, str(gen_err))

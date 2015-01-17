@@ -74,5 +74,11 @@ class  CIFWrapperTestCase(unittest.TestCase):
             self.assertNotEquals(unique_id, '', "No unique datablock id was assigned")
             self.assertEquals(data, {'_test_category_1': {'test_value_1': [1, 2, 3, 4]}}, "CIFWrapper to dictionary conversion failed")
 
+    def test_listContents(self):
+        cif_wrapper = CIFWrapper(self.raw_dictionary['TEST_BLOCK_1'])
+        categories = cif_wrapper.contents()
+        categories.sort()
+        self.assertEqual(categories, ['_test_category_1', '_test_category_2'], "Item list for the category is incorrect")
+
 if __name__ == '__main__':
     unittest.main()

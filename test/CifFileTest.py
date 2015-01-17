@@ -29,7 +29,6 @@ class  CifFileTestCase(unittest.TestCase):
             }
             }
         self.cf = CifFile()
-        str(self.cf)
 
 #    def tearDown(self):
 #        self.foo.dispose()
@@ -99,7 +98,7 @@ class  CifFileTestCase(unittest.TestCase):
             ).getCategory('_test_category_1'
             ).getItem('test_value_1'
             ).value, [1, 2, 3, 4], "CifFile.__init__ failed to import dictionary")
-        cf = CifFile(mmcif_data_map=())
+        cf = CifFile(mmcif_data_map={})
 
 if __name__ == '__main__':
     unittest.main()

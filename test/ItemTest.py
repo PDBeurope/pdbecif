@@ -21,13 +21,11 @@ class  CategoryTestCase(unittest.TestCase):
         self.assertEqual(self.im.value, "val_1", "Item value not set correctly")
         self.assertEqual(self.im.type, 'DEFAULTSTRING', "Item type not set correctly")
         self.assertEqual(self.im.isColumn, False, "Item isColumn not set correctly")
-        self.assertEqual(self.im.lineno, -1, "Item lineno not set correctly")
-
-        self.im.setValue("val_2", lineno=7357)
+        
+        self.im.setValue("val_2")
         self.assertEqual(self.im.value, ["val_1", "val_2"], "Item value not set correctly")
         self.assertEqual(self.im.type, ['DEFAULTSTRING', 'DEFAULTSTRING'], "Item type not set correctly")
         self.assertEqual(self.im.isColumn, True, "Item isColumn not set correctly")
-        self.assertEqual(self.im.lineno, [-1, 7357], "Item lineno not set correctly")
 
     def test_getRawValue(self):
         self.im.value = None
