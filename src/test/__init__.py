@@ -1,5 +1,5 @@
 
-from PDBeCIFSuite import PDBeCIFSuite
+from test.PDBeCIFSuite import PDBeCIFSuite
 
 suite = PDBeCIFSuite(verbosity=2)
 suite.run_all_tests()

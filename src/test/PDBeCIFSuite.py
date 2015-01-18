@@ -3,15 +3,17 @@
 
 import unittest
 
-import ItemTest
-import DataBlockTest
-import SaveFrameTest
-import CategoryTest
-import CIFWrapperTest
-import CIFWrapperTableTest
-import CifFileTest
-import CifFileReaderTest
-import CifFileIOTest
+from test import (
+    ItemTest, 
+    DataBlockTest, 
+    SaveFrameTest, 
+    CategoryTest, 
+    CIFWrapperTest, 
+    CIFWrapperTableTest, 
+    CifFileTest, 
+    CifFileReaderTest, 
+    CifFileIOTest,
+    )
 
 @unittest.skip("This is not a unittest")
 class PDBeCIFSuite(unittest.TestCase):
