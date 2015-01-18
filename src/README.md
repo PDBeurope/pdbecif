@@ -21,16 +21,18 @@ where items have a particular value.
 
 Typical usage often looks like this:
 
-'''from mmCif import *
+```python
+from mmCif import *
 import mmCif.mmcifIO as mmcif
-'''
+```
 
 ## Creating objects
 
 
 ###     Example 1 - Creating an mmCIF like dictionary by hand (manually)
 
-'''    mmcif_like = {
+```python
+mmcif_like = {
     'TEST_CIF': {
             '_test_category_1': {
                 'test_value_1': 1,
@@ -49,61 +51,85 @@ import mmCif.mmcifIO as mmcif
             }
         }
     }
-'''
+```
 ###    Example 2 - Creating a CifWrapper object from mmCif-like dictionaries
+```python
     cif_wrapper = CIFWrapper(mmcif_like)
     print cif_wrapper.data_id, cif_wrapper
+```
 
 ###    Example 3 - Creating an mmCif-like dictionary from a CifWrapper object
+```python
     data_dict = cif_wrapper.unwrap()
     print data_dict
+```
 
 ###    Example 4 - Creating a CifFile object from an mmCif-like dictionary
 ####     - Method 1: (instantiation):
+```python
     cif_file_1 = CifFile(filename="usage-test-1.cif", mmcif_data_map=mmcif_like)
+```
 
 ####     - Method 2: (dictionary import)
+```python
     cif_file_2 = CifFile(filename="usage-test-2.cif")
     cif_file_2.import_mmcif_data_map(mmcif_like)
     print cif_file_1, cif_file_2
+```
 
 ##Reading from files
 
 ###    Example 5 - INPUT: mmCif data files, OUTPUT: mmCif-like dictionary
+```python
     cfr = mmcif.CifFileReader(input='data')
-    (cif_id, cif_dictionary) = cfr.read(path + "/../../resources/usage-example.cif", output='cif_dictionary', ignore=["_atom_site", "_atom_site_anisotrop"])
+    (cif_id, cif_dictionary) = cfr.read(path + "/usage-example.cif", output='cif_dictionary', ignore=["_atom_site", "_atom_site_anisotrop"])
     print "mmCIF-like dictionary:", cif_dictionary
+```
 
 ###    Example 6 - INPUT: mmCif data files, OUTPUT: CIFWrapper object
+```python
     cfr = mmcif.CifFileReader(input='data')
-    cif_wrapper = cfr.read(path + "/../../resources/usage-example.cif", output='cif_wrapper')
+    cif_wrapper = cfr.read(path + "/usage-example.cif", output='cif_wrapper')
     print "CIFWrapper:", cif_wrapper
+```
 
 ###    Example 7 - INPUT: mmCif data files, OUTPUT: CifFile object
+```python
     cfr = mmcif.CifFileReader(input='data')
-    cif_file = cfr.read(path + "/../../resources/usage-example.cif", output='cif_file')
+    cif_file = cfr.read(path + "/usage-example.cif", output='cif_file')
     print "CifFile:", cif_file
+```
 
 ##Writing to files
 Using the objects from examples 5, 6, and 7 above
 
 ###    Example 8 - INPUT: mmCif-like dictionary
-    cfd1 = mmcif.CifFileWriter("../../resources/cif_dictionary_test-1.cif")
-####     - Method 1: NO datablocks defined in mmCIF-like dictionary (Define your own)
-####       Datablock ID defaults to filename defined in CifFileWriter if none provided
-    cfd1.write(cif_dictionary)
+```python
+    cfd1 = mmcif.CifFileWriter("./cif_dictionary_test-1.cif")
+```
+####     - Method 1: 
+>NO datablocks defined in mmCIF-like dictionary (Define your own) Datablock ID defaults to filename defined in CifFileWriter if none provided.
 
+```python
+    cfd1.write(cif_dictionary)
+```
 ####     - Method 2: DataBlocks defined in mmCIF-like dictionary
-    cfd2 = mmcif.CifFileWriter("../../resources/cif_dictionary_test-2.cif")
+```python
+    cfd2 = mmcif.CifFileWriter("./cif_dictionary_test-2.cif")
     cfd2.write({cif_id:cif_dictionary})
+```
 
 ###    Example 9 - INPUT: CIFWrapper object
-    cfw = mmcif.CifFileWriter("../../resources/cif_wrapper_test.cif")
+```python
+    cfw = mmcif.CifFileWriter("./cif_wrapper_test.cif")
     cfw.write(cif_wrapper)
+```
 
 ###    Example 10 - INPUT: CifFile object
-    cff = mmcif.CifFileWriter("../../resources/cif_file_test.cif")
+```python
+    cff = mmcif.CifFileWriter("./cif_file_test.cif")
     cff.write(cif_file)
+```
 
 ##Using an mmCIF-like python dictionary
 
@@ -113,14 +139,20 @@ Using the objects from examples 5, 6, and 7 above
     Data are accessed using standard data access mechanisms for
     python dictionaries:
 
+
     user_dict['_cif_category']['cif_item']
 
 
+
 ###    Example 11 - Accessing the value of an item
+```python
     print "_test_keyword.field_1", cif_dictionary["_test_keyword"]["field_1"]
+```
 
 ###    Example 12 - Accessing all items of a category
+```python
     print "_valid_CIF", cif_dictionary["_valid_CIF"]
+```
 
 ##Using a CIFWrapper object
     
@@ -133,32 +165,34 @@ Using the objects from examples 5, 6, and 7 above
     search() and searchiter()
     
 
-    cif_wrapper_2 = cfr.read(path + "/../../resources/1smv.cif", output='cif_wrapper')
+```python
+    cif_wrapper_2 = cfr.read(path + "/1smv.cif", output='cif_wrapper')
 
-###    Example 13 - Check table exists and get all the contents of the table
+    # Example 13 - Check table exists and get all the contents of the table
     if '_struct_ref_seq_dif' in cif_wrapper_2:
         print cif_wrapper_2._struct_ref_seq_dif
 
-###    Example 14 - Check column exists in a table and get all contents of the column
+        # Example 14 - Check column exists in a table and get all contents of the column
         if 'details' in cif_wrapper_2._struct_ref_seq_dif and cif_wrapper_2._struct_ref_seq_dif.details:
             print cif_wrapper_2._struct_ref_seq_dif.details
 
-###    Example 15 - Search a table for rows where values in column match and get
-###                 all results as dict in the form {match_row_index : {row}}
+            # Example 15 - Search a table for rows where values in column match and get
+            #              all results as dict in the form {match_row_index : {row}}
             print cif_wrapper_2._struct_ref_seq_dif.search('details', 'DELETION')
 
-###    Example 16 - Iterate over search results (table rows) where values in
-###                 column match the given searchterm and get rows as
-###                 {column_name: value_for_row}
+            # Example 16 - Iterate over search results (table rows) where values in
+            #              column match the given searchterm and get rows as
+            #              {column_name: value_for_row}
             for searchResult in cif_wrapper_2._struct_ref_seq_dif.searchiter('details', 'DELETION'):
                 print searchResult
                 break # only show one to demonstrate the principle
 
-###    Example 17 - Iterate over all rows in a table and get rows as
-###                 {column_name: value_for_row}
+            # Example 17 - Iterate over all rows in a table and get rows as
+            #              {column_name: value_for_row}
             for row in cif_wrapper_2._struct_ref_seq_dif:
                 print row
                 break # only show one to demonstrate the principle
+```
 
 ##Using a CifFile object
     
@@ -170,8 +204,9 @@ Using the objects from examples 5, 6, and 7 above
     NB: See the Test suite in mmCif.test for more examples
 
 
-###    Example 18 - Working with CifFile
-'''    print "DataBlock ids:", cif_file.getDataBlockIds() #List all datablock ids
+```python
+    # Example 18 - Working with CifFile
+    print "DataBlock ids:", cif_file.getDataBlockIds() #List all datablock ids
     print "DataBlock objects:", cif_file.getDataBlocks() #List all datablock objects
     data_block_1 = cif_file.getDataBlock("TEST_CIF") #Get a specific datablock
     data_block_1 = cif_file.getDataBlocks()[0] #Get the first datablock
@@ -180,11 +215,11 @@ Using the objects from examples 5, 6, and 7 above
     cif_file.removeChild(data_block_2) # Remove datablock (Method 1 - given object)
     cif_file.removeChild("BLOCK_3") # Remove datablock (Method 2 - given ID)
     print "RECYCLED DATABLOCKS:", cif_file.recycleBin # Removed objects are stored in a recycle bin
-'''
 
-###    Example 19 - Working with DataBlock
+
+    # Example 19 - Working with DataBlock
     """NB: Category and SaveFrame are handled in the same manner"""
-'''    data_block_1 = cif_file.getDataBlock("TEST_CIF") #Get a specific datablock
+    data_block_1 = cif_file.getDataBlock("TEST_CIF") #Get a specific datablock
     data_block_4 = cif_file.setDataBlock("BLOCK_4") # Create another empty datablock
     data_block_5 = cif_file.setDataBlock("BLOCK_5") # Create another empty datablock
     data_block_5.getId() # Get the datablock ID
@@ -198,10 +233,10 @@ Using the objects from examples 5, 6, and 7 above
     data_block_4.removeChild("CATEGORY_3") # Remove category (Method 2 - given ID)
     data_block_5.remove() # Remove datablock from CifFile
     print "RECYCLED CATEGORIES:", data_block_4.recycleBin # Removed objects are stored in a recycle bin
-'''
 
-###    Example 20 - Working with Category
-'''    category_1 = data_block_1.getCategory("_test_keyword") #Get a specific category
+
+    # Example 20 - Working with Category
+    category_1 = data_block_1.getCategory("_test_keyword") #Get a specific category
     category_4 = data_block_4.setCategory("CATEGORY_4") # Create another empty category
     category_5 = data_block_4.setCategory("CATEGORY_5") # Create another empty category
     print "Item names:", category_1.getItemNames() #List all item names
@@ -213,10 +248,10 @@ Using the objects from examples 5, 6, and 7 above
     category_4.removeChild("ITEM_3") # Remove item (Method 2 - given ID)
     category_5.remove() # Remove category from DataBlock
     print "RECYCLED ITEMS:", category_4.recycleBin # Removed objects end up in the recycle bin
-'''
 
-###    Example 21 - Working with Item
-'''    item_1 = category_1.getItem("field_1") #Get a specific item
+
+    # Example 21 - Working with Item
+    item_1 = category_1.getItem("field_1") #Get a specific item
     item_4 = category_4.setItem("ITEM_4") # Create another empty item
     item_5 = category_4.setItem("ITEM_5") # Create another empty item
     print "Value (raw):", item_1.getRawValue() #Get raw item value (Method 1 - using accessor)
@@ -226,16 +261,12 @@ Using the objects from examples 5, 6, and 7 above
     item_5.setValue([9, 8, 7, 6, 5]) #Set the item value
     item_5.remove() # Remove item from Category
     print "RECYCLED ITEMS:", category_4.recycleBin # Removed objects end up in the recycle bin
-'''
 
-###    Example 22 - Method chaining
+
+    # Example 22 - Method chaining
     For every object the setXXXX() method always returns the this you are
     trying to set. If no object is present it creates a new one and returns it.
     setXXXX() can therefor be used as both accessor and mutator
-'''
-    cif_file.setDataBlock("BLOCK_6").setCategory("CATEGORY_6").setItem("ITEM_6").setValue("VALUE_6")
-'''
 
-if __name__ == '__main__':
-    status = main()
-    sys.exit(status)
+    cif_file.setDataBlock("BLOCK_6").setCategory("CATEGORY_6").setItem("ITEM_6").setValue("VALUE_6")
+```
