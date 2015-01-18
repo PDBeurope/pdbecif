@@ -147,15 +147,22 @@ class CifFileWriter(object):
     LOOP = "loop_\n"
     SAVEFRAMESTART = "save_%s\n#\n"
     SAVEFRAMEEND = "save_\n\n"
+    
+    _handle = None
 
     def __init__(self, file_path=None):
         """"""
-        self._handle = openGzip(
-            file_path,
-            'w') if file_path is not None else file_path
-#        if self._handle is None:
-#            from exceptions import IOError
-#            raise IOError("Unable to open file for writing")
+        
+        if file_path and isinstance(file_path, str):
+            self._handle = openGzip(
+                file_path,
+                'w') if file_path is not None else file_path
+        elif file_path is None:
+            pass
+        else:
+            from exceptions import TypeError
+            raise TypeError("file_path argument is not a string")
+        
         self.verbose = False  # TODO: Not implemented
 
     def __del__(self):

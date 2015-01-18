@@ -1,0 +1,31 @@
+data_TEST
+#
+_entry.id   TEST
+#
+loop_
+_foo.text
+_foo.number
+_foo.bar
+;This is
+      a
+      multi-line example
+;
+1234567890 "bar foo" exampletext -9999 foobar
+
+save_some_interesting_category
+   _category.description
+;  This category contains some interesting stuff.
+;
+   _category.id                  some_interesting_category
+   _category.mandatory_code      no
+     loop_
+    _category_group.id           "inclusive_group"
+                                 "interesting_group"
+
+   loop_
+   _category_key.name
+         '_some_interesting_category.interesting_id'
+         '_some_interesting_category.interesting_type'
+
+save_
+#

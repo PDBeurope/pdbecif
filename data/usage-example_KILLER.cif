@@ -1,0 +1,62 @@
+dAtA_TEST_CIF
+
+_valid_CIF.introduction
+; You wanna know CIF? You wanna know CIF!!!;
+  ;YOU CAN'T HANDLE THE CIF!!!
+;
+
+looP_
+_test_keyword.field_1
+_test_keyword.field_2 # Can you handle comments in line with loop header
+_test_keyword.field_3
+                      # What about comments not starting at the beginning???
+_test_keyword.field_4
+# Are you able to parse the last value in the loop below
+_test_keyword.field_5 'The quick brown fox' JUMPED 5
+;
+    Does your parser catch quoted strings over multiple lines  for the "contents of
+    # Ever wondered what happens to comments in text fields
+    the entry."
+; 'WAS THIS VALUE LOST?'
+'Snow white' BIT 1
+; #This field contains a single quote that could cause problems for some;
+It was the evil queen's plan that was foiled by the 7 brave souls...;
+
+...go figure?!?
+;
+apple
+Rapunzel "LET DOWN" 1000 'locks of hair' 'a dog's life'
+
+ ;You ;feelin' ;"lucky punk?" ';Are you?' #There are 5 values + 1 comment on this line
+
+#
+_valid_CIF.strange_quoting   'a parser's nightmare'
+_valid_cif.Strange_quoting   "Data names (category and item) are case in-sensitive"
+#
+loop_
+_test_loop_1.field_1 
+_test_loop_1.field_2 1 2 3 4 5
+5 4 3 2 1
+#
+Loop_
+_test_loop_2.field_1
+_test_loop_2.field_2
+6 7 8 9 0
+0 9 8 7 6
+#
+Data_BLOCK_2
+
+_valid_CIF.introduction
+; BLAH!!!
+;
+_extra.value Rumplestiltskin
+#
+_extra.strange_value Three#Blind#Mice   #ONLY THIS IS THE COMMENT
+_extra.fairly_difficult 'Difficult #value'
+loop_
+_equivalence_test.value 05' "05'" '05''
+;05'
+;
+#
+
+
