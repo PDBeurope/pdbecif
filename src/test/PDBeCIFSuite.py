@@ -15,6 +15,7 @@ from test import (
     CifFileIOTest,
     )
 
+
 @unittest.skip("This is not a unittest")
 class PDBeCIFSuite(unittest.TestCase):
     

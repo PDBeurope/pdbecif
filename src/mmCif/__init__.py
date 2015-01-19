@@ -66,27 +66,37 @@ class CIFWrapperTable(object):
     notation.
     """
 
-    _DATA = OrderedDict()
+    _DATA = {}
+    _preserve_order = False
 
-    def __init__(self, d):
+    def __init__(self, d, preserve_token_order=False):
         self._DATA = d
+        if preserve_token_order:
+            self._preserve_order = preserve_token_order
 
     def __getattr__(self, attr_in):
         return self._DATA.get(attr_in)
 
     def __setattr__(self, itemName, itemValue):
-        if itemName != "_DATA":
-            self.__setitem__(itemName, itemValue)
-        else:
+        if itemName == "_DATA":
             self.__dict__['_DATA'] = copy.deepcopy(itemValue)
+        elif itemName == "_preserve_order":
+            self.__dict__['_preserve_order'] = copy.deepcopy(itemValue)
+        else:
+            self.__setitem__(itemName, itemValue)
 
     def __iter__(self):
         """CIFWrapperTable row iterator which makes row access available"""
         numRows = len(list(self._DATA.values())[0])
         idx = 0
-        while idx < numRows:
-            yield OrderedDict((k, v[idx]) for k, v in list(self._DATA.items()))
-            idx += 1
+        if self._preserve_order:
+            while idx < numRows:
+                yield OrderedDict((k, v[idx]) for k, v in list(self._DATA.items()))
+                idx += 1
+        else:
+            while idx < numRows:
+                yield dict((k, v[idx]) for k, v in list(self._DATA.items()))
+                idx += 1
 
     def __contains__(self, itemNameIn):
         """Support for 'in' operator"""
@@ -160,9 +170,14 @@ class CIFWrapper(object):
     providing access to mmCIF categories and items using the familiar python
     'dot' notation.
     """
-    _DATA = OrderedDict()
+    _DATA = {}
+    _preserve_order = False
 
-    def __init__(self, d, data_id=None):
+    def __init__(self, d, data_id=None, preserve_token_order=False):
+        if preserve_token_order:
+            self._DATA = OrderedDict()
+            self._preserve_order = True
+
         if d is not None:
             __dictionary = copy.deepcopy(d)
             self.data_id = data_id if data_id is not None else ''
@@ -195,21 +210,21 @@ class CIFWrapper(object):
     def __convertDictToCIFWrapperTable(self):
         """Converter for mmCIF-like dictionaries or MMCIF2Dict parser output"""
         for k in list(self._DATA.keys()):
-            j = OrderedDict()
+            j = OrderedDict() if self._preserve_order else {}
             for k2, v2 in list(self._DATA[k].items()):
                 if isinstance(v2, list):
                     j[k2] = v2
                 else:
                     j[k2] = [v2, ]
-            self._DATA.update({k: CIFWrapperTable(j)})
+            self._DATA.update({k: CIFWrapperTable(j, preserve_token_order=self._preserve_order)})
 
     def unwrap(self):
         """Extract encapsulated data to return an mmCIF-like python dictionary
         """
         # TODO: Might have to copy.deepcopy to ensure clean references
-        cleaned_map = OrderedDict()
+        cleaned_map = OrderedDict() if self._preserve_order else {}
         for k, v in list(self._DATA.items()):
-            cleaned_map.setdefault(k, OrderedDict())
+            cleaned_map.setdefault(k, OrderedDict() if self._preserve_order else {})
             for k2, v2 in list(v._DATA.items()):
                 cleaned_map[k][k2] = v2
         if self.data_id is not None and self.data_id != '':
@@ -224,7 +239,7 @@ class CIFWrapper(object):
 
     def __getitem__(self, tableNameIn):
         return self._DATA.get(tableNameIn)
-    
+
 #    def __setitem__(self, tableName, tableValue):
 #        if not isinstance(tableValue, list):
 #            tableValue = [tableValue, ]
@@ -240,7 +255,7 @@ class CIFWrapper(object):
     def contents(self):
         return list(self._DATA.keys())
 
-            
+
 class Item(object):
 
     """
@@ -335,7 +350,6 @@ class Category(object):
 
     def __init__(self, category_id, parent):
         """"""
-        self.items = OrderedDict()
         self.recycleBin = {}
         self.isTable = False
         self.id = category_id.lstrip("_")
@@ -343,6 +357,10 @@ class Category(object):
 
         self.parent = parent
         self.parent.categories[self.id] = self
+
+        self.preserve_order = self.parent.preserve_order
+        self.items = OrderedDict() if self.preserve_order else {}
+
 
     def getId(self):
         """"""
@@ -415,11 +433,13 @@ class SaveFrame(object):
     def __init__(self, saveFrame_id, parent):
         """"""
         self.id = saveFrame_id
-        self.categories = OrderedDict()
         self.recycleBin = {}
 
         self.parent = parent
         self.parent.saveFrames[self.id] = self
+
+        self.preserve_order = self.parent.preserve_order
+        self.categories = OrderedDict() if self.preserve_order else {}
 
     def updateId(self, saveFrame_id):
         """Change the SaveFrame definition ID"""
@@ -482,12 +502,18 @@ class DataBlock(object):
     def __init__(self, block_id, parent):
         """"""
         self.id = block_id
-        self.categories = OrderedDict()
-        self.saveFrames = OrderedDict()
         self.recycleBin = {}
 
         self.parent = parent
         self.parent.data_blocks[self.id] = self
+
+        self.preserve_order = self.parent.preserve_order
+        if self.preserve_order:
+            self.categories = OrderedDict()
+            self.saveFrames = OrderedDict()
+        else:
+            self.categories = {}
+            self.saveFrames = {}
 
     def updateId(self, block_id):
         """Change the DataBlock ID"""
@@ -594,11 +620,13 @@ class CifFile(object):
     dictionary. It stores and manages DataBlock objects.
     """
 
-    def __init__(self, file_path=None, mmcif_data_map=None):
+    def __init__(self, file_path=None, mmcif_data_map=None, preserve_token_order=False):
         """"""
-        self.data_blocks = OrderedDict()
         self.recycleBin = {}
         self.file_path = file_path
+        self.preserve_order = preserve_token_order
+        self.data_blocks = OrderedDict() if preserve_token_order else {}
+
         if mmcif_data_map is not None:
             self.import_mmcif_data_map(mmcif_data_map)
 
@@ -608,7 +636,7 @@ class CifFile(object):
             datablock.isalnum()  # duck typing
             datablock = DataBlock(datablock, self) if datablock not in \
                 self.data_blocks else self.data_blocks.get(datablock)
-        except AttributeError:
+        except AttributeError as attr_err:
             pass
         return self.data_blocks.setdefault(datablock.id, datablock)
 
