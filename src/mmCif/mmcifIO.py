@@ -73,6 +73,15 @@ import gzip
 from mmCif import *
 from mmCif.utils import openGzip
 from com.globalphasing.startools import StarTokeniser
+try:
+    from collections import OrderedDict
+except ImportError:
+    # fallback: try to use the ordereddict backport when using python 2.6
+    try:
+        from ordereddict import OrderedDict
+    except ImportError:
+        # backport not installed: use local OrderedDict
+        from mmCif.ordereddict import OrderedDict
 
 # constants
 
@@ -148,17 +157,28 @@ class CifFileWriter(object):
     SAVEFRAMESTART = "save_%s\n#\n"
     SAVEFRAMEEND = "save_\n\n"
     
-    _handle = None
-
-    def __init__(self, file_path=None):
+    def __init__(self, file_path=None, compress=False, mode='w'):
         """"""
+#        #orig
+#        self._handle = openGzip(
+#            file_path,
+#            'w') if file_path is not None else file_path
+        #new
+        self.compress = compress
+        self.mode = 'wb' if (compress and mode == 'w') else mode
         
-        if file_path and isinstance(file_path, str):
+        if (file_path and isinstance(file_path, str)) or file_path is None:
+            file_path = ( file_path 
+                    if (file_path and isinstance(file_path, str) and not compress)
+                    else (
+                        file_path+".gz" 
+                        if (file_path and isinstance(file_path, str) and not file_path.endswith(".gz") and compress)
+                        else filepath
+                    )
+                )
             self._handle = openGzip(
                 file_path,
-                'w') if file_path is not None else file_path
-        elif file_path is None:
-            pass
+                mode) if file_path is not None else file_path
         else:
             from exceptions import TypeError
             raise TypeError("file_path argument is not a string")
@@ -301,9 +321,10 @@ class CifFileReader(object):
         """"""
         self.input = input
         self.file_path = None
+        self.order_tokens = False
         self.verbose = verbose  # TODO: Not implemented
 
-    def read(self, file_path, output='cif_dictionary', ignore=[]):
+    def read(self, file_path, output='cif_dictionary', ignore=[], order_tokens=False):
         if self.input == 'data':
             #(datablock_id, mmcif_dict) = MMCIF2Dict().parse(file_path, ignoreCategories=ignore)
             mmcif_dict = MMCIF2Dict().parse(file_path, ignoreCategories=ignore)
@@ -490,9 +511,9 @@ class MMCIF2Dict():
         """Private method that will do the work of parsing the mmCIF data file
         return Dictionary"""
 
-        mmcif_like_file = {}
+        mmcif_like_file = dict()
         data_heading = ""
-        data_block = {}
+        data_block = dict()
         save_block = {}
         line_num = 0
         try:
@@ -574,7 +595,7 @@ class MMCIF2Dict():
                                 table_names = []
                                 table_values_array = []
                             mmcif_like_file[data_heading] = data_block
-                            data_block = {}
+                            data_block = dict()
                         data_heading = self.dataRE.match(line).group('data_heading')
                     elif self.saveRE.match(line):
                         while line.strip() != 'save_':
@@ -641,12 +662,12 @@ class MMCIF2Dict():
                                 if category in data_block:
                                     data_block[category].update({item: value if len(value) > 1 else value[0]})
                                 else:
-                                    data_block.setdefault(category, {item: value if len(value) > 1 else value[0]})
+                                    data_block.setdefault(category, dict({item: value if len(value) > 1 else value[0]}))
                         else:
                             if ignoreCategories and category in ignoreCategories:
                                 skipCategory = True
                             else:
-                                data_block.setdefault(category, {})
+                                data_block.setdefault(category, dict())
                                 table_names.append(item)
                     else:
                         if multiLineValue is True:

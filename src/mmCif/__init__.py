@@ -30,6 +30,15 @@ conversion to dictionary type objects has not yet been implemented.
 """
 import copy
 import re
+try:
+    from collections import OrderedDict
+except ImportError:
+    # fallback: try to use the ordereddict backport when using python 2.6
+    try:
+        from ordereddict import OrderedDict
+    except ImportError:
+        # backport not installed: use local OrderedDict
+        from mmCif.ordereddict import OrderedDict
 
 __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 __date__ = "$30-Jun-2012 18:23:30$"
@@ -57,7 +66,7 @@ class CIFWrapperTable(object):
     notation.
     """
 
-    _DATA = {}
+    _DATA = OrderedDict()
 
     def __init__(self, d):
         self._DATA = d
@@ -76,7 +85,7 @@ class CIFWrapperTable(object):
         numRows = len(list(self._DATA.values())[0])
         idx = 0
         while idx < numRows:
-            yield dict((k, v[idx]) for k, v in list(self._DATA.items()))
+            yield OrderedDict((k, v[idx]) for k, v in list(self._DATA.items()))
             idx += 1
 
     def __contains__(self, itemNameIn):
@@ -151,7 +160,7 @@ class CIFWrapper(object):
     providing access to mmCIF categories and items using the familiar python
     'dot' notation.
     """
-    _DATA = {}
+    _DATA = OrderedDict()
 
     def __init__(self, d, data_id=None):
         if d is not None:
@@ -186,7 +195,7 @@ class CIFWrapper(object):
     def __convertDictToCIFWrapperTable(self):
         """Converter for mmCIF-like dictionaries or MMCIF2Dict parser output"""
         for k in list(self._DATA.keys()):
-            j = {}
+            j = OrderedDict()
             for k2, v2 in list(self._DATA[k].items()):
                 if isinstance(v2, list):
                     j[k2] = v2
@@ -198,9 +207,9 @@ class CIFWrapper(object):
         """Extract encapsulated data to return an mmCIF-like python dictionary
         """
         # TODO: Might have to copy.deepcopy to ensure clean references
-        cleaned_map = {}
+        cleaned_map = OrderedDict()
         for k, v in list(self._DATA.items()):
-            cleaned_map.setdefault(k, {})
+            cleaned_map.setdefault(k, OrderedDict())
             for k2, v2 in list(v._DATA.items()):
                 cleaned_map[k][k2] = v2
         if self.data_id is not None and self.data_id != '':
@@ -266,7 +275,7 @@ class Item(object):
                 self.value = item_value
                 self.isColumn = True
                 self.parent.isTable = True
-                self.type = [item_type for it in item_value]
+                self.type = [item_type for item_type in item_value]
             else:
                 self.value = item_value
                 self.type = item_type
@@ -326,7 +335,7 @@ class Category(object):
 
     def __init__(self, category_id, parent):
         """"""
-        self.items = {}
+        self.items = OrderedDict()
         self.recycleBin = {}
         self.isTable = False
         self.id = category_id.lstrip("_")
@@ -406,7 +415,7 @@ class SaveFrame(object):
     def __init__(self, saveFrame_id, parent):
         """"""
         self.id = saveFrame_id
-        self.categories = {}
+        self.categories = OrderedDict()
         self.recycleBin = {}
 
         self.parent = parent
@@ -473,8 +482,8 @@ class DataBlock(object):
     def __init__(self, block_id, parent):
         """"""
         self.id = block_id
-        self.categories = {}
-        self.saveFrames = {}
+        self.categories = OrderedDict()
+        self.saveFrames = OrderedDict()
         self.recycleBin = {}
 
         self.parent = parent
@@ -587,7 +596,7 @@ class CifFile(object):
 
     def __init__(self, file_path=None, mmcif_data_map=None):
         """"""
-        self.data_blocks = {}
+        self.data_blocks = OrderedDict()
         self.recycleBin = {}
         self.file_path = file_path
         if mmcif_data_map is not None:
