@@ -126,7 +126,7 @@ class CifFileWriter(object):
 
     _handle = None
     
-    def __init__(self, file_path=None, compress=False, mode='w'):
+    def __init__(self, file_path=None, compress=False, mode='w', preserve_order=False):
 #        """"""
 #        #orig
 #        self._handle = openGzip(
@@ -135,6 +135,7 @@ class CifFileWriter(object):
         #new
         self.compress = compress
         self.mode = 'wb' if (compress and mode == 'w') else mode
+        self.preserve_token_order = preserve_order
         
         if (file_path and isinstance(file_path, str)) or file_path is None:
             file_path = ( file_path 
@@ -162,8 +163,12 @@ class CifFileWriter(object):
             self._handle.close()
             self._handle = None
 
-    def write(self, cifObjIn, compress=False, mode='w'):
+    def write(self, cifObjIn, compress=False, mode='w', preserve_order=False):
+
+        token_ordering = (self.preserve_token_order or preserve_order) # preserve ordering of either flag is True
+
         if isinstance(cifObjIn, CifFile):
+            cifObjIn.preserve_order = token_ordering if not cifObjIn.preserve_order else cifObjIn.preserve_order
             self._writeCifObj(cifObjIn, compress, mode)
         elif isinstance(cifObjIn, CIFWrapper):
             if self._handle is not None:
@@ -178,7 +183,7 @@ class CifFileWriter(object):
                 print("Cannot write CifFile as no path/filename was provided")
         elif isinstance(cifObjIn, dict):
             if self._handle is not None and cifObjIn != {}:
-                cif_file = CifFile(self._handle.name)
+                cif_file = CifFile(self._handle.name, preserve_token_order=token_ordering)
                 # Check if it is a mmCIF-like dictionary
                 # Expecting
                 #   {
