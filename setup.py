@@ -8,7 +8,7 @@ def read(fname):
   return open(os.path.join(os.path.dirname(__file__), fname)).read()
 setup (
         name='PDBeCif',
-        version='1.3.0',
+        version='1.3.1',
         author='Glen van Ginkel (Protein Data Bank in Europe; PDBe)',
         author_email='pdbe@ebi.ac.uk',
         package_dir = {'': 'src'},
