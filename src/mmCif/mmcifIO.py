@@ -72,13 +72,13 @@ import re
 import gzip
 from mmCif import *
 from mmCif.utils import openGzip
+from mmCif.utils import pretty_print
 from com.globalphasing.startools import StarTokeniser
 from com.pdbe.mmciftools import MMCIF2Dict
 
 # constants
 
 # exception classes
-
 
 class LoopValueMultiplesError(Exception):
 
@@ -245,9 +245,8 @@ class CifFileWriter(object):
                         table.append(item.getFormattedValue())
                         if not colLen:
                             colLen = len(item.value)
-                    for rI in range(len(table[0])):
-                        self._handle.write(
-                            " ".join([col[rI] for col in table]) + "\n")
+
+                    self._handle.write(pretty_print(table, transpose=True))
                 self._handle.write(self.NEWLINE)
                 # HANDLE SAVEFRAMES #
 
@@ -275,9 +274,7 @@ class CifFileWriter(object):
                             table.append(item.getFormattedValue())
                             if not colLen:
                                 colLen = len(item.value)
-                        for rI in range(len(table[0])):
-                            self._handle.write(
-                                " ".join([col[rI] for col in table]) + "\n")
+                        self._handle.write(pretty_print(table, transpose=True))
                     self._handle.write(self.NEWLINE)
                 self._handle.write(self.SAVEFRAMEEND)
         self._handle.flush()
