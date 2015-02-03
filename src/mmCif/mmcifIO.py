@@ -247,7 +247,7 @@ class CifFileWriter(object):
                             colLen = len(item.value)
 
                     self._handle.write(pretty_print(table, transpose=True))
-                self._handle.write(self.NEWLINE)
+                self._handle.write('\n' + self.NEWLINE)
                 # HANDLE SAVEFRAMES #
 
             for saveframe in datablock.getSaveFrames():
@@ -275,7 +275,7 @@ class CifFileWriter(object):
                             if not colLen:
                                 colLen = len(item.value)
                         self._handle.write(pretty_print(table, transpose=True))
-                    self._handle.write(self.NEWLINE)
+                    self._handle.write('\n' + self.NEWLINE)
                 self._handle.write(self.SAVEFRAMEEND)
         self._handle.flush()
         # self._handle.close()
