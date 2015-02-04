@@ -47,7 +47,7 @@ __date__ = "$30-Jun-2012 18:23:30$"
 
 # constants
 __all__ = [
-    'CIFWrapper', 'Item', 'Category', 'SaveFrame', 'DataBlock', 'CifFile'
+    'CIFWrapperTable', 'CIFWrapper', 'Item', 'Category', 'SaveFrame', 'DataBlock', 'CifFile'
     ]
 
 _reserved = ["loop_", "save_", "data_", "_"]

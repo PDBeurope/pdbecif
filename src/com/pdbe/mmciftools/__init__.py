@@ -122,10 +122,12 @@ class MMCIF2Dict():
         else:
             _dict = dict
 
-        mmcif_like_file = {}
+
+        mmcif_like_file = _dict()
+        data_block = _dict()
+        save_block = _dict()
+
         data_heading = ""
-        data_block = {}
-        save_block = {}
         line_num = 0
         try:
             with openGzip(file_path, 'r') as f1:
@@ -206,7 +208,7 @@ class MMCIF2Dict():
                                 table_names = []
                                 table_values_array = []
                             mmcif_like_file[data_heading] = data_block
-                            data_block = {}
+                            data_block = _dict()
                         data_heading = self.dataRE.match(line).group('data_heading')
                     elif self.saveRE.match(line):
                         while line.strip() != 'save_':
