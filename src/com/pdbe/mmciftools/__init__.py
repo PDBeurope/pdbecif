@@ -83,13 +83,13 @@ class MMCIF2Dict():
     reserve_token_order = False
 
 
-    def parse(self, file_path, ignoreCategories=[], preserve_token_order=False):
+    def parse(self, file_path, ignoreCategories=[], preserve_token_order=False, onlyCategories=[]):
         """Public method which only functions to check the existence of
         the mmCIF file in preparation for reading in the private parseFile
         method.
         """
         if os.path.exists(file_path) and os.path.isfile(file_path):
-            return self._parseFile(file_path, ignoreCategories, preserve_token_order)
+            return self._parseFile(file_path, ignoreCategories, preserve_token_order, onlyCategories)
         else:
             print("The file provided does not exist or is not a file.")
             return None
@@ -105,7 +105,7 @@ class MMCIF2Dict():
         else:
             return line.strip().split()
 
-    def _parseFile(self, file_path, ignoreCategories, preserve_token_order):
+    def _parseFile(self, file_path, ignoreCategories, preserve_token_order, onlyCategories):
         """Private method that will do the work of parsing the mmCIF data file
         return Dictionary"""
 
@@ -269,7 +269,7 @@ class MMCIF2Dict():
                                     value = (line[char_start:line.rfind('\n;')]).strip()
                                 else:
                                     value = self._tokenizeData(" "+line)
-                            if ignoreCategories and category in ignoreCategories:
+                            if (ignoreCategories and category in ignoreCategories) or (onlyCategories and category not in onlyCategories):
                                 pass
                             else:
                                 if category in data_block:
@@ -277,7 +277,7 @@ class MMCIF2Dict():
                                 else:
                                     data_block.setdefault(category, _dict({item: value if len(value) > 1 else value[0]})) # OrderedDict here preserves item order
                         else:
-                            if ignoreCategories and category in ignoreCategories:
+                            if (ignoreCategories and category in ignoreCategories) or (onlyCategories and category not in onlyCategories):
                                 skipCategory = True
                             else:
                                 data_block.setdefault(category, _dict()) # OrderedDict here preserves item order
