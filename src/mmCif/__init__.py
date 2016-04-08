@@ -699,9 +699,11 @@ class CifFile(object):
 # internal functions & classes
 def _formatVal(val):
     """Format any value as it would appear in a CIF file"""
+    reserved = ('_', '#', '$', "'", '"', '[', ']', ';')
+
     val = str(val)
     if "'" in val:
-        if val.startswith("_") or val.startswith("[") or \
+        if val.startswith(reserved) or \
                 (" " in val and "\n" not in val):
             val = ('"%s"' % val) if val.startswith("_") \
                 or val.startswith("[") \
@@ -709,7 +711,7 @@ def _formatVal(val):
         else:
             val = '"%s"' % val
     elif '"' in val:
-        if val.startswith("_") or val.startswith("[") or \
+        if val.startswith(reserved) or \
                 (" " in val and "\n" not in val):
             val = ("'%s'" % val) if val.startswith("_") \
                 or val.startswith("[") \
@@ -717,8 +719,7 @@ def _formatVal(val):
         else:
             val = "'%s'" % val
     else:
-        val = ('"%s"' % val) if val.startswith("_") \
-            or val.startswith("[") \
+        val = ('"%s"' % val) if val.startswith(reserved) \
             or (" " in val and "\n" not in val) else val
     if "\n" in val:
         if val[0] in ["'", '"']:
