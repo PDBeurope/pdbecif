@@ -296,12 +296,12 @@ class CifFileReader(object):
         self.verbose = verbose  # TODO: Not implemented
         self.preserve_token_order = preserve_order
 
-    def read(self, file_path, output='cif_dictionary', ignore=[], preserve_order=False):
+    def read(self, file_path, output='cif_dictionary', ignore=[], preserve_order=False, only=None):
 
         token_ordering = (self.preserve_token_order or preserve_order) # preserve ordering of either flag is True
         if self.input == 'data':
             #(datablock_id, mmcif_dict) = MMCIF2Dict().parse(file_path, ignoreCategories=ignore)
-            mmcif_dict = MMCIF2Dict().parse(file_path, ignoreCategories=ignore, preserve_token_order=token_ordering)
+            mmcif_dict = MMCIF2Dict().parse(file_path, ignoreCategories=ignore, preserve_token_order=token_ordering, onlyCategories=only)
             if output == 'cif_dictionary':
                 return mmcif_dict
             elif output == 'cif_wrapper':
