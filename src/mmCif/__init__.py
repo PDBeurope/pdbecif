@@ -700,31 +700,21 @@ class CifFile(object):
 def _formatVal(val):
     """Format any value as it would appear in a CIF file"""
     reserved = ('_', '#', '$', "'", '"', '[', ']', ';')
+    has_space = " " in val and "\n" not in val
 
     val = str(val)
     if "'" in val:
-        if val.startswith(reserved) or \
-                (" " in val and "\n" not in val):
-            val = ('"%s"' % val) if val.startswith("_") \
-                or val.startswith("[") \
-                or (" " in val and "\n" not in val) else val
-        else:
-            val = '"%s"' % val
+        val = '"%s"' % val
     elif '"' in val:
-        if val.startswith(reserved) or \
-                (" " in val and "\n" not in val):
-            val = ("'%s'" % val) if val.startswith("_") \
-                or val.startswith("[") \
-                or (" " in val and "\n" not in val) else val
-        else:
-            val = "'%s'" % val
+        val = "'%s'" % val
     else:
-        val = ('"%s"' % val) if val.startswith(reserved) \
-            or (" " in val and "\n" not in val) else val
+        val = ('"%s"' % val) if val.startswith(reserved) or has_space else val
+
     if "\n" in val:
-        if val[0] in ["'", '"']:
+        if val[0] in ("'", '"'):
             val = val[1:-1]
         val = "\n;" + val + "\n;\n"
-    elif "\n" not in val and val[0] in ["'", '"'] and ("'" in val[1:-1] and '"' in val[1:-1]):
+    elif "\n" not in val and val[0] in ("'", '"') and ("'" in val[1:-1] and '"' in val[1:-1]):
         val = "\n;" + val[1:-1] + "\n;\n"
+
     return val
