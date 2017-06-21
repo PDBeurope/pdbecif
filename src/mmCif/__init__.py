@@ -700,9 +700,10 @@ class CifFile(object):
 def _formatVal(val):
     """Format any value as it would appear in a CIF file"""
     reserved = ('_', '#', '$', "'", '"', '[', ']', ';')
-    has_space = " " in val and "\n" not in val
 
     val = str(val)
+    has_space = " " in val and "\n" not in val
+
     if "'" in val:
         val = '"%s"' % val
     elif '"' in val:
