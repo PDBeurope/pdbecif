@@ -128,9 +128,5 @@ Optionally, you can specify a tag/branch. For example:
 
 ### Manual
 
-You can also simply download a release from:
-
-    https://github.com/glenveegee/PDBeCIF/releases
-
-and copy it to your Python library path.
+You can also simply download a release from https://github.com/glenveegee/PDBeCIF/releases and copy it to your Python library path.
 
