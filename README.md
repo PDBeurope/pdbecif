@@ -12,7 +12,7 @@ from mmCif import *
 from mmcifIO import mmcifIO
 ```
 
-##Reading from a file
+## Reading from a file
 
 ### INPUT: Any STAR/CIF/mmCIF file, OUTPUT: CifFile object
 ```python
@@ -21,7 +21,7 @@ from mmcifIO import mmcifIO
     print "CifFile:", cif_file
 ```
 
-##Writing to a file
+## Writing to a file
 
 ### INPUT: CifFile object
 ```python
@@ -32,7 +32,7 @@ from mmcifIO import mmcifIO
 ```
 
 
-##Using a CifFile object
+## Using a CifFile object
     
     Using the CifFile object to access, edit and update mmCIF data.
     The following examples use a CifFile object with roughly the following structure.
