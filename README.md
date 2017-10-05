@@ -116,3 +116,21 @@ NB: Category and SaveFrame are handled in the same manner
     cif_file.setDataBlock("BLOCK_6").setCategory("CATEGORY_6").setItem("ITEM_6").setValue("VALUE_6")
 ```
 
+## Installation
+
+### pip
+
+    pip install git+http://github.com/glenveegee/PDBeCIF.git
+
+Optionally, you can specify a tag/branch. For example:
+
+    pip install git+http://github.com/glenveegee/PDBeCIF.git@v1.3.4
+
+### Manual
+
+You can also simply download a release from:
+
+    https://github.com/glenveegee/PDBeCIF/releases
+
+and copy it to your Python library path.
+
