@@ -92,7 +92,6 @@ class  CifFileIOTestCase(unittest.TestCase):
             "Categories were not ignored correctly")
 
     def test_openGzipError(self):
-        from exceptions import TypeError
         with self.assertRaises(TypeError):
             cfw = CifFileWriter(file_path=9999)
         

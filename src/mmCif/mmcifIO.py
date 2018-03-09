@@ -150,7 +150,6 @@ class CifFileWriter(object):
                 file_path,
                 mode) if file_path is not None else file_path
         else:
-            from exceptions import TypeError
             raise TypeError("file_path argument is not a string")
         
         self.verbose = False  # TODO: Not implemented
