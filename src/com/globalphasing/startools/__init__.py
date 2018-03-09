@@ -38,8 +38,14 @@
 
 import mmap
 import re
+import sys
 from . import star_regex
 from . import star_token_types
+
+PY3 = sys.version_info[0] == 3
+
+if PY3:
+    import io
 
 _star_pattern = re.compile(star_regex.REGEX, re.UNICODE)
 
@@ -59,7 +65,8 @@ class StarTokeniser(object):
         The parameter cif may be a string containing the pathname to a file
         (in which case it is opened in read only mode) or a file object 
         """
-        if type(cif) is file:
+        if PY3 and isinstance(cif, io.TextIOBase) or \
+                not PY3 and isinstance(cif, file):
             f = cif
         else:
             f = open(cif, "r")
