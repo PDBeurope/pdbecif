@@ -104,7 +104,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfw.write(cif_file)
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             ['TEST_BLOCK_1', 'TEST_BLOCK_2'],
@@ -126,7 +126,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         del cfw
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             ['TEST_BLOCK_1', 'TEST_BLOCK_2'],
@@ -143,7 +143,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         del cfw
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             ['TEST_BLOCK_1', 'TEST_BLOCK_2'],
@@ -160,7 +160,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         del cfw
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             [unit_test_file,],
