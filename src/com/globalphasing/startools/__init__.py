@@ -47,7 +47,7 @@ PY3 = sys.version_info[0] == 3
 if PY3:
     import io
 
-_star_pattern = re.compile(star_regex.REGEX, re.UNICODE)
+_star_pattern = re.compile(star_regex.REGEX, flags=re.UNICODE)
 
 class StarTokeniser(object):
     """
@@ -70,9 +70,9 @@ class StarTokeniser(object):
             f = cif
         else:
             f = open(cif, "r")
-            
+
         self.__map = mmap.mmap( f.fileno(), 0, access=mmap.ACCESS_READ )
-        self.__iterator = _star_pattern.finditer(self.__map)        
+        self.__iterator = _star_pattern.finditer(self.__map.read().decode("utf-8"))
         
     def __iter__(self):
         assert self.__map is not None
