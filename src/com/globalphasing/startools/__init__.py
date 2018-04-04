@@ -72,8 +72,12 @@ class StarTokeniser(object):
             f = open(cif, "r")
 
         self.__map = mmap.mmap( f.fileno(), 0, access=mmap.ACCESS_READ )
-        self.__iterator = _star_pattern.finditer(self.__map.read().decode("utf-8"))
-        
+
+        if PY3:
+            self.__iterator = _star_pattern.finditer(self.__map.read().decode("utf-8"))
+        else:
+            self.__iterator = _star_pattern.finditer(self.__map)
+
     def __iter__(self):
         assert self.__map is not None
         return self
