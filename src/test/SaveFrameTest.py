@@ -1,5 +1,6 @@
 import unittest
 from mmCif import *
+from .common import assert_equal
 
 class  SaveFrameTestCase(unittest.TestCase):
 
@@ -14,11 +15,11 @@ class  SaveFrameTestCase(unittest.TestCase):
 
     def test_updateId(self):
         self.sf.updateId("FOOBAR")
-        self.assertEquals(self.sf.id, "FOOBAR", "Could not change saveframe ID")
+        self.assertEqual(self.sf.id, "FOOBAR", "Could not change saveframe ID")
         self.sf.updateId("_saveframe.test")
 
     def test_getId(self):
-        self.assertEquals(self.sf.getId(), "_saveframe.test", "Could not get saveframe ID")
+        self.assertEqual(self.sf.getId(), "_saveframe.test", "Could not get saveframe ID")
 
     def test_setCategory(self):
         cat_1 = self.sf.setCategory("_foo")
@@ -40,19 +41,19 @@ class  SaveFrameTestCase(unittest.TestCase):
         self.sf.setCategory("_foo")
         self.sf.setCategory("foo")
         self.sf.setCategory("bar")
-        self.assertItemsEqual(["foo", "bar"], self.sf.getCategoryIds(), "getCategoryIds did not return expected values")
+        assert_equal(["foo", "bar"], self.sf.getCategoryIds(), "getCategoryIds did not return expected values")
 
     def test_getCategories(self):
         foo = self.sf.setCategory("_foo")
         self.sf.setCategory("foo")
         bar = self.sf.setCategory("bar")
-        self.assertItemsEqual([foo, bar], self.sf.getCategories(), "getCategories did not return expected values")
+        assert_equal([foo, bar], self.sf.getCategories(), "getCategories did not return expected values")
 
     def test_remove(self):
         self.sf.remove()
         self.assertIsNone(self.db.saveFrames.get("_saveframe.test"), "did not remove SaveFrame as expected")
         self.assertIsNotNone(self.db.recycleBin.get("_saveframe.test", None), "SaveFrame not moved to recycleBin as expected")
-        self.assertEquals(self.db.recycleBin.get("_saveframe.test"), self.sf, "SaveFrame expected in recycleBin but not found")
+        self.assertEqual(self.db.recycleBin.get("_saveframe.test"), self.sf, "SaveFrame expected in recycleBin but not found")
 
     def test_removeChildByString(self):
         msg = "SaveFrame.removeChild"
@@ -61,7 +62,7 @@ class  SaveFrameTestCase(unittest.TestCase):
         self.assertTrue(self.sf.removeChild("foo"), msg+" did not return expected True")
         self.assertListEqual(self.sf.getCategories(), [], msg+" categories should be an empty list")
         self.assertIsInstance(self.sf.recycleBin.get("foo"), Category, msg+" recycleBin should contain a Category instance")
-        self.assertEquals(self.sf.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
+        self.assertEqual(self.sf.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
 
     def test_removeChildByObj(self):
         msg = "SaveFrame.removeChild"
@@ -70,7 +71,7 @@ class  SaveFrameTestCase(unittest.TestCase):
         self.assertTrue(self.sf.removeChild(cat_foo), msg+" did not return expected True")
         self.assertListEqual(self.sf.getCategories(), [], msg+" categories should be an empty list")
         self.assertIsInstance(self.sf.recycleBin.get("foo"), Category, msg+" recycleBin should contain a Category instance")
-        self.assertEquals(self.sf.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
+        self.assertEqual(self.sf.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
 
     def test_removeChildBadRef(self):
         msg = "SaveFrame.removeChild"

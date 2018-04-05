@@ -1,5 +1,6 @@
 import unittest
 from mmCif import *
+from .common import assert_equal
 
 class  CategoryTestCase(unittest.TestCase):
 
@@ -12,9 +13,9 @@ class  CategoryTestCase(unittest.TestCase):
 #    def tearDown(self):
 #        self.foo.dispose()
 #        self.foo = None
-
+    
     def test_getId(self):
-        self.assertEquals(self.ct.getId(), "foo", "Could not get Category ID")
+        self.assertEqual(self.ct.getId(), "foo", "Could not get Category ID")
 
     def test_setItem(self):
         itm_1 = self.ct.setItem("bar")
@@ -40,36 +41,36 @@ class  CategoryTestCase(unittest.TestCase):
     def test_getItemNames(self):
         self.ct.setItem("bar")
         self.ct.setItem("barfoo")
-        self.assertItemsEqual(["bar", "barfoo"], self.ct.getItemNames(), "getItemNames did not return expected values")
+        assert_equal(["bar", "barfoo"], self.ct.getItemNames(), "getItemNames did not return expected values")
 
     def test_getItems(self):
         itm_1 = self.ct.setItem("bar")
         itm_2 = self.ct.setItem("barfoo")
-        self.assertItemsEqual([itm_1, itm_2], self.ct.getItems(), "getItems did not return expected values")
+        assert_equal([itm_1, itm_2], self.ct.getItems(), "getItems did not return expected values")
 
     def test_remove(self):
         self.ct.remove()
         self.assertIsNone(self.db.categories.get("foo"), "did not remove Category as expected")
         self.assertIsNotNone(self.db.recycleBin.get("foo", None), "Category not moved to recycleBin as expected")
-        self.assertEquals(self.db.recycleBin.get("foo"), self.ct, "Category expected in recycleBin but not found")
+        self.assertEqual(self.db.recycleBin.get("foo"), self.ct, "Category expected in recycleBin but not found")
 
     def test_removeChildByString(self):
         msg = "Category.removeChild"
 
         itm_1 = self.ct.setItem("bar_removeChildByString")
         self.assertTrue(self.ct.removeChild("bar_removeChildByString"), msg+" did not return expected True")
-        self.assertListEqual(self.ct.getItems(), [], msg+" items should be an empty list")
+        assert_equal(self.ct.getItems(), [], msg+" items should be an empty list")
         self.assertIsInstance(self.ct.recycleBin.get("bar_removeChildByString"), Item, msg+" recycleBin should contain a Item instance")
-        self.assertEquals(self.ct.recycleBin.get("bar_removeChildByString"), itm_1, msg+" recycleBin should contain the Item instance")
+        self.assertEqual(self.ct.recycleBin.get("bar_removeChildByString"), itm_1, msg+" recycleBin should contain the Item instance")
 
     def test_removeChildByObj(self):
         msg = "Category.removeChild"
 
         itm_1 = self.ct.setItem("bar_removeChildByObj")
         self.assertTrue(self.ct.removeChild(itm_1), msg+" did not return expected True")
-        self.assertListEqual(self.ct.getItems(), [], msg+" items should be an empty list")
+        assert_equal(self.ct.getItems(), [], msg+" items should be an empty list")
         self.assertIsInstance(self.ct.recycleBin.get("bar_removeChildByObj"), Item, msg+" recycleBin should contain a Item instance")
-        self.assertEquals(self.ct.recycleBin.get("bar_removeChildByObj"), itm_1, msg+" recycleBin should contain the Item instance")
+        self.assertEqual(self.ct.recycleBin.get("bar_removeChildByObj"), itm_1, msg+" recycleBin should contain the Item instance")
 
     def test_removeChildBadRef(self):
         msg = "Category.removeChild"

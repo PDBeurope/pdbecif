@@ -64,7 +64,7 @@ class  CifFileTestCase(unittest.TestCase):
         self.assertTrue(self.cf.removeChild("TEST"), msg+" did not return expected True")
         self.assertListEqual(self.cf.getDataBlocks(), [], msg+" datablocks should be an empty list")
         self.assertIsInstance(self.cf.recycleBin.get("TEST"), DataBlock, msg+" recyclebin should contain a DataBlock instance")
-        self.assertEquals(self.cf.recycleBin.get("TEST"), db, msg+" recyclebin should contain the datablock instance")
+        self.assertEqual(self.cf.recycleBin.get("TEST"), db, msg+" recyclebin should contain the datablock instance")
 
     def test_removeChildByObj(self):
         db = self.cf.setDataBlock("TEST")
@@ -72,7 +72,7 @@ class  CifFileTestCase(unittest.TestCase):
         self.assertTrue(self.cf.removeChild(db), msg+" did not return expected True")
         self.assertListEqual(self.cf.getDataBlocks(), [], msg+" datablocks should be an empty list")
         self.assertIsInstance(self.cf.recycleBin.get("TEST"), DataBlock, msg+" recyclebin should contain a DataBlock instance")
-        self.assertEquals(self.cf.recycleBin.get("TEST"), db, msg+" recyclebin should contain the datablock instance")
+        self.assertEqual(self.cf.recycleBin.get("TEST"), db, msg+" recyclebin should contain the datablock instance")
 
     def test_removeChildBadRef(self):
         self.cf.setDataBlock("TEST")

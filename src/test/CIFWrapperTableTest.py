@@ -50,7 +50,7 @@ class  CIFWrapperTableTestCase(unittest.TestCase):
         cif_wrapper = CIFWrapper(self.raw_dictionary['TEST_BLOCK_1'])
         del cif_wrapper._test_category_2['test_value_2']
         self.assertFalse('test_value_2' in cif_wrapper._test_category_2, "Failed to delete item from category")
-        columns = [k for k in cif_wrapper._test_category_2][0].keys()
+        columns = list([k for k in cif_wrapper._test_category_2][0].keys())
         columns.sort()
         self.assertEqual(columns, ['test_value_1', 'test_value_3'], "item deletion failed or gave inconsistent results")
 

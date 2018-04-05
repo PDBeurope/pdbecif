@@ -125,7 +125,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         # Test write CifFile initialized by CIFWrapper and dictionary import
         unit_test_file = "io_testcase_2.cif"
         cfw = CifFileWriter(file_path=os.path.join(self.FILE_ROOT, unit_test_file))
-        cif_obj = dict((k, CIFWrapper(v)) for k, v in self.raw_dictionary.items())
+        cif_obj = dict((k, CIFWrapper(v)) for k, v in list(self.raw_dictionary.items()))
         cif_wrapper = CIFWrapper({'TEST_BLOCK_1': self.raw_dictionary['TEST_BLOCK_1']})
         cfw.write(cif_wrapper)
         cif_wrapper = CIFWrapper({'TEST_BLOCK_2': self.raw_dictionary['TEST_BLOCK_2']})
