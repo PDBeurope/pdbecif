@@ -130,7 +130,7 @@ class MMCIF2Dict():
         data_heading = ""
         line_num = 0
         try:
-            with openGzip(file_path, 'r') as f1:
+            with openGzip(file_path, 'rt') as f1:
                 table_names = []
                 table_values = []
                 table_values_array = []
