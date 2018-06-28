@@ -1,0 +1,21 @@
+
+stages:
+  - test
+  - build
+
+tests:
+  stage: test
+  script:
+    - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
+    - apt-get update
+    - apt-get install -y --force-yes lsb-release fakeroot
+    - python2 setup.py test
+  artifacts:
+    paths:
+      - ./*.deb
+  variables:
+    PATCH: $CI_BUILD_ID
+  only:
+    - dev
+    - master
+
