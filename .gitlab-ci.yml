@@ -6,13 +6,9 @@ tests:
   stage: test
   script:
     - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
-    - apt-get update
-    - apt-get install -y --force-yes lsb-release fakeroot
-    - which python
-    - which pip
-    - which python2
-    - which python3
-    - pip install setuptools find_packages
+    - apt-get update -qy
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+    - pip install -r requirements.txt
     - python setup.py test
   artifacts:
     paths:
