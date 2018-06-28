@@ -10,9 +10,6 @@ tests:
     - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
     - pip install -r requirements.txt
     - python setup.py test
-  artifacts:
-    paths:
-      - ./*.deb
   variables:
     PATCH: $CI_BUILD_ID
   only:
