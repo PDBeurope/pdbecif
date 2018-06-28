@@ -22,6 +22,11 @@ setup (
                 ]),
         test_suite = 'test',
       	include_package_data=True,
+        setup_requires=['pytest-runner'],
+        tests_require=[
+            'pytest>=3.2',
+            'pytest-cov',
+        ],
         package_data={
             '': [
                 '*.txt', 

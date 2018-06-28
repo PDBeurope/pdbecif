@@ -41,7 +41,8 @@ except ImportError:
         from mmCif.ordereddict import OrderedDict
 
 __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
-__date__ = "$30-Jun-2012 18:23:30$"
+__date__ = "$28-Jun-2018 18:23:30$"
+__version__= "0.2.0"
 
 # imports
 

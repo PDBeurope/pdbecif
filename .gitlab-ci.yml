@@ -2,14 +2,36 @@ stages:
   - test
   - build
 
+.prep_test: &prep_test |
+  - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
+  - apt-get update -qy
+  - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+  - pip install -r requirements.txt
+
+
+pages:
+  stage: test
+  allow_failure: true
+  script:
+    - *prep_test
+    - mkdir -p public
+    - time make cover && mv htmlcov public/
+    - mv docs public/
+    - echo '<html><body><a href="htmlcov/index.html">Test Coverage</a><br/><a href="docs/index.html">Developer Documentation</a></body></html>' > public/index.html
+  coverage: '/TOTAL.*?\s+(\d+%)/'
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+
+
+
 tests:
   stage: test
   script:
-    - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
-    - apt-get update -qy
-    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install -r requirements.txt
-    - python setup.py test
+    - *prep_test
+    - make test
   variables:
     PATCH: $CI_BUILD_ID
   only:

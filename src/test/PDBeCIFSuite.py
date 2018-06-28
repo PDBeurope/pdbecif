@@ -4,15 +4,15 @@
 import unittest
 
 from test import (
-    ItemTest, 
-    DataBlockTest, 
-    SaveFrameTest, 
-    CategoryTest, 
-    CIFWrapperTest, 
-    CIFWrapperTableTest, 
-    CifFileTest, 
-    CifFileReaderTest, 
-    CifFileIOTest,
+    test_Item, 
+    test_DataBlock, 
+    test_SaveFrame, 
+    test_Category, 
+    test_CIFWrapper, 
+    test_CIFWrapperTable, 
+    test_CifFile, 
+    test_CifFileReader, 
+    test_CifFileIO,
     )
 
 
@@ -27,15 +27,15 @@ class PDBeCIFSuite(unittest.TestCase):
         loader = unittest.TestLoader()
 
         PDBeCIF_Suite = unittest.TestSuite()
-        PDBeCIF_Suite = loader.loadTestsFromModule(ItemTest)
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(CategoryTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(SaveFrameTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(DataBlockTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(CifFileTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(CIFWrapperTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(CIFWrapperTableTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(CifFileIOTest))
-        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(CifFileReaderTest))
+        PDBeCIF_Suite = loader.loadTestsFromModule(test_Item)
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_Category))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_SaveFrame))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_DataBlock))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_CifFile))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_CIFWrapper))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_CIFWrapperTable))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_CifFileIO))
+        PDBeCIF_Suite.addTests(loader.loadTestsFromModule(test_CifFileReader))
         return PDBeCIF_Suite 
 
     def _run(self):
