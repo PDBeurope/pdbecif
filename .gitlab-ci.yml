@@ -30,7 +30,10 @@ pages:
 tests:
   stage: test
   script:
-    - *prep_test
+    - apt-get update -qy
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+    - pip install -r requirements.tx
+    - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
     - make test
   variables:
     PATCH: $CI_BUILD_ID
