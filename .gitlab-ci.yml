@@ -3,7 +3,7 @@ stages:
   - build
 
 .prep_test: &prep_test |
-  - apt-get update -qy
+  - apt-get update
   - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
   - pip install -r requirements.tx
   - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
