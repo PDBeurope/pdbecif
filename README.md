@@ -1,4 +1,6 @@
-# PDBeCIF
+[![coverage report](https://gitlab.com/glenveegee/PDBeCIF/badges/master/coverage.svg)](https://gitlab.com/glenveegee/PDBeCIF/commits/master)
+
+# PDBeCIF 
 Protein Data Bank in Europe (PDBe; http://pdbe.org) mmCif/CIF/STAR parser and API
 
 used to work with STAR, CIF, and mmCIF formatted files. The package
