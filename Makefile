@@ -1,5 +1,5 @@
-MAJOR  ?= 0
-MINOR  ?= 2
+MAJOR  ?= 1
+MINOR  ?= 3
 PATCH  ?= ${PATCH}
 
 PACKAGE := mmCif

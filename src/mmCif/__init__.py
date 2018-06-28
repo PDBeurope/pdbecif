@@ -42,7 +42,7 @@ except ImportError:
 
 __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 __date__ = "$28-Jun-2018 18:23:30$"
-__version__= "0.2.0"
+__version__= "1.3.5"
 
 # imports
 
