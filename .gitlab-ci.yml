@@ -8,8 +8,12 @@ tests:
     - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
     - apt-get update
     - apt-get install -y --force-yes lsb-release fakeroot
-    - pip2 install setuptools find_packages
-    - python2 setup.py test
+    - which python
+    - which pip
+    - which python2
+    - which python3
+    - pip install setuptools find_packages
+    - python setup.py test
   artifacts:
     paths:
       - ./*.deb
