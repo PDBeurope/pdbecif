@@ -4,7 +4,7 @@ PATCH  ?= ${PATCH}
 
 PACKAGE := mmCif
 
-SHELL := /bin/bash
+SHELL := /bin/sh
 PY_VERSION := 2.7
 
 export PYTHONUNBUFFERED := 1
