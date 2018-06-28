@@ -5,7 +5,7 @@ stages:
 # .prep_test: &prep_test |
 #   - apt-get update
 #   - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-#   - pip install -r requirements.tx
+#   - pip install -r requirements.txt
 #   - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
 
 
@@ -15,7 +15,7 @@ pages:
   script:
     - apt-get update -qy
     - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install -r requirements.tx
+    - pip install -r requirements.txt
     - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
     # - *prep_test
     - mkdir -p public
@@ -36,7 +36,7 @@ tests:
   script:
     - apt-get update -qy
     - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install -r requirements.tx
+    - pip install -r requirements.txt
     - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
     - make test
   variables:
