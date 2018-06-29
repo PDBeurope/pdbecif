@@ -55,7 +55,7 @@ package:
     - pip install -r setuptools
     - make version PATCH=$CI_BUILD_ID
     - make package
-    - pip install dist/*.whl
+    - pip2 install dist/*.whl
   artifacts:
     paths:
       - dist
