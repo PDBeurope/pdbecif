@@ -55,6 +55,7 @@ package:
     - pip install -r requirements.txt
     - make version PATCH=$CI_BUILD_ID
     - make package
+    - pip install dist *.whl
   artifacts:
     paths:
       - ./dist/*.whl
