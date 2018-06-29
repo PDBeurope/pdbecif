@@ -1,6 +1,7 @@
 stages:
   - test
-  - build
+  - package
+  - upload
 
 # .prep_test: &prep_test |
 #   - apt-get update
@@ -31,7 +32,7 @@ pages:
 
 
 
-tests:
+test:
   stage: test
   script:
     - apt-get update -qy
@@ -44,4 +45,22 @@ tests:
   only:
     - dev
     - master
+    - python2/master
+
+package:
+  stage: package
+  script:
+    - apt-get update -qy
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+    - pip install -r requirements.txt
+    - make version PATCH=$CI_BUILD_ID
+    - make package
+  artifacts:
+    paths:
+      - ./dist/*.whl
+      - ./dist/*.tar.gz
+  variables:
+    PATCH: $CI_BUILD_ID
+  only:
+    - python2/master
 
