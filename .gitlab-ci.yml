@@ -52,7 +52,7 @@ package:
   script:
     - apt-get update -qy
     - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install -r setuptools
+    - pip install setuptools
     - make version PATCH=$CI_BUILD_ID
     - make package
     - pip2 install dist/*.whl
