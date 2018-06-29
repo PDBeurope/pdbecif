@@ -52,16 +52,28 @@ package:
   script:
     - apt-get update -qy
     - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install -r requirements.txt
+    - pip install -r setuptools
     - make version PATCH=$CI_BUILD_ID
     - make package
-    - pip install dist *.whl
+    - pip install dist/*.whl
   artifacts:
     paths:
-      - ./dist/*.whl
-      - ./dist/*.tar.gz
+      - dist
   variables:
     PATCH: $CI_BUILD_ID
+  only:
+    - python2/master
+
+
+upload:
+  stage: upload
+  script:
+    - apt-get update -qy
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+    - pip install twine
+    - twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
+  # variables:
+  #   PYPI_USERNAME: $CI_BUILD_ID
   only:
     - python2/master
 
