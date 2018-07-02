@@ -13,11 +13,11 @@ setup (
         author_email='pdbe@ebi.ac.uk',
         package_dir = {'': 'src'},
         packages = find_packages(
-            'src', 
+            'src',
             exclude = [
-                '*.test', 
-                '*.test.*', 
-                'test.*', 
+                '*.test',
+                '*.test.*',
+                'test.*',
                 'test',
                 ]),
         test_suite = 'test',
@@ -30,14 +30,14 @@ setup (
         ],
         package_data={
             '': [
-                '*.txt', 
-                '*.rst', 
+                '*.txt',
+                '*.rst',
                 '*.md',
             ],
             'test': [
-                'data/usage-example.cif', 
+                'data/usage-example.cif',
                 'data/usage-example.dic',
-            ],        
+            ],
         },
         scripts=[],
         url='http://pypi.python.org/pypi/PDBeCIF/',

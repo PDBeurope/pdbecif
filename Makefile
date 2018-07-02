@@ -27,6 +27,7 @@ cover:
 	$(PYTHON) -m coverage html
 
 test:
-	$(PYTHON) setup.py test
+	# $(PYTHON) setup.py test
+	tox
 
 
