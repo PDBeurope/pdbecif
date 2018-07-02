@@ -125,7 +125,7 @@ class CifFileWriter(object):
     SAVEFRAMEEND = "save_\n\n"
 
     _handle = None
-    
+
     def __init__(self, file_path=None, compress=False, mode='wt', preserve_order=False):
 #        """"""
 #        #orig
@@ -135,12 +135,12 @@ class CifFileWriter(object):
         #new
         self.compress = compress
         self.preserve_token_order = preserve_order
-        
+
         if (file_path and isinstance(file_path, str)) or file_path is None:
-            file_path = ( file_path 
+            file_path = ( file_path
                     if (file_path and isinstance(file_path, str) and not compress)
                     else (
-                        file_path+".gz" 
+                        file_path+".gz"
                         if (file_path and isinstance(file_path, str) and not file_path.endswith(".gz") and compress)
                         else file_path
                     )
@@ -150,7 +150,7 @@ class CifFileWriter(object):
                 mode) if file_path is not None else file_path
         else:
             raise TypeError("file_path argument is not a string")
-        
+
         self.verbose = False  # TODO: Not implemented
 
     def __del__(self):

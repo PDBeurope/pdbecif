@@ -21,7 +21,7 @@ class  CifFileReaderTestCase(unittest.TestCase):
 
         return self.assertEqual(l1, l2, msg)
     def test_inData_outDict(self):
-        cfr = mmcif_IO.CifFileReader(input='data')
+        cfr = mmcif_IO.CifFileReader(input='data', preserve_order=True)
         cif_dictionary = cfr.read(self.TEST_CIF_FILE, output='cif_dictionary')
         self.assertIsInstance(cif_dictionary, dict, "Failed to create python dictionary from cif file")
         self.__assertEqual(list(cif_dictionary.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -29,7 +29,7 @@ class  CifFileReaderTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_inData_outWrap(self):
-        cfr = mmcif_IO.CifFileReader(input='data')
+        cfr = mmcif_IO.CifFileReader(input='data', preserve_order=True)
         cif_wrapper = cfr.read(self.TEST_CIF_FILE, output='cif_wrapper')
         self.assertIsInstance(cif_wrapper["TEST_CIF"], CIFWrapper, "Failed to create CIFWrapper using lexical parser")
         self.__assertEqual(list(cif_wrapper.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -37,7 +37,7 @@ class  CifFileReaderTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_inData_outFile(self):
-        cfr = mmcif_IO.CifFileReader(input='data')
+        cfr = mmcif_IO.CifFileReader(input='data', preserve_order=True)
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file')
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using algorithmic parser")
         self.__assertEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -46,7 +46,7 @@ class  CifFileReaderTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_inDict_outFile(self):
-        cfr = mmcif_IO.CifFileReader(input='dictionary')
+        cfr = mmcif_IO.CifFileReader(input='dictionary', preserve_order=True)
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file')
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using lexical parser")
         self.__assertEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")

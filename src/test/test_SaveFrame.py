@@ -5,7 +5,7 @@ from .common import assert_equal
 class  SaveFrameTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.cf = CifFile("test.cif")
+        self.cf = CifFile("test.cif", preserve_token_order=True)
         self.db = DataBlock("TEST", parent=self.cf)
         self.sf = SaveFrame("_saveframe.test", parent=self.db)
         str(self.sf)
@@ -41,13 +41,25 @@ class  SaveFrameTestCase(unittest.TestCase):
         self.sf.setCategory("_foo")
         self.sf.setCategory("foo")
         self.sf.setCategory("bar")
-        assert_equal(["foo", "bar"], self.sf.getCategoryIds(), "getCategoryIds did not return expected values")
+
+        categories = self.sf.getCategoryIds()
+
+        self.assertEqual(
+            "foo", categories[0], "getCategoryIds did not return expected values - id as string")
+        self.assertEqual(
+            "bar", categories[1], "getCategoryIds did not return expected values - id as string")
 
     def test_getCategories(self):
         foo = self.sf.setCategory("_foo")
         self.sf.setCategory("foo")
         bar = self.sf.setCategory("bar")
-        assert_equal([foo, bar], self.sf.getCategories(), "getCategories did not return expected values")
+
+        categories = self.sf.getCategories()
+
+        self.assertEqual(
+            foo, categories[0], "getCategories did not return expected values - id as reference")
+        self.assertEqual(
+            bar, categories[1], "getCategories did not return expected values - id as reference")
 
     def test_remove(self):
         self.sf.remove()

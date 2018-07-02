@@ -5,7 +5,7 @@ from .common import assert_equal
 class  DataBlockTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.cf = CifFile("test.cif")
+        self.cf = CifFile("test.cif", preserve_token_order=True)
         self.db = DataBlock("TEST", parent=self.cf)
         str(self.db)
 #    def tearDown(self):
@@ -41,13 +41,25 @@ class  DataBlockTestCase(unittest.TestCase):
         self.db.setCategory("_foo")
         self.db.setCategory("foo")
         self.db.setCategory("bar")
-        assert_equal(["foo", "bar"], self.db.getCategoryIds(), "getCategoryIds did not return expected values")
+
+        categoryIds = self.db.getCategoryIds()
+
+        self.assertEqual(
+            "foo", categoryIds[0], "getCategoryIds did not return expected values - id as string")
+        self.assertEqual(
+            "bar", categoryIds[1], "getCategoryIds did not return expected values - id as string")
 
     def test_getCategories(self):
         foo = self.db.setCategory("_foo")
         self.db.setCategory("foo")
         bar = self.db.setCategory("bar")
-        assert_equal([foo, bar], self.db.getCategories(), "getCategories did not return expected values")
+
+        categories = self.db.getCategories()
+
+        self.assertEqual(
+            foo, categories[0], "getCategories did not return expected values - category as reference")
+        self.assertEqual(
+            bar, categories[1], "getCategories did not return expected values - category as reference")
 
     # SAVEFRAMES
     def test_setSaveFrame(self):

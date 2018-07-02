@@ -4,7 +4,7 @@ from mmCif import *
 class  ItemTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.cf = CifFile("test.cif")
+        self.cf = CifFile("test.cif", preserve_token_order=True)
         self.db = DataBlock("TEST", parent=self.cf)
         self.ct = Category("_foo", parent=self.db)
         self.im = Item("bar", parent=self.ct)
@@ -21,7 +21,7 @@ class  ItemTestCase(unittest.TestCase):
         self.assertEqual(self.im.value, "val_1", "Item value not set correctly")
         self.assertEqual(self.im.type, 'DEFAULTSTRING', "Item type not set correctly")
         self.assertEqual(self.im.isColumn, False, "Item isColumn not set correctly")
-        
+
         self.im.setValue("val_2")
         self.assertEqual(self.im.value, ["val_1", "val_2"], "Item value not set correctly")
         self.assertEqual(self.im.type, ['DEFAULTSTRING', 'DEFAULTSTRING'], "Item type not set correctly")
@@ -52,7 +52,7 @@ class  ItemTestCase(unittest.TestCase):
         self.im.setValue(7357.73570)
         self.assertEqual(self.im.getFormattedValue(), ['"_val_3"', '\n;"val_4" test 4\'\n;\n', '7357.7357'], "T3: Item raw value not set correctly")
 
-        self.im.setValue("7357\n73570")        
+        self.im.setValue("7357\n73570")
         self.assertEqual(self.im.getFormattedValue(), ['"_val_3"', '\n;"val_4" test 4\'\n;\n', '7357.7357', '\n;7357\n73570\n;\n'], "T4: Item raw value not set correctly")
 
         im_2 = Item('bogus', parent = self.ct)

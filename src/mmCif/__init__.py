@@ -188,7 +188,7 @@ class CIFWrapper(object):
                 #   {
                 #       DATABLOCK_ID: { CATEGORY: { ITEM: VALUE } }
                 #   }
-                (datablock_id, datablock) = list(__dictionary.items())[0]
+                (datablock_id, datablock) = list(__dictionary.items())[0] # arbitrarily take the first datablock
                 category = list(datablock.values())[0]
                 item = list(category.values())[0]
                 # Extract data block id from dictionary

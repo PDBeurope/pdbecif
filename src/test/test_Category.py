@@ -5,7 +5,7 @@ from .common import assert_equal
 class  CategoryTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.cf = CifFile("test.cif")
+        self.cf = CifFile("test.cif", preserve_token_order=True)
         self.db = DataBlock("TEST", parent=self.cf)
         self.ct = Category("_foo", parent=self.db)
         str(self.ct)
@@ -13,7 +13,7 @@ class  CategoryTestCase(unittest.TestCase):
 #    def tearDown(self):
 #        self.foo.dispose()
 #        self.foo = None
-    
+
     def test_getId(self):
         self.assertEqual(self.ct.getId(), "foo", "Could not get Category ID")
 
@@ -41,12 +41,21 @@ class  CategoryTestCase(unittest.TestCase):
     def test_getItemNames(self):
         self.ct.setItem("bar")
         self.ct.setItem("barfoo")
-        assert_equal(["bar", "barfoo"], self.ct.getItemNames(), "getItemNames did not return expected values")
+        itemNames = self.ct.getItemNames()
+        self.assertEqual(
+            "bar", itemNames[0], "getItemNames did not return expected values - item names as string")
+        self.assertEqual(
+            "barfoo", itemNames[1], "getItemNames did not return expected values - item names as string")
 
     def test_getItems(self):
         itm_1 = self.ct.setItem("bar")
         itm_2 = self.ct.setItem("barfoo")
-        assert_equal([itm_1, itm_2], self.ct.getItems(), "getItems did not return expected values")
+        items = self.ct.getItems()
+
+        self.assertEqual(
+            itm_1, items[0], "getItems did not return expected values - items by reference")
+        self.assertEqual(
+            itm_2, items[1], "getItems did not return expected values - items by reference")
 
     def test_remove(self):
         self.ct.remove()
