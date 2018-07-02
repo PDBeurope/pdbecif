@@ -22,12 +22,9 @@ version:
 	rm -f $(SOURCE)/$(PACKAGE)/__init__.py.bak
 
 cover:
-	rm -rf $(BASE)/coverage
-	make -i test
-	$(PYTHON) -m coverage html
+	tox -r --skip-missing-interpreters -c toxcov.ini
 
 test:
-	# $(PYTHON) setup.py test
-	tox
+	tox --skip-missing-interpreters -r
 
 

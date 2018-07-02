@@ -1,6 +1,7 @@
 stages:
   - test
-  - build
+  - package
+  - upload
 
 # .prep_test: &prep_test |
 #   - apt-get update
@@ -31,7 +32,7 @@ pages:
 
 
 
-tests:
+test:
   stage: test
   script:
     - apt-get update -qy
@@ -44,4 +45,39 @@ tests:
   only:
     - dev
     - master
+
+package:
+  stage: package
+  script:
+    - apt-get update -qy
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+    - pip install setuptools
+    - make version PATCH=$CI_BUILD_ID
+    - make package
+    - pip2 install dist/*.whl
+  artifacts:
+    paths:
+      - dist
+  variables:
+    PATCH: $CI_BUILD_ID
+  only:
+    - master
+    - /^v\d+\.\d+(?:.\d+)?(?:-\d+)?$/ # use regexp
+  only:
+    - tags
+
+
+upload:
+  stage: upload
+  script:
+    - apt-get update -qy
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
+    - pip install twine
+    - twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
+  # variables:
+  #   PYPI_USERNAME: $CI_BUILD_ID
+  only:
+    - /^v\d+\.\d+(?:.\d+)?(?:-\d+)?$/ # use regexp
+  only:
+    - tags
 
