@@ -63,8 +63,6 @@ package:
   only:
     - master
     - /^v\d+\.\d+(?:.\d+)?(?:-\d+)?$/ # use regexp
-  only:
-    - tags
 
 
 upload:
