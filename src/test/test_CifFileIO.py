@@ -49,7 +49,7 @@ class  CifFileIOTestCase(unittest.TestCase):
             os.unlink(file)
 
     def test_inData_outDict(self):
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         cif_dictionary = cfr.read(self.TEST_CIF_FILE, output='cif_dictionary')
         self.assertIsInstance(cif_dictionary, dict, "Failed to create python dictionary from cif file")
         self.__assertListEqual(list(cif_dictionary.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -57,7 +57,7 @@ class  CifFileIOTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_inData_outWrap(self):
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         cif_wrapper = cfr.read(self.TEST_CIF_FILE, output='cif_wrapper')
         self.assertIsInstance(cif_wrapper["TEST_CIF"], CIFWrapper, "Failed to create CIFWrapper using lexical parser")
         self.__assertListEqual(list(cif_wrapper.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -65,7 +65,7 @@ class  CifFileIOTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_inData_outFile(self):
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file')
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using algorithmic parser")
         self.__assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -74,7 +74,7 @@ class  CifFileIOTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_inDict_outFile(self):
-        cfr = CifFileReader(input='dictionary')
+        cfr = CifFileReader(input='dictionary', preserve_order=True)
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file')
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using lexical parser")
         self.__assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -83,7 +83,7 @@ class  CifFileIOTestCase(unittest.TestCase):
             "All levels of CIF file not translated to dictionary correctly")
 
     def test_ignoreCategories(self):
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file', ignore=['_test_loop_2', '_valid_CIF'])
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using algorithmic parser")
         self.__assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
@@ -109,7 +109,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cif_file = CifFile(os.path.join(self.FILE_ROOT, unit_test_file))
         cif_file.import_mmcif_data_map(self.raw_dictionary)
         cfw.write(cif_file)
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
         data_block_ids = list(test_file.keys())
         data_block_ids.sort()
@@ -125,13 +125,16 @@ class  CifFileIOTestCase(unittest.TestCase):
         # Test write CifFile initialized by CIFWrapper and dictionary import
         unit_test_file = "io_testcase_2.cif"
         cfw = CifFileWriter(file_path=os.path.join(self.FILE_ROOT, unit_test_file))
-        cif_obj = dict((k, CIFWrapper(v)) for k, v in list(self.raw_dictionary.items()))
-        cif_wrapper = CIFWrapper({'TEST_BLOCK_1': self.raw_dictionary['TEST_BLOCK_1']})
+        cif_obj = dict((k, CIFWrapper(v, preserve_token_order=True))
+                       for k, v in list(self.raw_dictionary.items()))
+        cif_wrapper = CIFWrapper(
+            {'TEST_BLOCK_1': self.raw_dictionary['TEST_BLOCK_1']}, preserve_token_order=True)
         cfw.write(cif_wrapper)
-        cif_wrapper = CIFWrapper({'TEST_BLOCK_2': self.raw_dictionary['TEST_BLOCK_2']})
+        cif_wrapper = CIFWrapper(
+            {'TEST_BLOCK_2': self.raw_dictionary['TEST_BLOCK_2']}, preserve_token_order=True)
         cfw.write(cif_wrapper)
         del cfw
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
         data_block_ids = list(test_file.keys())
         data_block_ids.sort()
@@ -148,7 +151,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfw = CifFileWriter(file_path=os.path.join(self.FILE_ROOT, unit_test_file))
         cfw.write(self.raw_dictionary)
         del cfw
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
         data_block_ids = list(test_file.keys())
         data_block_ids.sort()
@@ -165,7 +168,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfw = CifFileWriter(file_path=os.path.join(self.FILE_ROOT, unit_test_file))
         cfw.write(self.raw_dictionary['TEST_BLOCK_1'])
         del cfw
-        cfr = CifFileReader(input='data')
+        cfr = CifFileReader(input='data', preserve_order=True)
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
         data_block_ids = list(test_file.keys())
         data_block_ids.sort()
@@ -178,7 +181,7 @@ class  CifFileIOTestCase(unittest.TestCase):
 
     def test_write_mmCIF_dictionary(self):
         unit_test_file = "io_testcase_5.cif"
-        cfr = CifFileReader(input='dictionary')
+        cfr = CifFileReader(input='dictionary', preserve_order=True)
         cif_file = cfr.read(self.TEST_DIC_FILE, output='cif_file')
         cfw = CifFileWriter(file_path=os.path.join(self.FILE_ROOT, unit_test_file))
         cfw.write(cif_file)

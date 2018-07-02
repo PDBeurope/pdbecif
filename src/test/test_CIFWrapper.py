@@ -2,12 +2,22 @@ import unittest
 
 from mmCif import CIFWrapper, CIFWrapperTable
 from .common import assert_equal
+import sys
+try:
+    from collections import OrderedDict
+except ImportError:
+    # fallback: try to use the ordereddict backport when using python 2.6
+    try:
+        from ordereddict import OrderedDict
+    except ImportError:
+        # backport not installed: use local OrderedDict
+        from mmCif.ordereddict import OrderedDict
 
 class  CIFWrapperTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.raw_dictionary = {
-            'TEST_BLOCK_1': {
+        self.raw_dictionary = OrderedDict((
+            ('TEST_BLOCK_1', {
                 '_test_category_1': {
                     'test_value_1': 1,
                     'test_value_2': 2,
@@ -23,27 +33,22 @@ class  CIFWrapperTestCase(unittest.TestCase):
                         'D ->\nLINE = D'
                     ]
                 }
-            },
-            'TEST_BLOCK_2': {
+            }),
+            ('TEST_BLOCK_2', {
                 '_test_category_1': {
                     'test_value_1': [1, 2, 3, 4]
                 }
-            }
-        }
-
-    # This test assumes that TEST_BLOCK_2 is going to be the value for
-    # cif_wrapper.data_id but dictionary keys order is not guaranteed
-    #def test_init_3_level_dictionary(self):
-    #    cif_wrapper = CIFWrapper(self.raw_dictionary)
-    #    self.assertIsInstance(cif_wrapper, CIFWrapper, "Failed to instantiate CIFWrapper from 3-level mmCIF-like dictionary")
-    #    assert_equal(cif_wrapper.data_id, 'TEST_BLOCK_2', "'TEST_BLOCK_2' not set correctly as datablock ID")
+            })
+        ))
 
     def test_init_3_level_dictionary(self):
         ''' preserve_token_order=True ensures deterministic unittests otherwise CIF data is random access '''
         cif_wrapper = CIFWrapper(self.raw_dictionary, preserve_token_order=True)
         self.assertIsInstance(cif_wrapper, CIFWrapper, "Failed to instantiate CIFWrapper from 3-level mmCIF-like dictionary")
+        sys.stdout.write(cif_wrapper.data_id)
         self.assertEqual(cif_wrapper.data_id, 'TEST_BLOCK_1',
                          "'TEST_BLOCK_1' not set correctly as datablock ID")
+
     def test_init_2_level_dictionary(self):
         cif_wrapper = CIFWrapper(self.raw_dictionary['TEST_BLOCK_1'], preserve_token_order=True)
         self.assertIsInstance(cif_wrapper, CIFWrapper, "Failed to instantiate CIFWrapper from 2-level mmCIF-like dictionary")

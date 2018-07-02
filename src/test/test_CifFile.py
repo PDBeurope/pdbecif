@@ -88,10 +88,10 @@ class  CifFileTestCase(unittest.TestCase):
             ).getCategory('_test_category_1'
             ).getItem('test_value_1'
             ).value, [1, 2, 3, 4], "CifFile failed to import dictionary")
-            
+
     def test_initializeWithDictionary(self):
         cf = CifFile(mmcif_data_map=self.raw_dictionary)
-        
+
         self.assertIsInstance(cf, CifFile, "CifFile.__init__ failed to import dictionary")
         self.assertIsNotNone(cf.getDataBlock('TEST_BLOCK_2'), "CifFile.__init__ failed to import dictionary")
         self.assertEqual(cf.getDataBlock('TEST_BLOCK_2'
