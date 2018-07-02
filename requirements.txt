@@ -1,3 +1,2 @@
 setuptools
-coverage
-html
+tox
