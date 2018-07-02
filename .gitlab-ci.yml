@@ -36,8 +36,8 @@ test:
   stage: test
   script:
     - apt-get update -qy
-    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install -r requirements.txt
+    - apt-get install -y --force-yes lsb-release fakeroot python-dev python3-dev python3.6-dev python3-pip
+    - pip3 install -r requirements.txt
     - echo "export PATCH=$CI_BUILD_ID" > PATCH_VERSION
     - make test
   variables:
@@ -50,8 +50,8 @@ package:
   stage: package
   script:
     - apt-get update -qy
-    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install setuptools
+    - apt-get install -y --force-yes lsb-release fakeroot python3-dev python3-pip
+    - pip3 install setuptools
     - make version PATCH=$CI_BUILD_ID
     - make package PY_VERSION=3
     - pip3 install dist/*.whl
@@ -71,8 +71,8 @@ upload:
   stage: upload
   script:
     - apt-get update -qy
-    - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
-    - pip install twine
+    - apt-get install -y --force-yes lsb-release fakeroot python3-dev python3-pip
+    - pip3 install twine
     - twine upload dist/* -u $PYPI_USERNAME -p $PYPI_PASSWORD
   # variables:
   #   PYPI_USERNAME: $CI_BUILD_ID
