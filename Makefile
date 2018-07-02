@@ -20,6 +20,8 @@ SEDI   = sed -i.bak
 version:
 	$(SEDI) "s/[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]*/$(MAJOR).$(MINOR).$(PATCH)/g" $(SOURCE)/$(PACKAGE)/__init__.py
 	rm -f $(SOURCE)/$(PACKAGE)/__init__.py.bak
+	$(SEDI) "s/[[:digit:]]*\.[[:digit:]]*\.[[:digit:]]*/$(MAJOR).$(MINOR).$(PATCH)/g" $(BASE)/setup.py
+	rm -f $(BASE)/setup.py.bak
 
 cover:
 	tox -r --skip-missing-interpreters -c toxcov.ini
@@ -27,4 +29,9 @@ cover:
 test:
 	tox --skip-missing-interpreters -r
 
+clean:
+  $(shell cat .gitignore | xargs rm -rf)
+
+package:
+	$(PYTHON) setup.py sdist bdist_wheel
 
