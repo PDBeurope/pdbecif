@@ -53,7 +53,7 @@ package:
     - apt-get install -y --force-yes lsb-release fakeroot python-dev python-pip
     - pip install setuptools
     - make version PATCH=$CI_BUILD_ID
-    - make package
+    - make package PY_VERSION=3
     - pip3 install dist/*.whl
   artifacts:
     paths:
