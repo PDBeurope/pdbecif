@@ -34,18 +34,25 @@ class  CifFileIOTestCase(unittest.TestCase):
                     'test_value_1': [1, 2, 3, 4]
                 }
             }
-            }
+        }
+
+    # Compares two unsorted lists
+    def __assertListEqual(self, l1, l2, msg):
+        l1.sort()
+        l2.sort()
+
+        return self.assertListEqual(l1, l2, msg)
 
     def tearDown(self):
         from glob import glob
         for file in glob(os.path.join(self.FILE_ROOT, 'io_testcase*')):
             os.unlink(file)
-            
+
     def test_inData_outDict(self):
         cfr = CifFileReader(input='data')
         cif_dictionary = cfr.read(self.TEST_CIF_FILE, output='cif_dictionary')
         self.assertIsInstance(cif_dictionary, dict, "Failed to create python dictionary from cif file")
-        self.assertListEqual(list(cif_dictionary.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
+        self.__assertListEqual(list(cif_dictionary.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
         self.assertEqual(cif_dictionary["BLOCK_2"]["_extra"]["strange_value"], "Three#Blind#Mice",
             "All levels of CIF file not translated to dictionary correctly")
 
@@ -53,7 +60,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfr = CifFileReader(input='data')
         cif_wrapper = cfr.read(self.TEST_CIF_FILE, output='cif_wrapper')
         self.assertIsInstance(cif_wrapper["TEST_CIF"], CIFWrapper, "Failed to create CIFWrapper using lexical parser")
-        self.assertListEqual(list(cif_wrapper.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
+        self.__assertListEqual(list(cif_wrapper.keys()), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
         self.assertEqual(cif_wrapper["BLOCK_2"]._extra.strange_value[0], "Three#Blind#Mice",
             "All levels of CIF file not translated to dictionary correctly")
 
@@ -61,7 +68,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfr = CifFileReader(input='data')
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file')
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using algorithmic parser")
-        self.assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
+        self.__assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
         self.assertEqual(cif_file.getDataBlock("BLOCK_2").getCategory("_extra").getItem("strange_value").value,
             "Three#Blind#Mice",
             "All levels of CIF file not translated to dictionary correctly")
@@ -70,7 +77,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfr = CifFileReader(input='dictionary')
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file')
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using lexical parser")
-        self.assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
+        self.__assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
         self.assertEqual(cif_file.getDataBlock("BLOCK_2").getCategory("_extra").getItem("strange_value").value,
             "Three#Blind#Mice",
             "All levels of CIF file not translated to dictionary correctly")
@@ -79,7 +86,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfr = CifFileReader(input='data')
         cif_file = cfr.read(self.TEST_CIF_FILE, output='cif_file', ignore=['_test_loop_2', '_valid_CIF'])
         self.assertIsInstance(cif_file, CifFile, "Failed to create CifFile using algorithmic parser")
-        self.assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
+        self.__assertListEqual(cif_file.getDataBlockIds(), ["TEST_CIF", "BLOCK_2"], "DataBlocks not read correctly")
         categories_A = cif_file.getDataBlock("TEST_CIF").getCategoryIds()
         categories_A.sort()
         self.assertEqual(categories_A,
@@ -92,7 +99,6 @@ class  CifFileIOTestCase(unittest.TestCase):
             "Categories were not ignored correctly")
 
     def test_openGzipError(self):
-        from exceptions import TypeError
         with self.assertRaises(TypeError):
             cfw = CifFileWriter(file_path=9999)
         
@@ -105,7 +111,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         cfw.write(cif_file)
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             ['TEST_BLOCK_1', 'TEST_BLOCK_2'],
@@ -119,7 +125,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         # Test write CifFile initialized by CIFWrapper and dictionary import
         unit_test_file = "io_testcase_2.cif"
         cfw = CifFileWriter(file_path=os.path.join(self.FILE_ROOT, unit_test_file))
-        cif_obj = dict((k, CIFWrapper(v)) for k, v in self.raw_dictionary.items())
+        cif_obj = dict((k, CIFWrapper(v)) for k, v in list(self.raw_dictionary.items()))
         cif_wrapper = CIFWrapper({'TEST_BLOCK_1': self.raw_dictionary['TEST_BLOCK_1']})
         cfw.write(cif_wrapper)
         cif_wrapper = CIFWrapper({'TEST_BLOCK_2': self.raw_dictionary['TEST_BLOCK_2']})
@@ -127,7 +133,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         del cfw
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             ['TEST_BLOCK_1', 'TEST_BLOCK_2'],
@@ -144,7 +150,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         del cfw
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             ['TEST_BLOCK_1', 'TEST_BLOCK_2'],
@@ -161,7 +167,7 @@ class  CifFileIOTestCase(unittest.TestCase):
         del cfw
         cfr = CifFileReader(input='data')
         test_file = cfr.read(os.path.join(self.FILE_ROOT, unit_test_file), output='cif_wrapper')
-        data_block_ids = test_file.keys()
+        data_block_ids = list(test_file.keys())
         data_block_ids.sort()
         self.assertEqual(data_block_ids,
             [unit_test_file,],
@@ -182,7 +188,7 @@ class  CifFileIOTestCase(unittest.TestCase):
             .getCategory('category')\
             .getItem('mandatory_code')\
             .value
-        self.assertEquals(test_value, 'no', 'mmCIF dictionary file was not written correctly')
+        self.assertEqual(test_value, 'no', 'mmCIF dictionary file was not written correctly')
 
 
 

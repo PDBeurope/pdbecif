@@ -126,7 +126,7 @@ class CifFileWriter(object):
 
     _handle = None
     
-    def __init__(self, file_path=None, compress=False, mode='w', preserve_order=False):
+    def __init__(self, file_path=None, compress=False, mode='wt', preserve_order=False):
 #        """"""
 #        #orig
 #        self._handle = openGzip(
@@ -134,7 +134,6 @@ class CifFileWriter(object):
 #            'w') if file_path is not None else file_path
         #new
         self.compress = compress
-        self.mode = 'wb' if (compress and mode == 'w') else mode
         self.preserve_token_order = preserve_order
         
         if (file_path and isinstance(file_path, str)) or file_path is None:
@@ -150,7 +149,6 @@ class CifFileWriter(object):
                 file_path,
                 mode) if file_path is not None else file_path
         else:
-            from exceptions import TypeError
             raise TypeError("file_path argument is not a string")
         
         self.verbose = False  # TODO: Not implemented
@@ -163,7 +161,7 @@ class CifFileWriter(object):
             self._handle.close()
             self._handle = None
 
-    def write(self, cifObjIn, compress=False, mode='w', preserve_order=False):
+    def write(self, cifObjIn, compress=False, mode='wt', preserve_order=False):
 
         token_ordering = (self.preserve_token_order or preserve_order) # preserve ordering of either flag is True
 
@@ -212,7 +210,7 @@ class CifFileWriter(object):
         else:
             print("Could not write CIF file (object provided not supported)")
 
-    def _writeCifObj(self, cifObjIn, compress=False, mode='w'):
+    def _writeCifObj(self, cifObjIn, compress=False, mode='wt'):
         """"""
         if self._handle is None:
             try:

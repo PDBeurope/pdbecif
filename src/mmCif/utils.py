@@ -23,7 +23,7 @@ def pretty_print(mat, transpose=False):
 
     return "\n".join(out)
 
-def openGzip(file_path, mode='r'):
+def openGzip(file_path, mode='rt'):
     try:
         return (
             gzip.open(file_path, mode) if mimetypes.guess_type(

@@ -14,7 +14,7 @@ class  ItemTestCase(unittest.TestCase):
 #        self.foo = None
 
     def test_getItemName(self):
-        self.assertEquals(self.im.getItemName(), "bar", "Could not get Item name")
+        self.assertEqual(self.im.getItemName(), "bar", "Could not get Item name")
 
     def test_setValue(self):
         self.im.setValue("val_1")
@@ -80,16 +80,16 @@ class  ItemTestCase(unittest.TestCase):
         self.im.remove()
         self.assertIsNone(self.ct.items.get("bar"), "did not remove Item as expected")
         self.assertIsNotNone(self.ct.recycleBin.get("bar", None), "Item not moved to recycleBin as expected")
-        self.assertEquals(self.ct.recycleBin.get("bar"), self.im, "Item expected in recycleBin but not found")
+        self.assertEqual(self.ct.recycleBin.get("bar"), self.im, "Item expected in recycleBin but not found")
 
     def test_reset(self):
         self.im.setValue("val_1")
         self.im.reset()
-        self.assertEquals(self.im.value, None, "Item values have not reset to None as expected")
+        self.assertEqual(self.im.value, None, "Item values have not reset to None as expected")
         self.im.setValue("val_1")
         self.im.setValue("val_2")
         self.im.reset()
-        self.assertEquals(self.im.value, [None, None], "Item values have not reset to None as expected")
+        self.assertEqual(self.im.value, [None, None], "Item values have not reset to None as expected")
 
 if __name__ == '__main__':
     unittest.main()

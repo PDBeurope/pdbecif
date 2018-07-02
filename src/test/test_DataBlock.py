@@ -1,5 +1,6 @@
 import unittest
 from mmCif import *
+from .common import assert_equal
 
 class  DataBlockTestCase(unittest.TestCase):
 
@@ -13,11 +14,11 @@ class  DataBlockTestCase(unittest.TestCase):
 
     def test_updateId(self):
         self.db.updateId("FOOBAR")
-        self.assertEquals(self.db.id, "FOOBAR", "Could not change datablock ID")
+        self.assertEqual(self.db.id, "FOOBAR", "Could not change datablock ID")
         self.db.updateId("TEST")
 
     def test_getId(self):
-        self.assertEquals(self.db.getId(), "TEST", "Could not get datablock ID")
+        self.assertEqual(self.db.getId(), "TEST", "Could not get datablock ID")
 
     def test_setCategory(self):
         cat_1 = self.db.setCategory("_foo")
@@ -40,13 +41,13 @@ class  DataBlockTestCase(unittest.TestCase):
         self.db.setCategory("_foo")
         self.db.setCategory("foo")
         self.db.setCategory("bar")
-        self.assertItemsEqual(["foo", "bar"], self.db.getCategoryIds(), "getCategoryIds did not return expected values")
+        assert_equal(["foo", "bar"], self.db.getCategoryIds(), "getCategoryIds did not return expected values")
 
     def test_getCategories(self):
         foo = self.db.setCategory("_foo")
         self.db.setCategory("foo")
         bar = self.db.setCategory("bar")
-        self.assertItemsEqual([foo, bar], self.db.getCategories(), "getCategories did not return expected values")
+        assert_equal([foo, bar], self.db.getCategories(), "getCategories did not return expected values")
 
     # SAVEFRAMES
     def test_setSaveFrame(self):
@@ -69,19 +70,19 @@ class  DataBlockTestCase(unittest.TestCase):
         self.db.setSaveFrame("_foo")
         self.db.setSaveFrame("foo")
         self.db.setSaveFrame("bar")
-        self.assertEquals(["_foo","foo", "bar"], self.db.getSaveFrameIds(), "getSaveFrameIds did not return expected values")
+        assert_equal(["_foo","foo", "bar"], self.db.getSaveFrameIds(), "getSaveFrameIds did not return expected values")
 
     def test_getSaveFrames(self):
         _foo = self.db.setSaveFrame("_foo")
         foo = self.db.setSaveFrame("foo")
         bar = self.db.setSaveFrame("bar")
-        self.assertEquals([_foo, foo, bar], self.db.getSaveFrames(), "getSaveFrames did not return expected values")
+        assert_equal([_foo, foo, bar], self.db.getSaveFrames(), "getSaveFrames did not return expected values")
 
     def test_remove(self):
         self.db.remove()
         self.assertIsNone(self.cf.data_blocks.get("TEST"), "did not remove DataBlock as expected")
         self.assertIsNotNone(self.cf.recycleBin.get("TEST", None), "DataBlock not moved to recycleBin as expected")
-        self.assertEquals(self.cf.recycleBin.get("TEST"), self.db, "DataBlock expected in recycleBin but not found")
+        self.assertEqual(self.cf.recycleBin.get("TEST"), self.db, "DataBlock expected in recycleBin but not found")
 
     def test_removeChildByString(self):
         msg = "DataBlock.removeChild"
@@ -90,13 +91,13 @@ class  DataBlockTestCase(unittest.TestCase):
         self.assertTrue(self.db.removeChild("foo"), msg+" did not return expected True")
         self.assertListEqual(self.db.getCategories(), [], msg+" categories should be an empty list")
         self.assertIsInstance(self.db.recycleBin.get("foo"), Category, msg+" recycleBin should contain a Category instance")
-        self.assertEquals(self.db.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
+        self.assertEqual(self.db.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
 
         save_bar = self.db.setSaveFrame("_bar")
         self.assertTrue(self.db.removeChild("_bar"), msg+" did not return expected True")
         self.assertListEqual(self.db.getSaveFrames(), [], msg+" saveframes shoud be an empty list")
         self.assertIsInstance(self.db.recycleBin.get("_bar"), SaveFrame, msg+" recycleBin should contain a SaveFrame instance")
-        self.assertEquals(self.db.recycleBin.get("_bar"), save_bar, msg+" recycleBin should contain the SaveFrame instance")
+        self.assertEqual(self.db.recycleBin.get("_bar"), save_bar, msg+" recycleBin should contain the SaveFrame instance")
 
     def test_removeChildByObj(self):
         msg = "DataBlock.removeChild"
@@ -105,13 +106,13 @@ class  DataBlockTestCase(unittest.TestCase):
         self.assertTrue(self.db.removeChild(cat_foo), msg+" did not return expected True")
         self.assertListEqual(self.db.getCategories(), [], msg+" categories should be an empty list")
         self.assertIsInstance(self.db.recycleBin.get("foo"), Category, msg+" recycleBin should contain a Category instance")
-        self.assertEquals(self.db.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
+        self.assertEqual(self.db.recycleBin.get("foo"), cat_foo, msg+" recycleBin should contain the Category instance")
 
         save_bar = self.db.setSaveFrame("_bar")
         self.assertTrue(self.db.removeChild(save_bar), msg+" did not return expected True")
         self.assertListEqual(self.db.getSaveFrames(), [], msg+" saveframes should be an empty list")
         self.assertIsInstance(self.db.recycleBin.get("_bar"), SaveFrame, msg+" recycleBin should contain a SaveFrame instance")
-        self.assertEquals(self.db.recycleBin.get("_bar"), save_bar, msg+" recycleBin should contain the SaveFrame instance")
+        self.assertEqual(self.db.recycleBin.get("_bar"), save_bar, msg+" recycleBin should contain the SaveFrame instance")
 
     def test_removeChildBadRef(self):
         msg = "DataBlock.removeChild"
