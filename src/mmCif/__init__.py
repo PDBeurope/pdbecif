@@ -667,7 +667,20 @@ class CifFile(object):
                 for category, items_and_values in \
                         list(categories_items_and_values.items()):
                     category_obj = data_block_obj.setCategory(category)
-                    for item, value in list(items_and_values.items()):
+
+                    try:
+                        for item, value in list(items_and_values.items()):
+                            item = category_obj.setItem(item).setValue(value)
+                    # A CIF file without categories.
+                    # Default value for category name is datablock id
+                    # (if it defaults to filename then the extension is removed)
+                    except AttributeError:
+                        item = category
+                        value = items_and_values
+
+                        category = datablock_id.split('.', 1)[0]
+                        category_obj = data_block_obj.setCategory(category)
+
                         item = category_obj.setItem(item).setValue(value)
         else:
             if not isinstance(mmcif_data_map, dict):

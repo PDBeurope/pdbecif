@@ -388,7 +388,14 @@ class CifFileReader(object):
                             loopValues = []
 
                 elif tok.type_string == 'DATA_NAME':
-                    [category_name, item_name] = tok.value.split('.')
+                    try:
+                        [category_name, item_name] = tok.value.split('.')
+                    # If category name is not present use
+                    # datablock id by default
+                    except ValueError:
+                        category_name = db.id
+                        item_name = tok.value
+
                     if loop_value_state:
                         loop_state = False
                         loop_value_state = False
