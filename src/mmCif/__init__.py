@@ -1,3 +1,5 @@
+# -*- coding=utf-8 -*-
+
 """
 This mmcif package contains all the objects necessary to represent
 either a data CIF file or a dictionary CIF file.
