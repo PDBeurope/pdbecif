@@ -52,7 +52,7 @@ __all__ = [
     ]
 
 _reserved = ["loop_", "save_", "data_", "_"]
-
+ascii_char = re.compile(r'[^\x00-\x7F]') # Match non-ASCII characters
 # exception classes
 # interface functions
 # classes
@@ -701,14 +701,17 @@ class CifFile(object):
 def _formatVal(val):
     """Format any value as it would appear in a CIF file"""
     reserved = ('_', '#', '$', "'", '"', '[', ']', ';')
-
+    
     val = str(val)
     has_space = " " in val and "\n" not in val
-
+    
     if "'" in val:
         val = '"%s"' % val
     elif '"' in val:
         val = "'%s'" % val
+    elif re.search(ascii_char, val):
+        # Checks if non-ascii character present
+        val = '"%s"' % val
     else:
         val = ('"%s"' % val) if val.startswith(reserved) or has_space else val
 
