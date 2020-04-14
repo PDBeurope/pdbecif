@@ -41,6 +41,11 @@ class  ItemTestCase(unittest.TestCase):
         self.im.setValue("7357\n73570")
         self.assertEqual(self.im.getRawValue(), ['_val_3', '"val_4" test 4\'', 7357.7357, '7357\n73570'], "T4: Item raw value not set correctly")
 
+    def test_non_ascii_quoted_properly(self):
+        self.im.value = None
+        self.im.setValue("α-alanine")
+        self.assertEqual(self.im.getFormattedValue(),'"α-alanine"', " getFormattedValue not handling non-ascii properly")
+
     def test_getFormattedValue(self):
         self.im.value = None
         self.im.setValue("_val_3")
@@ -54,6 +59,7 @@ class  ItemTestCase(unittest.TestCase):
 
         self.im.setValue("7357\n73570")
         self.assertEqual(self.im.getFormattedValue(), ['"_val_3"', '\n;"val_4" test 4\'\n;\n', '7357.7357', '\n;7357\n73570\n;\n'], "T4: Item raw value not set correctly")
+        
 
         im_2 = Item('bogus', parent = self.ct)
         im_2.reset()
