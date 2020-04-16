@@ -3,7 +3,7 @@
 
 import unittest
 from operator import attrgetter
-from mmCif import Category, Item, SaveFrame
+from mmcif.mmcif import Category, Item, SaveFrame
 
 
 # Sorts in place
