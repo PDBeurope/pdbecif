@@ -22,11 +22,11 @@ jobs:
     steps:
         - uses: actions/checkout@v2
         - name: Set up Python ${{ matrix.python-version }}
-            uses: actions/setup-python@v2
-            with:
+          uses: actions/setup-python@v2
+          with:
             python-version: ${{ matrix.python-version }}    
-    - run: |
-        pip install -r requirements.txt
-        pip install -e .
-        pip install pytest-cov
-        make test
+        - run: |
+            pip install -r requirements.txt
+            pip install -e .
+            pip install pytest-cov
+            make test
