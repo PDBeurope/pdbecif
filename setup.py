@@ -2,7 +2,9 @@ __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 __date__ = "$17-Aug-2013 12:39:18$"
 
 import os
-from setuptools import setup, find_packages
+
+import mmcif
+from setuptools import find_packages, setup
 
 
 def read(fname):
@@ -11,7 +13,7 @@ def read(fname):
 
 setup(
     name="PDBeCif",
-    version="1.4.1",
+    version=mmcif.__version__,
     author="Glen van Ginkel (Protein Data Bank in Europe; PDBe)",
     author_email="pdbe@ebi.ac.uk",
     package_dir={"": "src"},
@@ -27,10 +29,10 @@ setup(
     scripts=[],
     url="http://pypi.python.org/pypi/PDBeCIF/",
     # license=read("LICENSE"),
-    description="A lightweight pure python package for reading, writing and manipulating mmCIF files distributed by the wwPDB",
+    description="A lightweight pure python package for reading, writing and manipulating mmCIF files distributed by the wwPDB.",
     project_urls={
-        "Source code": "https://gitlab.ebi.ac.uk/pdbe/PDBeCIF",
-        "Documentation": "https://pdbe.gitdocs.ebi.ac.uk/pdbecif/",
+        "Source code": "https://github.com/PDBeurope/pdbecif",
+        "Documentation": "https://pdbeurope.github.io/pdbecif/",
     },
     long_description=read("README.md"),
     long_description_content_type="text/markdown",

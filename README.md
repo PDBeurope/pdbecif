@@ -1,13 +1,20 @@
-[![pipeline status](https://gitlab.com/glenveegee/PDBeCIF/badges/master/pipeline.svg)](https://gitlab.com/glenveegee/PDBeCIF/commits/master)
-[![coverage report](https://gitlab.com/glenveegee/PDBeCIF/badges/master/coverage.svg)](https://gitlab.com/glenveegee/PDBeCIF/commits/master)
+# PDBeCIF
 
-# PDBeCIF 
-Protein Data Bank in Europe (PDBe; http://pdbe.org) mmCif/CIF/STAR parser and API.
-
-This software was written by Glen van Ginkel while working at Protein Data Bank in Europe.
-
-used to work with STAR, CIF, and mmCIF formatted files. The package
+PDBeCIF is a package that is used to work with mmCIF formatted files. The package
 contains modules for accessing mmCIF data in different ways depending
 on the type of task required.
 
-The documentation on how to install and use this parser is available from (https://pdbe.gitdocs.ebi.ac.uk/pdbecif/)[https://pdbe.gitdocs.ebi.ac.uk/pdbecif]
+The first mechanism (while slower) allows users to access ANY mmCIF formatted
+file and includes Reader and Writer objects for mmCIF file IO.
+
+This not only includes mmCIF data files but mmCIF dictionaries as well.
+
+The second mechanism is a highly optimised (algorithmic) mmCIF parser that
+currently has NO Reader and Writer objects. This module (fastCif) can only be
+used for accessing public mmCIF data files.
+The fastCif module also contains wrappers that emulate python objects from
+python dictionaries and so mmCIF categories and items are accessed using 'dot'
+notation. There are also convenience methods for searching rows in categories
+where items have a particular value.
+
+The documentation on how to use the toolkit can be found [here](https://github.com/PDBeurope/pdbecif).
