@@ -24,8 +24,6 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
-    
-    - name: Set up environment and make documentation      
     - run: |
         pip install -e .
         pip install pytest-cov sphinx sphinx_rtd_theme recommonmark sphinx-autodoc-typehints sphinx-markdown-tables
