@@ -4,10 +4,10 @@ __date__ = "$30-Jun-2012 18:23:30$"
 import gzip
 import os.path
 
-from com.globalphasing.startools import StarTokeniser
-from mmcif.mmcif import CifFile, CIFWrapper
-from mmcif.mmcif_tools import MMCIF2Dict
-from mmcif.utils import openGzip, pretty_print
+from pdbecif.globalphasing.startools import StarTokeniser
+from pdbecif.mmcif import CifFile, CIFWrapper
+from pdbecif.mmcif_tools import MMCIF2Dict
+from pdbecif.utils import openGzip, pretty_print
 # constants
 
 # exception classes

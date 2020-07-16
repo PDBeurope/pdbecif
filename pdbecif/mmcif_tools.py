@@ -10,7 +10,7 @@ __date__ = "$30-Jun-2012 18:23:30$"
 # imports
 import os.path
 import re
-from mmcif.utils import openGzip
+from pdbecif.utils import openGzip
 
 # constants
 

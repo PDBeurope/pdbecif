@@ -3,8 +3,8 @@ __date__ = "$17-Aug-2013 12:39:18$"
 
 import os
 
-import mmcif
-from setuptools import find_packages, setup
+import pdbecif
+from setuptools import setup
 
 
 def read(fname):
@@ -13,11 +13,9 @@ def read(fname):
 
 setup(
     name="PDBeCif",
-    version=mmcif.__version__,
+    version=pdbecif.__version__,
     author="Glen van Ginkel (Protein Data Bank in Europe; PDBe)",
     author_email="pdbe@ebi.ac.uk",
-    package_dir={"": "src"},
-    packages=find_packages("src", exclude=["*.test", "*.test.*", "test.*", "test"]),
     test_suite="test",
     include_package_data=True,
     setup_requires=["pytest-runner"],
