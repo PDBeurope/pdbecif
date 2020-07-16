@@ -4,7 +4,7 @@ __date__ = "$17-Aug-2013 12:39:18$"
 import os
 
 import pdbecif
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(fname):
@@ -20,11 +20,15 @@ setup(
     include_package_data=True,
     setup_requires=["pytest-runner"],
     tests_require=["tox", "pytest>=3.2", "pytest-cov"],
-    package_data={
-        "": ["*.txt", "*.rst", "*.md"],
-        "test": ["data/usage-example.cif", "data/usage-example.dic"],
-    },
-    scripts=[],
+    package_dir = {'': 'src'},
+        packages = find_packages(
+            'src',
+            exclude = [
+                '*.test',
+                '*.test.*',
+                'test.*',
+                'test',
+                ]),    scripts=[],
     url="http://pypi.python.org/pypi/PDBeCIF/",
     # license=read("LICENSE"),
     description="A lightweight pure python package for reading, writing and manipulating mmCIF files distributed by the wwPDB.",
