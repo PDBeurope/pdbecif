@@ -6,11 +6,12 @@ The pdbecif package is made up of the following modules:
 
 
 ```eval_rst
-.. module:: com.globalphasing
+.. module:: pdbecif.globalphasing
 ```
 
 ```eval_rst
 .. toctree::
-    mmcif
     com
+    mmcif
+    objects
 ```

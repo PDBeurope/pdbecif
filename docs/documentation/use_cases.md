@@ -1,8 +1,8 @@
 # Use cases
 
 ```python
-from mmcif.mmcif import CifFile, CifWrapper, CifFileWriter
-import mmcif.mmcif_io as mmcif
+from pdbeif.mmcif import CifFile, CifWrapper, CifFileWriter
+import pdbecif.mmcif_io as mmcif
 ```
 
 ## Creating objects

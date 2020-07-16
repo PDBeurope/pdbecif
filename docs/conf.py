@@ -15,13 +15,13 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 from recommonmark.transform import AutoStructify
-
+import pdbecif
 # -- Project information -----------------------------------------------------
 
 project = "PDBeCIF"
 copyright = "2020, Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 author = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
-version = "1.3.7"
+version = pdbecif.__version__
 
 # -- General configuration ---------------------------------------------------
 

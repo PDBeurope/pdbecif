@@ -19,8 +19,7 @@ pip install pdbecif
 Alternativelly, clone the repository and install the package from source:
 
 ```
-git clone https://gitlab.ebi.ac.uk/pdbe/PDBeCIF.git
-pip install -e PDBeCIF
+pip install git+https://github.com/PDBeurope/pdbecif.git@master#egg=pdbecif
 ```
 
 ## Package documentation

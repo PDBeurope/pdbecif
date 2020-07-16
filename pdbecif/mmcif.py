@@ -11,7 +11,7 @@ except ImportError:
         from ordereddict import OrderedDict
     except ImportError:
         # backport not installed: use local OrderedDict
-        from mmcif.ordereddict import OrderedDict
+        from pdbecif.mmcif.ordereddict import OrderedDict
 
 __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 __date__ = "$28-Jun-2018 18:23:30$"
@@ -660,9 +660,9 @@ class CifFile(object):
     def import_mmcif_data_map(self, mmcif_data_map):
         """Populates all objects necessary to represent mmCIF data files.
         mmcif_data_map is an mmCIF-like dictionary of the form
-        {
-            DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
-        }
+            {
+                DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
+            }
         """
         if isinstance(mmcif_data_map, dict) and mmcif_data_map != {}:
             for datablock_id, categories_items_and_values in list(

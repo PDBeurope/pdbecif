@@ -3,19 +3,19 @@
 Typical use case very often looks like this:
 
 ```python
->>> from mmcif.mmcif_io import CifFileReader
+>>> from pdbecif.mmcif_io import CifFileReader
 
->>> cfr = mmcifIO.CifFileReader()
+>>> cfr = mmcif_io.CifFileReader()
 >>> cif_obj = cfr.read("usage-example.cif", output='cif_wrapper')
 
 >>> print(cif_obj)
-{'3K1Q': <mmCif.CIFWrapper object at 0xa65ee10>}
+{'3K1Q': <mmcif.CIFWrapper object at 0xa65ee10>}
 >>> cif_data = cif_obj.values()[0]
 >>> print(cif_data)
-<mmCif.CIFWrapper object at 0xa65ee10>
+<mmcif.CIFWrapper object at 0xa65ee10>
 
 >>> print(cif_data._entity_poly_seq)
-<mmCif.CIFWrapperTable object at 0xa8faa90>
+<mmcif.CIFWrapperTable object at 0xa8faa90>
 
 # using dot-notation
 >>> print(cif_data._entity_poly.pdbx_strand_id)

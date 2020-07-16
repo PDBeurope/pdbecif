@@ -12,7 +12,7 @@ There are two types of behaviour that can be configured when instantiating the
    in the read method.
 
 ```python
-import mmcif.mmcif_io as mmcif
+import pdbecif.mmcif_io as mmcif
 cfr = mmcif.CifFileReader(input='dictionary')
 ```
 
