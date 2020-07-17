@@ -2,33 +2,33 @@ __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 __date__ = "$17-Aug-2013 12:39:18$"
 
 import os
-
-import pdbecif
 from setuptools import setup, find_packages
 
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+def get_version(rel_path):
+    for line in read(rel_path).splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")
+
 
 setup(
     name="PDBeCif",
-    version=pdbecif.__version__,
+    version=get_version("src/pdbecif/__init__.py"),
     author="Glen van Ginkel (Protein Data Bank in Europe; PDBe)",
     author_email="pdbe@ebi.ac.uk",
     test_suite="test",
     include_package_data=True,
     setup_requires=["pytest-runner"],
     tests_require=["tox", "pytest>=3.2", "pytest-cov"],
-    package_dir = {'': 'src'},
-        packages = find_packages(
-            'src',
-            exclude = [
-                '*.test',
-                '*.test.*',
-                'test.*',
-                'test',
-                ]),    scripts=[],
+    package_dir={"": "src"},
+    packages=find_packages("src", exclude=["*.test", "*.test.*", "test.*", "test",]),
+    scripts=[],
     url="http://pypi.python.org/pypi/PDBeCIF/",
     # license=read("LICENSE"),
     description="A lightweight pure python package for reading, writing and manipulating mmCIF files distributed by the wwPDB.",
