@@ -21,6 +21,13 @@ from mmCif.utils import openGzip
 
 # exception classes
 
+print('DEPRECATION NOTICE:')
+print('===================')
+print()
+print('Imports from mmCIF/com are going to be deprecated with the new version.')
+print('Please import from pdbecif package.')
+print('See documentation: https://pdbeurope.github.io/pdbecif/ for details.')
+
 
 class MMCIFWrapperSyntaxError(Exception):
 

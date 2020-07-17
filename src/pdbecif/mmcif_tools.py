@@ -294,10 +294,10 @@ class MMCIF2Dict:
                                         line_num += 1
                                     except StopIteration:
                                         break
-                                value = (line[char_start: line.rfind("\n;")]).strip()
+                                value = (line[char_start : line.rfind("\n;")]).strip()
                                 if char_start > 0:
                                     value = (
-                                        line[char_start: line.rfind("\n;")]
+                                        line[char_start : line.rfind("\n;")]
                                     ).strip()
                                 else:
                                     value = self._tokenizeData(" " + line)

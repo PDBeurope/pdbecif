@@ -8,6 +8,7 @@ from pdbecif.globalphasing.startools import StarTokeniser
 from pdbecif.mmcif import CifFile, CIFWrapper
 from pdbecif.mmcif_tools import MMCIF2Dict
 from pdbecif.utils import openGzip, pretty_print
+
 # constants
 
 # exception classes
