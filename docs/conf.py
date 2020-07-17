@@ -19,8 +19,8 @@ import pdbecif
 # -- Project information -----------------------------------------------------
 
 project = "PDBeCIF"
-copyright = "2020, Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
-author = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
+copyright = "2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)"
+author = "Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)"
 version = pdbecif.__version__
 
 # -- General configuration ---------------------------------------------------

@@ -59,7 +59,6 @@ cff = mmcif.CifFileWriter("../../resources/cif_file_test.cif")
 cff.write(cif_file)
 ```
 
-
 ## MMCIF2Dict
 
 A very low level access to mmCIF data files. `MMCIF2Dict` has one method `parse()`
@@ -68,7 +67,54 @@ that returns `(datablock_id, mmCIF_data)` tuples as `(str, dict)`
 `MMCIF2Dict` is very fast at reading mmCIF data.
 
 ```python
-from mmcif.mmcif_tools import MMCIF2Dict
+from pdbecif.mmcif_tools import MMCIF2Dict
+
+>>> obj = MMCIF2Dict().parse('1tqn_updated.cif')
+>>> print(obj)
 ```
 
-TODO how the structure looks like
+Resulting structure is a plain python dictionary with mmCIF category names
+organized as keys. Value to that key is another python dictionary
+with mmCIF fields being keys and value is either a string (provided there
+is just a single value) or an array if `_loop` element was present and there
+are multiple values to a given field.
+
+### Category examples
+
+### Category with a single value per field
+
+```json
+{
+    "1TQN": {
+        "_entry": {
+            "id": "1TQN"
+        },
+        "_symmetry": {
+            "entry_id": "1TQN",
+            "space_group_name_H-M": "I 2 2 2",
+            "pdbx_full_space_group_name_H-M": "?",
+            "cell_setting": "?",
+            "Int_Tables_number": "23",
+            "space_group_name_Hall": "?"
+        }
+}
+```
+
+### Multivalue category per field
+
+```json
+{
+        "_entity": {
+            "id": ["1", "2", "3"],
+            "type": ["polymer", "non-polymer", "water"],
+            "src_method": ["man", "syn", "nat"],
+            "pdbx_description": ["cytochrome P450 3A4", "PROTOPORPHYRIN IX CONTAINING FE", "water"],
+            "formula_weight": ["55594.637", "616.487", "18.015"],
+            "pdbx_number_of_molecules": ["1", "1", "190"],
+            "pdbx_ec": ["1.14.14.1", "?", "?"],
+            "pdbx_mutation": ["?", "?", "?"],
+            "pdbx_fragment": ["?", "?", "?"],
+            "details": ["?", "?", "?"]
+        }
+}
+```
