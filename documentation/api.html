@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API documentation &mdash; PDBeCIF  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Startools toolkit" href="com.html" />
+    <link rel="prev" title="Use cases" href="use_cases.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PDBeCIF
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick.html">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-ciffilereader">Reading using CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-mmcif2dict">Reading using MMCIF2Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#writing-data">Writing data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">Use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#creating-objects">Creating objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-1-creating-an-mmcif-like-dictionary-by-hand-manually">Example 1 - Creating an mmCIF like dictionary by hand (manually)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-2-creating-a-cifwrapper-object-from-mmcif-like-dictionaries">Example 2 - Creating a CifWrapper object from mmCif-like dictionaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-3-creating-an-mmcif-like-dictionary-from-a-cifwrapper-object">Example 3 - Creating an mmCif-like dictionary from a CifWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-4-creating-a-ciffile-object-from-an-mmcif-like-dictionary">Example 4 - Creating a CifFile object from an mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-1-instantiation">Method 1: (instantiation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-2-dictionary-import">Method 2: (dictionary import)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#reading-from-files">Reading from files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-5-input-mmcif-data-files-output-mmcif-like-dictionary">Example 5 - INPUT: mmCif data files, OUTPUT: mmCif-like dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-6-input-mmcif-data-files-output-cifwrapper-object">Example 6 - INPUT: mmCif data files, OUTPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-7-input-mmcif-data-files-output-ciffile-object">Example 7 - INPUT: mmCif data files, OUTPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#writing-to-files">Writing to files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-8-input-mmcif-like-dictionary">Example 8 - INPUT: mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-1">Method 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-2-datablocks-defined-in-mmcif-like-dictionary">Method 2: DataBlocks defined in mmCIF-like dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-9-input-cifwrapper-object">Example 9 - INPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-10-input-ciffile-object">Example 10 - INPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-an-mmcif-like-python-dictionary">Using an mmCIF-like python dictionary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-11-accessing-the-value-of-an-item">Example 11 - Accessing the value of an item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-12-accessing-all-items-of-a-category">Example 12 - Accessing all items of a category</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-a-cifwrapper-object">Using a CIFWrapper object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-a-ciffile-object">Using a CifFile object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-18-working-with-ciffile">Example 18 - Working with CifFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-19-working-with-datablock">Example 19 - Working with DataBlock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-20-working-with-category">Example 20 - Working with Category</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-21-working-with-item">Example 21 - Working with Item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-22-method-chaining">Example 22 - Method chaining</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="com.html">Startools toolkit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="com.html#module-pdbecif.globalphasing.startools">pdbecif.globalphasing.startools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html">pdbecif</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#pdbecif-mmcif">pdbecif.mmcif</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mmcif.html#mmcif-data-files">mmCIF data files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mmcif.html#mmcif-dictionaries">mmCIF dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_io">pdbecif.mmcif_io</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_tools">pdbecif.mmcif_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#pdbecif-ordereddict">pdbecif.ordereddict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.utils">pdbecif.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PDBeCIF</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>API documentation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/documentation/api.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-documentation">
+<h1>API documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation is automatically generated from the <strong>PDBeCif</strong> source code and comments.</p>
+<p>The pdbecif package is made up of the following modules:</p>
+<span class="target" id="module-pdbecif.globalphasing"></span><div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="com.html">Startools toolkit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="com.html#module-pdbecif.globalphasing.startools">pdbecif.globalphasing.startools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mmcif.html">pdbecif</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html#pdbecif-mmcif">pdbecif.mmcif</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#mmcif-data-files">mmCIF data files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#mmcif-dictionaries">mmCIF dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_io">pdbecif.mmcif_io</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_tools">pdbecif.mmcif_tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html#pdbecif-ordereddict">pdbecif.ordereddict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html#module-pdbecif.utils">pdbecif.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="com.html" class="btn btn-neutral float-right" title="Startools toolkit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="use_cases.html" class="btn btn-neutral float-left" title="Use cases" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

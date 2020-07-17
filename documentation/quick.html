@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Quick start &mdash; PDBeCIF  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Objects description" href="objects.html" />
+    <link rel="prev" title="PDBeCIF: mmCif/CIF/STAR parser and API" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PDBeCIF
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#reading-using-ciffilereader">Reading using CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-using-mmcif2dict">Reading using MMCIF2Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-data">Writing data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">Use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#creating-objects">Creating objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-1-creating-an-mmcif-like-dictionary-by-hand-manually">Example 1 - Creating an mmCIF like dictionary by hand (manually)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-2-creating-a-cifwrapper-object-from-mmcif-like-dictionaries">Example 2 - Creating a CifWrapper object from mmCif-like dictionaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-3-creating-an-mmcif-like-dictionary-from-a-cifwrapper-object">Example 3 - Creating an mmCif-like dictionary from a CifWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-4-creating-a-ciffile-object-from-an-mmcif-like-dictionary">Example 4 - Creating a CifFile object from an mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-1-instantiation">Method 1: (instantiation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-2-dictionary-import">Method 2: (dictionary import)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#reading-from-files">Reading from files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-5-input-mmcif-data-files-output-mmcif-like-dictionary">Example 5 - INPUT: mmCif data files, OUTPUT: mmCif-like dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-6-input-mmcif-data-files-output-cifwrapper-object">Example 6 - INPUT: mmCif data files, OUTPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-7-input-mmcif-data-files-output-ciffile-object">Example 7 - INPUT: mmCif data files, OUTPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#writing-to-files">Writing to files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-8-input-mmcif-like-dictionary">Example 8 - INPUT: mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-1">Method 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-2-datablocks-defined-in-mmcif-like-dictionary">Method 2: DataBlocks defined in mmCIF-like dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-9-input-cifwrapper-object">Example 9 - INPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-10-input-ciffile-object">Example 10 - INPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-an-mmcif-like-python-dictionary">Using an mmCIF-like python dictionary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-11-accessing-the-value-of-an-item">Example 11 - Accessing the value of an item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-12-accessing-all-items-of-a-category">Example 12 - Accessing all items of a category</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-a-cifwrapper-object">Using a CIFWrapper object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-a-ciffile-object">Using a CifFile object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-18-working-with-ciffile">Example 18 - Working with CifFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-19-working-with-datablock">Example 19 - Working with DataBlock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-20-working-with-category">Example 20 - Working with Category</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-21-working-with-item">Example 21 - Working with Item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-22-method-chaining">Example 22 - Method chaining</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="com.html">Startools toolkit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="com.html#module-pdbecif.globalphasing.startools">pdbecif.globalphasing.startools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html">pdbecif</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#pdbecif-mmcif">pdbecif.mmcif</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mmcif.html#mmcif-data-files">mmCIF data files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mmcif.html#mmcif-dictionaries">mmCIF dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_io">pdbecif.mmcif_io</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_tools">pdbecif.mmcif_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#pdbecif-ordereddict">pdbecif.ordereddict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.utils">pdbecif.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PDBeCIF</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Quick start</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/documentation/quick.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="quick-start">
+<h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="reading-using-ciffilereader">
+<h2>Reading using CifFileReader<a class="headerlink" href="#reading-using-ciffilereader" title="Permalink to this headline">¶</a></h2>
+<p>Typical use case very often looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pdbecif.mmcif_io</span> <span class="kn">import</span> <span class="n">CifFileReader</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfr</span> <span class="o">=</span> <span class="n">CifFileReader</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cif_obj</span> <span class="o">=</span> <span class="n">cfr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;1tqn_updated.cif&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;cif_wrapper&#39;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cif_obj</span><span class="p">)</span>
+<span class="go">{&#39;1TQN&#39;: &lt;pdbecif.mmcif.CIFWrapper object at 0x7fac9693c110&gt;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cif_data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cif_obj</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cif_data</span><span class="p">)</span>
+<span class="go">&lt;pdbecif.mmcif.CIFWrapper at 0x7fac9601ef10&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cif_data</span><span class="o">.</span><span class="n">_entity_poly_seq</span><span class="p">)</span>
+<span class="go">&lt;pdbecif.mmcif.CIFWrapperTable at 0x7fac966eea50&gt;</span>
+
+<span class="go"># using dot-notation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cif_data</span><span class="o">.</span><span class="n">_entity_poly</span><span class="o">.</span><span class="n">pdbx_strand_id</span><span class="p">)</span>
+<span class="go">[&#39;A&#39;]</span>
+
+<span class="go"># using slice notation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cif_data</span><span class="p">[</span><span class="s1">&#39;_entity_poly&#39;</span><span class="p">][</span><span class="s1">&#39;pdbx_strand_id&#39;</span><span class="p">])</span>
+<span class="go">[&#39;A&#39;]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cif_data</span><span class="o">.</span><span class="n">_entity_poly</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;entity_id&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">))</span>
+<span class="go">{0: {&#39;entity_id&#39;: &#39;1&#39;,</span>
+<span class="go">     &#39;type&#39;: &#39;polypeptide(L)&#39;,</span>
+<span class="go">     &#39;nstd_linkage&#39;: &#39;no&#39;,</span>
+<span class="go">     &#39;nstd_monomer&#39;: &#39;no&#39;,</span>
+<span class="go">     &#39;pdbx_seq_one_letter_code&#39;: &#39;MALYGTHSHGLFKKLGI...HHHH&#39;,</span>
+<span class="go">     &#39;pdbx_seq_one_letter_code_can&#39;: &#39;MALYGTHSHGLFKKLGIPGPTPLPFLGNHHHH&#39;,</span>
+<span class="go">     &#39;pdbx_strand_id&#39;: &#39;A&#39;,</span>
+<span class="go">     &#39;pdbx_target_identifier&#39;: &#39;?&#39;}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-using-mmcif2dict">
+<h2>Reading using MMCIF2Dict<a class="headerlink" href="#reading-using-mmcif2dict" title="Permalink to this headline">¶</a></h2>
+<p>MMCIF2Dict is a purely algorithmic parser that convers mmCIF files into python dictionaries</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pdbecif.mmcif_tools</span> <span class="kn">import</span> <span class="n">MMCIF2Dict</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mmcif_dict</span> <span class="o">=</span> <span class="n">MMCIF2Dict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cif_dict</span> <span class="o">=</span> <span class="n">mmcif_dict</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;1tqn_updated.cif&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pdb_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cif_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">pdb_id</span><span class="p">)</span>
+<span class="go">&#39;1TQN&#39;</span>
+
+<span class="go">mmcif_categories = list(cif_dict[&#39;1TQN&#39;].keys())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">mmcif_categories</span><span class="p">)</span>
+<span class="go">[&#39;_entry&#39;, &#39;_citation&#39;, &#39;_citation_author&#39;]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">polymer_name</span> <span class="o">=</span> <span class="n">cif_dict</span><span class="p">[</span><span class="s1">&#39;1TQN&#39;</span><span class="p">][</span><span class="s1">&#39;_entity&#39;</span><span class="p">][</span><span class="s1">&#39;pdbx_description&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">polymer_name</span><span class="p">)</span>
+<span class="go">&#39;cytochrome P450 3A4&#39;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hem_name</span> <span class="o">=</span> <span class="n">cif_dict</span><span class="p">[</span><span class="s1">&#39;1TQN&#39;</span><span class="p">][</span><span class="s1">&#39;_entity&#39;</span><span class="p">][</span><span class="s1">&#39;pdbx_description&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">hem_name</span><span class="p">)</span>
+<span class="go">&#39;PROTOPORPHYRIN IX CONTAINING FE&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-data">
+<h2>Writing data<a class="headerlink" href="#writing-data" title="Permalink to this headline">¶</a></h2>
+<p>PDBeCif package contains <code class="docutils literal notranslate"><span class="pre">CifFileWriter</span></code> object that allows you to write out
+both <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">dictionaries</span></code> and <code class="docutils literal notranslate"><span class="pre">CIFWrapper</span></code> object.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pdbecif.mmcif_io</span> <span class="kn">import</span> <span class="n">CifFileWriter</span>
+
+<span class="go">obj = {</span>
+<span class="go">    &quot;root&quot;: {</span>
+<span class="go">        &quot;category1&quot;: {</span>
+<span class="go">            &quot;subcatA&quot;: &quot;val1&quot;,</span>
+<span class="go">            &quot;subcatB&quot;: &quot;val2&quot;</span>
+<span class="go">        },</span>
+<span class="go">        &quot;category2&quot;: {</span>
+<span class="go">            &quot;subcat1&quot;: [0,1,2],</span>
+<span class="go">            &quot;subcat2&quot;: [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span>
+<span class="go">        }</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+
+<span class="go"># write out python dictionary</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">writer</span> <span class="o">=</span> <span class="n">CifFileWriter</span><span class="p">(</span><span class="s1">&#39;cif_file.cif&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">writer</span><span class="p">)</span>
+<span class="go">&lt;pdbecif.mmcif_io.CifFileWriter object at 0x7f83cb575410&gt;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+
+<span class="go"># write out CIFWrapper object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pdbecif.mmcif_io</span> <span class="kn">import</span> <span class="n">CifFileReader</span><span class="p">,</span> <span class="n">CifFileWriter</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfr</span> <span class="o">=</span> <span class="n">CifFileReader</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cif_obj</span> <span class="o">=</span> <span class="n">cfr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;example.cif&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;cif_file&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">CifFileWriter</span><span class="p">(</span><span class="s1">&#39;/path/to/file.cif&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cif_obj</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="objects.html" class="btn btn-neutral float-right" title="Objects description" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="PDBeCIF: mmCif/CIF/STAR parser and API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

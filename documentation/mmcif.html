@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pdbecif &mdash; PDBeCIF  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Startools toolkit" href="com.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PDBeCIF
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick.html">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-ciffilereader">Reading using CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-mmcif2dict">Reading using MMCIF2Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#writing-data">Writing data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="use_cases.html">Use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#creating-objects">Creating objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-1-creating-an-mmcif-like-dictionary-by-hand-manually">Example 1 - Creating an mmCIF like dictionary by hand (manually)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-2-creating-a-cifwrapper-object-from-mmcif-like-dictionaries">Example 2 - Creating a CifWrapper object from mmCif-like dictionaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-3-creating-an-mmcif-like-dictionary-from-a-cifwrapper-object">Example 3 - Creating an mmCif-like dictionary from a CifWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-4-creating-a-ciffile-object-from-an-mmcif-like-dictionary">Example 4 - Creating a CifFile object from an mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-1-instantiation">Method 1: (instantiation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-2-dictionary-import">Method 2: (dictionary import)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#reading-from-files">Reading from files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-5-input-mmcif-data-files-output-mmcif-like-dictionary">Example 5 - INPUT: mmCif data files, OUTPUT: mmCif-like dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-6-input-mmcif-data-files-output-cifwrapper-object">Example 6 - INPUT: mmCif data files, OUTPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-7-input-mmcif-data-files-output-ciffile-object">Example 7 - INPUT: mmCif data files, OUTPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#writing-to-files">Writing to files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-8-input-mmcif-like-dictionary">Example 8 - INPUT: mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-1">Method 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="use_cases.html#method-2-datablocks-defined-in-mmcif-like-dictionary">Method 2: DataBlocks defined in mmCIF-like dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-9-input-cifwrapper-object">Example 9 - INPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-10-input-ciffile-object">Example 10 - INPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-an-mmcif-like-python-dictionary">Using an mmCIF-like python dictionary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-11-accessing-the-value-of-an-item">Example 11 - Accessing the value of an item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-12-accessing-all-items-of-a-category">Example 12 - Accessing all items of a category</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-a-cifwrapper-object">Using a CIFWrapper object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="use_cases.html#using-a-ciffile-object">Using a CifFile object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-18-working-with-ciffile">Example 18 - Working with CifFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-19-working-with-datablock">Example 19 - Working with DataBlock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-20-working-with-category">Example 20 - Working with Category</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-21-working-with-item">Example 21 - Working with Item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="use_cases.html#example-22-method-chaining">Example 22 - Method chaining</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api.html">API documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="com.html">Startools toolkit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="com.html#module-pdbecif.globalphasing.startools">pdbecif.globalphasing.startools</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pdbecif</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pdbecif-mmcif">pdbecif.mmcif</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mmcif-data-files">mmCIF data files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mmcif-dictionaries">mmCIF dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pdbecif.mmcif_io">pdbecif.mmcif_io</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pdbecif.mmcif_tools">pdbecif.mmcif_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pdbecif-ordereddict">pdbecif.ordereddict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pdbecif.utils">pdbecif.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PDBeCIF</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="api.html">API documentation</a> &raquo;</li>
+        
+      <li>pdbecif</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/documentation/mmcif.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pdbecif">
+<h1>pdbecif<a class="headerlink" href="#pdbecif" title="Permalink to this headline">¶</a></h1>
+<p>This mmcif module contains all the classes necessary to read and write
+either a data or a dictionary mmCIF file.</p>
+<p>Reading files can be acheived using either <code class="docutils literal notranslate"><span class="pre">CifFileReader</span></code> or <code class="docutils literal notranslate"><span class="pre">MMCIF2Dict</span></code>:</p>
+<div class="section" id="pdbecif-mmcif">
+<h2>pdbecif.mmcif<a class="headerlink" href="#pdbecif-mmcif" title="Permalink to this headline">¶</a></h2>
+<p>The module contains all the objects necessary to represent
+either a data CIF file or a dictionary CIF file.</p>
+<div class="section" id="mmcif-data-files">
+<h3>mmCIF data files<a class="headerlink" href="#mmcif-data-files" title="Permalink to this headline">¶</a></h3>
+<p>DATA mmCIF files are represented one of 3 ways (interchangeable):</p>
+<ol>
+<li><p>As a series of objects that encapsulate each major component of mmCIF
+<code class="docutils literal notranslate"><span class="pre">CifFile</span> <span class="pre">-&gt;</span> <span class="pre">DataBlock</span> <span class="pre">-&gt;</span> <span class="pre">[</span> <span class="pre">SaveFrame</span> <span class="pre">-&gt;</span> <span class="pre">]</span> <span class="pre">Category</span> <span class="pre">-&gt;</span> <span class="pre">Item</span></code></p></li>
+<li><p>As a python wrapper to a dictionary. Categories and items are accessed
+through the familiar python dot (.) notation.</p></li>
+<li><p>As a dictionary of the form</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">DATABLOCK_ID</span><span class="p">:</span> <span class="p">{</span> <span class="n">CATEGORY</span><span class="p">:</span> <span class="p">{</span> <span class="n">ITEM</span><span class="p">:</span>  <span class="n">VALUE</span> <span class="p">}</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="mmcif-dictionaries">
+<h3>mmCIF dictionaries<a class="headerlink" href="#mmcif-dictionaries" title="Permalink to this headline">¶</a></h3>
+<p>DICTIONARY mmCIF files can ONLY be represented as (1) above i.e.:</p>
+<ol class="simple">
+<li><p>As a series of objects that encapsulate each major component of mmCIF</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">CifFile</span> <span class="pre">-&gt;</span> <span class="pre">DataBlock</span> <span class="pre">-&gt;</span> <span class="pre">[</span> <span class="pre">SaveFrame</span> <span class="pre">-&gt;</span> <span class="pre">]</span> <span class="pre">Category</span> <span class="pre">-&gt;</span> <span class="pre">Item</span></code></p>
+<p>Due to the presence of SaveFrame objects they are not interchangeable as the
+conversion to dictionary type objects has not yet been implemented.</p>
+<span class="target" id="module-pdbecif.mmcif"></span><dl class="py class">
+<dt id="pdbecif.mmcif.CIFWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">CIFWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span></em>, <em class="sig-param"><span class="n">data_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preserve_token_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>CIFWrapper is a wrapper object for the output of the MMCIF2Dict object
+i.e., an mmCIF-like python dictionary object. This implies that mmCIF-like
+dictionaries written outside this package may be used to initialize the
+CIFWrapper class as well. The CIFWrapper object emulates python objects by
+providing access to mmCIF categories and items using the familiar python
+‘dot’ notation.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.CIFWrapper.unwrap">
+<code class="sig-name descname">unwrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapper.unwrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract encapsulated data to return an mmCIF-like python dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif.CIFWrapperTable">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">CIFWrapperTable</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">d</span></em>, <em class="sig-param"><span class="n">preserve_token_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapperTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>CIFWrapperTable represents (and wraps up) mmCif category like dictionaries.
+Categories that are stored as dictionary like objects are represented as
+tables and their items and data are accessed using familiar python ‘dot’
+notation.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.CIFWrapperTable.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapperTable.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list Rows in table where item contain has value</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.CIFWrapperTable.searchiter">
+<code class="sig-name descname">searchiter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapperTable.searchiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Highly optimised search for values of items in tables</p>
+<p>return list Rows in table where item contain has value</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif.Category">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">Category</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">category_id</span></em>, <em class="sig-param"><span class="n">parent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Category objects store and manage Item objects. Categories that contain
+Items that are lists of values would represent looped categories.
+Category objects are stored and managed by either DataBlock of SaveFrame
+objects.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.Category.getItemNames">
+<code class="sig-name descname">getItemNames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Category.getItemNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the Items (by name) stored by Category</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.Category.getItems">
+<code class="sig-name descname">getItems</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Category.getItems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all Item objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.Category.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Category.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove Category from SaveFrame or DataBlock and add Category to
+SaveFrame or DataBlock recycle bin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.Category.removeChild">
+<code class="sig-name descname">removeChild</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Category.removeChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove Item from the Category using Item(object) or item name
+ID(string)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif.CifFile">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">CifFile</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mmcif_data_map</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">preserve_token_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CifFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>CifFile represents all the objects contained/part of an mmCIF file or
+dictionary. It stores and manages DataBlock objects.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.CifFile.getDataBlockIds">
+<code class="sig-name descname">getDataBlockIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CifFile.getDataBlockIds" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the DataBlocks (by ID) stored by CifFile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.CifFile.getDataBlocks">
+<code class="sig-name descname">getDataBlocks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CifFile.getDataBlocks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all DataBlock objects stored by CifFile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.CifFile.import_mmcif_data_map">
+<code class="sig-name descname">import_mmcif_data_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mmcif_data_map</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CifFile.import_mmcif_data_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates all objects necessary to represent mmCIF data files.
+mmcif_data_map is an mmCIF-like dictionary of the form</p>
+<blockquote>
+<div><dl class="simple">
+<dt>{</dt><dd><p>DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.CifFile.removeChild">
+<code class="sig-name descname">removeChild</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CifFile.removeChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove DataBlock from the CifFile using
+DataBlock(object) or DataBlock ID(string)
+&#64;return True if child removed else False</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif.DataBlock">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">DataBlock</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">block_id</span></em>, <em class="sig-param"><span class="n">parent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock" title="Permalink to this definition">¶</a></dt>
+<dd><p>DataBlock stores and manages SaveFrame and Category objects in CIF files.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.getCategories">
+<code class="sig-name descname">getCategories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.getCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all Category objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.getCategoryIds">
+<code class="sig-name descname">getCategoryIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.getCategoryIds" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the Categories (by ID) stored by SaveFrame</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.getSaveFrameIds">
+<code class="sig-name descname">getSaveFrameIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.getSaveFrameIds" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the SaveFrames (by ID) stored by DataBlock</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.getSaveFrames">
+<code class="sig-name descname">getSaveFrames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.getSaveFrames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all SaveFrame objects stored by DataBlock</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove DataBlock from CifFile and add DataBlock to CifFile
+recycle bin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.removeChild">
+<code class="sig-name descname">removeChild</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.removeChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove Category/SaveFrame from the DataBlock using
+Category/SaveFrame(object) or Category/SaveFrame ID(string)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.DataBlock.updateId">
+<code class="sig-name descname">updateId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">block_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.DataBlock.updateId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the DataBlock ID</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif.Item">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">Item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item_name</span></em>, <em class="sig-param"><span class="n">parent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Item objects are stored and managed by Category objects while Item
+objects store and manage values in CIF files. Items that are lists would
+represent looped categories.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.Item.getFormattedValue">
+<code class="sig-name descname">getFormattedValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Item.getFormattedValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value as it should appear (formatted) in the CIF file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.Item.getRawValue">
+<code class="sig-name descname">getRawValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Item.getRawValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raw value is the unformatted value stored by the item</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.Item.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Item.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove Item from Category and add Item to the Category recycle bin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.Item.reset">
+<code class="sig-name descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.Item.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the value of Item for one or all values to ‘.’</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif.SaveFrame">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif.</code><code class="sig-name descname">SaveFrame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">saveFrame_id</span></em>, <em class="sig-param"><span class="n">parent</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.SaveFrame" title="Permalink to this definition">¶</a></dt>
+<dd><p>SaveFrame objects store and manage Category objects (Dictionary CIF only).
+SaveFrame objects are stored and managed by DataBlock objects.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif.SaveFrame.getCategories">
+<code class="sig-name descname">getCategories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.SaveFrame.getCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve all Category objects</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.SaveFrame.getCategoryIds">
+<code class="sig-name descname">getCategoryIds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.SaveFrame.getCategoryIds" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the Categories (by ID) stored by SaveFrame</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.SaveFrame.remove">
+<code class="sig-name descname">remove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.SaveFrame.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove SaveFrame from DataBlock and add SaveFrame to DataBlock
+recycle bin</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.SaveFrame.removeChild">
+<code class="sig-name descname">removeChild</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.SaveFrame.removeChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove Category from the SaveFrame using Category(object) or
+Category ID(string)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pdbecif.mmcif.SaveFrame.updateId">
+<code class="sig-name descname">updateId</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">saveFrame_id</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.SaveFrame.updateId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the SaveFrame definition ID</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-pdbecif.mmcif_io">
+<span id="pdbecif-mmcif-io"></span><h2>pdbecif.mmcif_io<a class="headerlink" href="#module-pdbecif.mmcif_io" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="pdbecif.mmcif_io.CifFileReader">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif_io.</code><code class="sig-name descname">CifFileReader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span><span class="o">=</span><span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">preserve_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_io.CifFileReader" title="Permalink to this definition">¶</a></dt>
+<dd><p>CifFileReader takes a path to an mmCIF file location (data or dictionary
+CIF and once read will return an mmcif.CifFile object</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="pdbecif.mmcif_io.CifFileWriter">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif_io.</code><code class="sig-name descname">CifFileWriter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">compress</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'wt'</span></em>, <em class="sig-param"><span class="n">preserve_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_io.CifFileWriter" title="Permalink to this definition">¶</a></dt>
+<dd><p>CifFileWriter writes mmCIF formatted files and accepts mmCIF-like dictionary
+files, CIFWrapper objects, and CifFile objects.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pdbecif.mmcif_tools">
+<span id="pdbecif-mmcif-tools"></span><h2>pdbecif.mmcif_tools<a class="headerlink" href="#module-pdbecif.mmcif_tools" title="Permalink to this headline">¶</a></h2>
+<p>A very low level access to mmCIF data files. MMCIF2Dict has one method ‘parse()’
+that returns (datablock_id, mmCIF_data) tuples as (str, dict)</p>
+<p>MMCIF2DICT is very fast at reading mmCIF data.</p>
+<dl class="py class">
+<dt id="pdbecif.mmcif_tools.MMCIF2Dict">
+<em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif_tools.</code><code class="sig-name descname">MMCIF2Dict</code><a class="headerlink" href="#pdbecif.mmcif_tools.MMCIF2Dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>MMCIF2Dict is a purely algorithmic parser that takes as input public
+mmCIF files and creates a python dictionary from them.</p>
+<p>Because this parser is highly optimised for public mmCIF format, it is
+highly unlikely that it will work successfully on any other formatted mmCIF
+file.</p>
+<p>MMCIF2Dict will not work on mmCIF dictionaries!</p>
+<p>Users are able to speed up parsing of public mmCIF data files substantially
+by including a list of categoriies that the parser can ignore if
+encountered.</p>
+<p>For example:</p>
+<blockquote>
+<div><p>parser.parse(path, ignoreCategories=[“_atom_site”, “_atom_site_anisotrop”])</p>
+</div></blockquote>
+<p>will ignore all coordinate lines in the file.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif_tools.MMCIF2Dict.parse">
+<code class="sig-name descname">parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em>, <em class="sig-param"><span class="n">ignoreCategories</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">preserve_token_order</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">onlyCategories</span><span class="o">=</span><span class="default_value">[]</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_tools.MMCIF2Dict.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Public method which only functions to check the existence of
+the mmCIF file in preparation for reading in the private parseFile
+method.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pdbecif-ordereddict">
+<h2>pdbecif.ordereddict<a class="headerlink" href="#pdbecif-ordereddict" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-pdbecif.utils">
+<span id="pdbecif-utils"></span><h2>pdbecif.utils<a class="headerlink" href="#module-pdbecif.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="com.html" class="btn btn-neutral float-left" title="Startools toolkit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

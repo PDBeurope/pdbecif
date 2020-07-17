@@ -1,0 +1,577 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Use cases &mdash; PDBeCIF  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="API documentation" href="api.html" />
+    <link rel="prev" title="Objects description" href="objects.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PDBeCIF
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick.html">Quick start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-ciffilereader">Reading using CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-mmcif2dict">Reading using MMCIF2Dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick.html#writing-data">Writing data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-objects">Creating objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-1-creating-an-mmcif-like-dictionary-by-hand-manually">Example 1 - Creating an mmCIF like dictionary by hand (manually)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-2-creating-a-cifwrapper-object-from-mmcif-like-dictionaries">Example 2 - Creating a CifWrapper object from mmCif-like dictionaries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-3-creating-an-mmcif-like-dictionary-from-a-cifwrapper-object">Example 3 - Creating an mmCif-like dictionary from a CifWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-4-creating-a-ciffile-object-from-an-mmcif-like-dictionary">Example 4 - Creating a CifFile object from an mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#method-1-instantiation">Method 1: (instantiation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#method-2-dictionary-import">Method 2: (dictionary import)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-from-files">Reading from files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-5-input-mmcif-data-files-output-mmcif-like-dictionary">Example 5 - INPUT: mmCif data files, OUTPUT: mmCif-like dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-6-input-mmcif-data-files-output-cifwrapper-object">Example 6 - INPUT: mmCif data files, OUTPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-7-input-mmcif-data-files-output-ciffile-object">Example 7 - INPUT: mmCif data files, OUTPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-to-files">Writing to files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-8-input-mmcif-like-dictionary">Example 8 - INPUT: mmCif-like dictionary</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#method-1">Method 1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#method-2-datablocks-defined-in-mmcif-like-dictionary">Method 2: DataBlocks defined in mmCIF-like dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#example-9-input-cifwrapper-object">Example 9 - INPUT: CIFWrapper object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-10-input-ciffile-object">Example 10 - INPUT: CifFile object</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-an-mmcif-like-python-dictionary">Using an mmCIF-like python dictionary</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-11-accessing-the-value-of-an-item">Example 11 - Accessing the value of an item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-12-accessing-all-items-of-a-category">Example 12 - Accessing all items of a category</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-cifwrapper-object">Using a CIFWrapper object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-ciffile-object">Using a CifFile object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-18-working-with-ciffile">Example 18 - Working with CifFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-19-working-with-datablock">Example 19 - Working with DataBlock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-20-working-with-category">Example 20 - Working with Category</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-21-working-with-item">Example 21 - Working with Item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-22-method-chaining">Example 22 - Method chaining</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="com.html">Startools toolkit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="com.html#module-pdbecif.globalphasing.startools">pdbecif.globalphasing.startools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mmcif.html">pdbecif</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#pdbecif-mmcif">pdbecif.mmcif</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mmcif.html#mmcif-data-files">mmCIF data files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mmcif.html#mmcif-dictionaries">mmCIF dictionaries</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_io">pdbecif.mmcif_io</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.mmcif_tools">pdbecif.mmcif_tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#pdbecif-ordereddict">pdbecif.ordereddict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmcif.html#module-pdbecif.utils">pdbecif.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="objects.html">Objects description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilereader">CifFileReader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#ciffilewriter">CifFileWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="objects.html#mmcif2dict">MMCIF2Dict</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-examples">Category examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#category-with-a-single-value-per-field">Category with a single value per field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="objects.html#multivalue-category-per-field">Multivalue category per field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PDBeCIF</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Use cases</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/documentation/use_cases.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="use-cases">
+<h1>Use cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pdbeif.mmcif</span> <span class="kn">import</span> <span class="n">CifFile</span><span class="p">,</span> <span class="n">CifWrapper</span><span class="p">,</span> <span class="n">CifFileWriter</span>
+<span class="kn">import</span> <span class="nn">pdbecif.mmcif_io</span> <span class="k">as</span> <span class="nn">mmcif</span>
+</pre></div>
+</div>
+<div class="section" id="creating-objects">
+<h2>Creating objects<a class="headerlink" href="#creating-objects" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example-1-creating-an-mmcif-like-dictionary-by-hand-manually">
+<h3>Example 1 - Creating an mmCIF like dictionary by hand (manually)<a class="headerlink" href="#example-1-creating-an-mmcif-like-dictionary-by-hand-manually" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mmcif_like</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;TEST_CIF&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;_test_category_1&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;test_value_1&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;test_value_2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">&#39;test_value_3&#39;</span><span class="p">:</span> <span class="mi">3</span>
+            <span class="p">},</span>
+            <span class="s1">&#39;_test_category_2&#39;</span><span class="p">:</span> <span class="p">{</span><span class="c1"># Loop/table</span>
+                <span class="s1">&#39;test_value_1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+                <span class="s1">&#39;test_value_2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Sleepy&quot;</span><span class="p">,</span> <span class="s2">&quot;Dopey&quot;</span><span class="p">,</span> <span class="s2">&quot;Bashful&quot;</span><span class="p">,</span> <span class="s2">&quot;Grumpy&quot;</span><span class="p">],</span>
+                <span class="s1">&#39;test_value_3&#39;</span><span class="p">:</span> <span class="p">[</span>\
+                    <span class="s1">&#39;A -&gt;</span><span class="se">\n</span><span class="s1">LINE = A&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;B -&gt;</span><span class="se">\n</span><span class="s1">LINE = B&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;C -&gt;</span><span class="se">\n</span><span class="s1">LINE = C&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;D -&gt;</span><span class="se">\n</span><span class="s1">LINE = D&#39;</span>
+                <span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-2-creating-a-cifwrapper-object-from-mmcif-like-dictionaries">
+<h3>Example 2 - Creating a CifWrapper object from mmCif-like dictionaries<a class="headerlink" href="#example-2-creating-a-cifwrapper-object-from-mmcif-like-dictionaries" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cif_wrapper</span> <span class="o">=</span> <span class="n">CIFWrapper</span><span class="p">(</span><span class="n">mmcif_like</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cif_wrapper</span><span class="o">.</span><span class="n">data_id</span><span class="p">,</span> <span class="n">cif_wrapper</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-3-creating-an-mmcif-like-dictionary-from-a-cifwrapper-object">
+<h3>Example 3 - Creating an mmCif-like dictionary from a CifWrapper object<a class="headerlink" href="#example-3-creating-an-mmcif-like-dictionary-from-a-cifwrapper-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">data_dict</span> <span class="o">=</span> <span class="n">cif_wrapper</span><span class="o">.</span><span class="n">unwrap</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-4-creating-a-ciffile-object-from-an-mmcif-like-dictionary">
+<h3>Example 4 - Creating a CifFile object from an mmCif-like dictionary<a class="headerlink" href="#example-4-creating-a-ciffile-object-from-an-mmcif-like-dictionary" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="method-1-instantiation">
+<h4>Method 1: (instantiation)<a class="headerlink" href="#method-1-instantiation" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cif_file_1</span> <span class="o">=</span> <span class="n">CifFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;usage-test-1.cif&quot;</span><span class="p">,</span> <span class="n">mmcif_data_map</span><span class="o">=</span><span class="n">mmcif_like</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="method-2-dictionary-import">
+<h4>Method 2: (dictionary import)<a class="headerlink" href="#method-2-dictionary-import" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cif_file_2</span> <span class="o">=</span> <span class="n">CifFile</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;usage-test-2.cif&quot;</span><span class="p">)</span>
+    <span class="n">cif_file_2</span><span class="o">.</span><span class="n">import_mmcif_data_map</span><span class="p">(</span><span class="n">mmcif_like</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">cif_file_1</span><span class="p">,</span> <span class="n">cif_file_2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="reading-from-files">
+<h2>Reading from files<a class="headerlink" href="#reading-from-files" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example-5-input-mmcif-data-files-output-mmcif-like-dictionary">
+<h3>Example 5 - INPUT: mmCif data files, OUTPUT: mmCif-like dictionary<a class="headerlink" href="#example-5-input-mmcif-data-files-output-mmcif-like-dictionary" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfr</span> <span class="o">=</span> <span class="n">CifFileReader</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">cif_id</span><span class="p">,</span> <span class="n">cif_dictionary</span><span class="p">)</span> <span class="o">=</span> <span class="n">cfr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/usage-example.cif&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;cif_dictionary&#39;</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;_atom_site&quot;</span><span class="p">,</span> <span class="s2">&quot;_atom_site_anisotrop&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mmCIF-like dictionary:&quot;</span><span class="p">,</span> <span class="n">cif_dictionary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-6-input-mmcif-data-files-output-cifwrapper-object">
+<h3>Example 6 - INPUT: mmCif data files, OUTPUT: CIFWrapper object<a class="headerlink" href="#example-6-input-mmcif-data-files-output-cifwrapper-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfr</span> <span class="o">=</span> <span class="n">CifFileReader</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="n">cif_wrapper</span> <span class="o">=</span> <span class="n">cfr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/usage-example.cif&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;cif_wrapper&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CIFWrapper:&quot;</span><span class="p">,</span> <span class="n">cif_wrapper</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-7-input-mmcif-data-files-output-ciffile-object">
+<h3>Example 7 - INPUT: mmCif data files, OUTPUT: CifFile object<a class="headerlink" href="#example-7-input-mmcif-data-files-output-ciffile-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfr</span> <span class="o">=</span> <span class="n">CifFileReader</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+    <span class="n">cif_file</span> <span class="o">=</span> <span class="n">cfr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/usage-example.cif&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;cif_file&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CifFile:&quot;</span><span class="p">,</span> <span class="n">cif_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="writing-to-files">
+<h2>Writing to files<a class="headerlink" href="#writing-to-files" title="Permalink to this headline">¶</a></h2>
+<p>Using the objects from examples 5, 6, and 7 above</p>
+<div class="section" id="example-8-input-mmcif-like-dictionary">
+<h3>Example 8 - INPUT: mmCif-like dictionary<a class="headerlink" href="#example-8-input-mmcif-like-dictionary" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfd1</span> <span class="o">=</span> <span class="n">CifFileWriter</span><span class="p">(</span><span class="s2">&quot;./cif_dictionary_test-1.cif&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="method-1">
+<h4>Method 1<a class="headerlink" href="#method-1" title="Permalink to this headline">¶</a></h4>
+<p>NO datablocks defined in mmCIF-like dictionary (Define your own) Datablock ID defaults to filename defined in CifFileWriter if none provided.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfd1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cif_dictionary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="method-2-datablocks-defined-in-mmcif-like-dictionary">
+<h4>Method 2: DataBlocks defined in mmCIF-like dictionary<a class="headerlink" href="#method-2-datablocks-defined-in-mmcif-like-dictionary" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfd2</span> <span class="o">=</span> <span class="n">CifFileWriter</span><span class="p">(</span><span class="s2">&quot;./cif_dictionary_test-2.cif&quot;</span><span class="p">)</span>
+    <span class="n">cfd2</span><span class="o">.</span><span class="n">write</span><span class="p">({</span><span class="n">cif_id</span><span class="p">:</span><span class="n">cif_dictionary</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="example-9-input-cifwrapper-object">
+<h3>Example 9 - INPUT: CIFWrapper object<a class="headerlink" href="#example-9-input-cifwrapper-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cfw</span> <span class="o">=</span> <span class="n">CifFileWriter</span><span class="p">(</span><span class="s2">&quot;./cif_wrapper_test.cif&quot;</span><span class="p">)</span>
+    <span class="n">cfw</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cif_wrapper</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-10-input-ciffile-object">
+<h3>Example 10 - INPUT: CifFile object<a class="headerlink" href="#example-10-input-ciffile-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cff</span> <span class="o">=</span> <span class="n">CifFileWriter</span><span class="p">(</span><span class="s2">&quot;./cif_file_test.cif&quot;</span><span class="p">)</span>
+    <span class="n">cff</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cif_file</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-an-mmcif-like-python-dictionary">
+<h2>Using an mmCIF-like python dictionary<a class="headerlink" href="#using-an-mmcif-like-python-dictionary" title="Permalink to this headline">¶</a></h2>
+<p>Using the CIF dictionary directly to access data. The following examples
+use the objects from examples 5, 6, and 7 above.</p>
+<p>Data are accessed using standard data access mechanisms for
+python dictionaries:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_dict</span><span class="p">[</span><span class="s1">&#39;_cif_category&#39;</span><span class="p">][</span><span class="s1">&#39;cif_item&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="example-11-accessing-the-value-of-an-item">
+<h3>Example 11 - Accessing the value of an item<a class="headerlink" href="#example-11-accessing-the-value-of-an-item" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;_test_keyword.field_1&quot;</span><span class="p">,</span> <span class="n">cif_dictionary</span><span class="p">[</span><span class="s2">&quot;_test_keyword&quot;</span><span class="p">][</span><span class="s2">&quot;field_1&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-12-accessing-all-items-of-a-category">
+<h3>Example 12 - Accessing all items of a category<a class="headerlink" href="#example-12-accessing-all-items-of-a-category" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;_valid_CIF&quot;</span><span class="p">,</span> <span class="n">cif_dictionary</span><span class="p">[</span><span class="s2">&quot;_valid_CIF&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-a-cifwrapper-object">
+<h2>Using a CIFWrapper object<a class="headerlink" href="#using-a-cifwrapper-object" title="Permalink to this headline">¶</a></h2>
+<p>The CIFWrapper object is a wrapper for the mmCIF-like dictionary used to
+emulate python objects. Data are accessed using familiar ‘dot’ notation:</p>
+<p>user_dict._cif_category.cif_item</p>
+<p>Categories (tables) also have useful methods for filtering i.e.: <code class="docutils literal notranslate"><span class="pre">search()</span></code> and <code class="docutils literal notranslate"><span class="pre">searchiter()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cif_wrapper_2</span> <span class="o">=</span> <span class="n">cfr</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;/1smv.cif&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s1">&#39;cif_wrapper&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Example 13 - Check table exists and get all the contents of the table</span>
+    <span class="k">if</span> <span class="s1">&#39;_struct_ref_seq_dif&#39;</span> <span class="ow">in</span> <span class="n">cif_wrapper_2</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span><span class="p">)</span>
+
+        <span class="c1"># Example 14 - Check column exists in a table and get all contents of the column</span>
+        <span class="k">if</span> <span class="s1">&#39;details&#39;</span> <span class="ow">in</span> <span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span> <span class="ow">and</span> <span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span><span class="o">.</span><span class="n">details</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span><span class="o">.</span><span class="n">details</span><span class="p">)</span>
+
+            <span class="c1"># Example 15 - Search a table for rows where values in column match and get</span>
+            <span class="c1">#              all results as dict in the form {match_row_index : {row}}</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="s1">&#39;DELETION&#39;</span><span class="p">))</span>
+
+            <span class="c1"># Example 16 - Iterate over search results (table rows) where values in</span>
+            <span class="c1">#              column match the given searchterm and get rows as</span>
+            <span class="c1">#              {column_name: value_for_row}</span>
+            <span class="k">for</span> <span class="n">searchResult</span> <span class="ow">in</span> <span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span><span class="o">.</span><span class="n">searchiter</span><span class="p">(</span><span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="s1">&#39;DELETION&#39;</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">searchResult</span><span class="p">)</span>
+                <span class="k">break</span> <span class="c1"># only show one to demonstrate the principle</span>
+
+            <span class="c1"># Example 17 - Iterate over all rows in a table and get rows as</span>
+            <span class="c1">#              {column_name: value_for_row}</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cif_wrapper_2</span><span class="o">.</span><span class="n">_struct_ref_seq_dif</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="k">break</span> <span class="c1"># only show one to demonstrate the principle</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-a-ciffile-object">
+<h2>Using a CifFile object<a class="headerlink" href="#using-a-ciffile-object" title="Permalink to this headline">¶</a></h2>
+<p>Using the CifFile object to access, edit and update mmCIF data.
+The following examples use the CifFile object objects from example 7 above.</p>
+<p>Data are manipulated using the accessors and mutators provided:</p>
+<p>NB: See the Test suite in mmCif.test for more examples</p>
+<div class="section" id="example-18-working-with-ciffile">
+<h3>Example 18 - Working with CifFile<a class="headerlink" href="#example-18-working-with-ciffile" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DataBlock ids:&quot;</span><span class="p">,</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">getDataBlockIds</span><span class="p">())</span> <span class="c1">#List all datablock ids</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DataBlock objects:&quot;</span><span class="p">,</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">getDataBlocks</span><span class="p">())</span> <span class="c1">#List all datablock objects</span>
+    <span class="n">data_block_1</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">getDataBlock</span><span class="p">(</span><span class="s2">&quot;TEST_CIF&quot;</span><span class="p">)</span> <span class="c1">#Get a specific datablock</span>
+    <span class="n">data_block_1</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">getDataBlocks</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#Get the first datablock</span>
+    <span class="n">data_block_2</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">setDataBlock</span><span class="p">(</span><span class="s2">&quot;BLOCK_2&quot;</span><span class="p">)</span> <span class="c1"># Create another empty datablock</span>
+    <span class="n">data_block_3</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">setDataBlock</span><span class="p">(</span><span class="s2">&quot;BLOCK_3&quot;</span><span class="p">)</span> <span class="c1"># Create another empty datablock</span>
+    <span class="n">cif_file</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="n">data_block_2</span><span class="p">)</span> <span class="c1"># Remove datablock (Method 1 - given object)</span>
+    <span class="n">cif_file</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="s2">&quot;BLOCK_3&quot;</span><span class="p">)</span> <span class="c1"># Remove datablock (Method 2 - given ID)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RECYCLED DATABLOCKS:&quot;</span><span class="p">,</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">recycleBin</span><span class="p">)</span> <span class="c1"># Removed objects are stored in a recycle bin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-19-working-with-datablock">
+<h3>Example 19 - Working with DataBlock<a class="headerlink" href="#example-19-working-with-datablock" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="sd">&quot;&quot;&quot;NB: Category and SaveFrame are handled in the same manner&quot;&quot;&quot;</span>
+    <span class="n">data_block_1</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">getDataBlock</span><span class="p">(</span><span class="s2">&quot;TEST_CIF&quot;</span><span class="p">)</span> <span class="c1">#Get a specific datablock</span>
+    <span class="n">data_block_4</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">setDataBlock</span><span class="p">(</span><span class="s2">&quot;BLOCK_4&quot;</span><span class="p">)</span> <span class="c1"># Create another empty datablock</span>
+    <span class="n">data_block_5</span> <span class="o">=</span> <span class="n">cif_file</span><span class="o">.</span><span class="n">setDataBlock</span><span class="p">(</span><span class="s2">&quot;BLOCK_5&quot;</span><span class="p">)</span> <span class="c1"># Create another empty datablock</span>
+    <span class="n">data_block_5</span><span class="o">.</span><span class="n">getId</span><span class="p">())</span> <span class="c1"># Get the datablock ID</span>
+    <span class="n">data_block_5</span><span class="o">.</span><span class="n">updateId</span><span class="p">(</span><span class="s2">&quot;BLOCK_5.1&quot;</span><span class="p">)</span> <span class="c1"># Change the datablock ID</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Category ids:&quot;</span><span class="p">,</span> <span class="n">data_block_1</span><span class="o">.</span><span class="n">getCategoryIds</span><span class="p">())</span> <span class="c1">#List all category ids</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Category objects:&quot;</span><span class="p">,</span> <span class="n">data_block_1</span><span class="o">.</span><span class="n">getCategories</span><span class="p">())</span> <span class="c1">#List all category objects</span>
+    <span class="n">category_1</span> <span class="o">=</span> <span class="n">data_block_1</span><span class="o">.</span><span class="n">getCategory</span><span class="p">(</span><span class="s2">&quot;_test_keyword&quot;</span><span class="p">)</span> <span class="c1">#Get a specific category</span>
+    <span class="n">category_2</span> <span class="o">=</span> <span class="n">data_block_4</span><span class="o">.</span><span class="n">setCategory</span><span class="p">(</span><span class="s2">&quot;CATEGORY_2&quot;</span><span class="p">)</span> <span class="c1">#Create an empty category</span>
+    <span class="n">category_3</span> <span class="o">=</span> <span class="n">data_block_4</span><span class="o">.</span><span class="n">setCategory</span><span class="p">(</span><span class="s2">&quot;CATEGORY_3&quot;</span><span class="p">)</span> <span class="c1">#Create an empty category</span>
+    <span class="n">data_block_4</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="n">category_2</span><span class="p">)</span> <span class="c1"># Remove category (Method 1 - given object)</span>
+    <span class="n">data_block_4</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="s2">&quot;CATEGORY_3&quot;</span><span class="p">)</span> <span class="c1"># Remove category (Method 2 - given ID)</span>
+    <span class="n">data_block_5</span><span class="o">.</span><span class="n">remove</span><span class="p">())</span> <span class="c1"># Remove datablock from CifFile</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RECYCLED CATEGORIES:&quot;</span><span class="p">,</span> <span class="n">data_block_4</span><span class="o">.</span><span class="n">recycleBin</span><span class="p">)</span> <span class="c1"># Removed objects are stored in a recycle bin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-20-working-with-category">
+<h3>Example 20 - Working with Category<a class="headerlink" href="#example-20-working-with-category" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">category_1</span> <span class="o">=</span> <span class="n">data_block_1</span><span class="o">.</span><span class="n">getCategory</span><span class="p">(</span><span class="s2">&quot;_test_keyword&quot;</span><span class="p">)</span> <span class="c1">#Get a specific category</span>
+    <span class="n">category_4</span> <span class="o">=</span> <span class="n">data_block_4</span><span class="o">.</span><span class="n">setCategory</span><span class="p">(</span><span class="s2">&quot;CATEGORY_4&quot;</span><span class="p">)</span> <span class="c1"># Create another empty category</span>
+    <span class="n">category_5</span> <span class="o">=</span> <span class="n">data_block_4</span><span class="o">.</span><span class="n">setCategory</span><span class="p">(</span><span class="s2">&quot;CATEGORY_5&quot;</span><span class="p">)</span> <span class="c1"># Create another empty category</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Item names:&quot;</span><span class="p">,</span> <span class="n">category_1</span><span class="o">.</span><span class="n">getItemNames</span><span class="p">())</span> <span class="c1">#List all item names</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Item objects:&quot;</span><span class="p">,</span> <span class="n">category_1</span><span class="o">.</span><span class="n">getItems</span><span class="p">())</span> <span class="c1">#List all item objects</span>
+    <span class="n">item_1</span> <span class="o">=</span> <span class="n">category_1</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="s2">&quot;field_1&quot;</span><span class="p">)</span> <span class="c1">#Get a specific item</span>
+    <span class="n">item_2</span> <span class="o">=</span> <span class="n">category_4</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s2">&quot;ITEM_2&quot;</span><span class="p">)</span> <span class="c1">#Create an empty item</span>
+    <span class="n">item_3</span> <span class="o">=</span> <span class="n">category_4</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s2">&quot;ITEM_3&quot;</span><span class="p">)</span> <span class="c1">#Create an empty item</span>
+    <span class="n">category_4</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="n">item_2</span><span class="p">)</span> <span class="c1"># Remove item (Method 1 - given object)</span>
+    <span class="n">category_4</span><span class="o">.</span><span class="n">removeChild</span><span class="p">(</span><span class="s2">&quot;ITEM_3&quot;</span><span class="p">)</span> <span class="c1"># Remove item (Method 2 - given ID)</span>
+    <span class="n">category_5</span><span class="o">.</span><span class="n">remove</span><span class="p">())</span> <span class="c1"># Remove category from DataBlock</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RECYCLED ITEMS:&quot;</span><span class="p">,</span> <span class="n">category_4</span><span class="o">.</span><span class="n">recycleBin</span><span class="p">)</span> <span class="c1"># Removed objects end up in the recycle bin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-21-working-with-item">
+<h3>Example 21 - Working with Item<a class="headerlink" href="#example-21-working-with-item" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">item_1</span> <span class="o">=</span> <span class="n">category_1</span><span class="o">.</span><span class="n">getItem</span><span class="p">(</span><span class="s2">&quot;field_1&quot;</span><span class="p">)</span> <span class="c1">#Get a specific item</span>
+    <span class="n">item_4</span> <span class="o">=</span> <span class="n">category_4</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s2">&quot;ITEM_4&quot;</span><span class="p">)</span> <span class="c1"># Create another empty item</span>
+    <span class="n">item_5</span> <span class="o">=</span> <span class="n">category_4</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s2">&quot;ITEM_5&quot;</span><span class="p">)</span> <span class="c1"># Create another empty item</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value (raw):&quot;</span><span class="p">,</span> <span class="n">item_1</span><span class="o">.</span><span class="n">getRawValue</span><span class="p">())</span> <span class="c1">#Get raw item value (Method 1 - using accessor)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value (raw):&quot;</span><span class="p">,</span> <span class="n">item_1</span><span class="o">.</span><span class="n">value</span> <span class="c1">#Get raw item value (Method 2 - using attribute)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Value (formated):&quot;</span><span class="p">,</span> <span class="n">item_1</span><span class="o">.</span><span class="n">getFormattedValue</span><span class="p">())</span> <span class="c1">#Get the formated value (for file export)</span>
+    <span class="n">item_4</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;VALUE_2&quot;</span><span class="p">)</span> <span class="c1">#Set the item value</span>
+    <span class="n">item_5</span><span class="o">.</span><span class="n">setValue</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="c1">#Set the item value</span>
+    <span class="n">item_5</span><span class="o">.</span><span class="n">remove</span><span class="p">())</span> <span class="c1"># Remove item from Category</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RECYCLED ITEMS:&quot;</span><span class="p">,</span> <span class="n">category_4</span><span class="o">.</span><span class="n">recycleBin</span><span class="p">)</span> <span class="c1"># Removed objects end up in the recycle bin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-22-method-chaining">
+<h3>Example 22 - Method chaining<a class="headerlink" href="#example-22-method-chaining" title="Permalink to this headline">¶</a></h3>
+<p>For every object the <code class="docutils literal notranslate"><span class="pre">setXXXX()</span></code> method always returns the this you are
+trying to set. If no object is present it creates a new one and returns it.
+<code class="docutils literal notranslate"><span class="pre">setXXXX()</span></code> can therefor be used as both accessor and mutator</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">cif_file</span><span class="o">.</span><span class="n">setDataBlock</span><span class="p">(</span><span class="s2">&quot;BLOCK_6&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setCategory</span><span class="p">(</span><span class="s2">&quot;CATEGORY_6&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setItem</span><span class="p">(</span><span class="s2">&quot;ITEM_6&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="s2">&quot;VALUE_6&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="API documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="objects.html" class="btn btn-neutral float-left" title="Objects description" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
