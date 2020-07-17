@@ -1,0 +1,32 @@
+name: pdbecif tests
+
+on:
+  push:
+    branches: 
+      - master
+      - dev
+  pull_request:
+    branches: 
+      - master
+      - dev
+
+jobs:
+  pytest:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+
+    steps:
+        - uses: actions/checkout@v2
+        - name: Set up Python ${{ matrix.python-version }}
+          uses: actions/setup-python@v2
+          with:
+            python-version: ${{ matrix.python-version }}    
+        - run: |
+            pip install -e .    
+            pip install -r requirements.txt
+            pip install pytest-cov
+            make test

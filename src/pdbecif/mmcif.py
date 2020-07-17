@@ -1,37 +1,8 @@
 # -*- coding=utf-8 -*-
 
-"""
-This mmcif package contains all the objects necessary to represent
-either a data CIF file or a dictionary CIF file.
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ mmCIF data files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DATA mmCIF files are represented one of 3 ways (interchangeable):
-
-1. As a series of objects that encapsulate each major component of mmCIF
-
-CifFile -> DataBlock -> [ SaveFrame -> ] Category -> Item
-
-2. As a python wrapper to a dictionary. Categories and items are accessed
-   through the familiar python dot (.) notation.
-
-3. As a dictionary of the form
-{
-    DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
-}
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~ mmCIF dictionaries ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-DICTIONARY mmCIF files can ONLY be represented as (1) above i.e.:
-
-1. As a series of objects that encapsulate each major component of mmCIF
-
-CifFile -> DataBlock -> [ SaveFrame -> ] Category -> Item
-
-Due to the presence of SaveFrame objects they are not interchangeable as the
-conversion to dictionary type objects has not yet been implemented.
-
-"""
 import copy
 import re
+
 try:
     from collections import OrderedDict
 except ImportError:
@@ -40,31 +11,30 @@ except ImportError:
         from ordereddict import OrderedDict
     except ImportError:
         # backport not installed: use local OrderedDict
-        from mmCif.ordereddict import OrderedDict
+        from pdbecif.mmcif.ordereddict import OrderedDict
 
 __author__ = "Glen van Ginkel (Protein Data Bank in Europe; http://pdbe.org)"
 __date__ = "$28-Jun-2018 18:23:30$"
-__version__= "1.3.6"
 
 # imports
 
 # constants
 __all__ = [
-    'CIFWrapperTable', 'CIFWrapper', 'Item', 'Category', 'SaveFrame', 'DataBlock', 'CifFile'
-    ]
+    "CIFWrapperTable",
+    "CIFWrapper",
+    "Item",
+    "Category",
+    "SaveFrame",
+    "DataBlock",
+    "CifFile",
+]
 
 _reserved = ["loop_", "save_", "data_", "_"]
-ascii_char = re.compile(r'[^\x00-\x7F]') # Match non-ASCII characters
+ascii_char = re.compile(r"[^\x00-\x7F]")  # Match non-ASCII characters
 # exception classes
 # interface functions
 # classes
 
-print('DEPRECATION NOTICE:')
-print('===================')
-print()
-print('Imports from mmCIF/com are going to be deprecated with the new version.')
-print('Please import from pdbecif package.')
-print('See documentation: https://pdbeurope.github.io/pdbecif/ for details.')
 
 class CIFWrapperTable(object):
 
@@ -88,9 +58,9 @@ class CIFWrapperTable(object):
 
     def __setattr__(self, itemName, itemValue):
         if itemName == "_DATA":
-            self.__dict__['_DATA'] = copy.deepcopy(itemValue)
+            self.__dict__["_DATA"] = copy.deepcopy(itemValue)
         elif itemName == "_preserve_order":
-            self.__dict__['_preserve_order'] = copy.deepcopy(itemValue)
+            self.__dict__["_preserve_order"] = copy.deepcopy(itemValue)
         else:
             self.__setitem__(itemName, itemValue)
 
@@ -116,7 +86,9 @@ class CIFWrapperTable(object):
 
     def __setitem__(self, itemName, itemValue):
         if not isinstance(itemValue, list):
-            itemValue = [itemValue, ]
+            itemValue = [
+                itemValue,
+            ]
         if itemName not in self._DATA:
             self._DATA.setdefault(itemName, itemValue)
         else:
@@ -130,21 +102,21 @@ class CIFWrapperTable(object):
         """return list Rows in table where item contain has value"""
         results = {}
         try:
-            results.update([
-                       (
-                       idx, dict((k, v[idx]) for k, v in list(self._DATA.items()))
-                       )
-                       for idx, el in enumerate(self._DATA[item])
-                       if value.match(el)
-                       ])
+            results.update(
+                [
+                    (idx, dict((k, v[idx]) for k, v in list(self._DATA.items())))
+                    for idx, el in enumerate(self._DATA[item])
+                    if value.match(el)
+                ]
+            )
         except AttributeError:
-            results.update([
-                       (
-                       idx, dict((k, v[idx]) for k, v in list(self._DATA.items()))
-                       )
-                       for idx, el in enumerate(self._DATA[item])
-                       if el == value
-                       ])
+            results.update(
+                [
+                    (idx, dict((k, v[idx]) for k, v in list(self._DATA.items())))
+                    for idx, el in enumerate(self._DATA[item])
+                    if el == value
+                ]
+            )
         return results
 
     def searchiter(self, item, value):
@@ -165,6 +137,7 @@ class CIFWrapperTable(object):
     def contents(self):
         return list(self._DATA.keys())
 
+
 #    def __repr__(self):
 #        return str(self._DATA)
 
@@ -179,6 +152,7 @@ class CIFWrapper(object):
     providing access to mmCIF categories and items using the familiar python
     'dot' notation.
     """
+
     _DATA = {}
     _preserve_order = False
 
@@ -189,14 +163,16 @@ class CIFWrapper(object):
 
         if d is not None:
             __dictionary = copy.deepcopy(d)
-            self.data_id = data_id if data_id is not None else ''
+            self.data_id = data_id if data_id is not None else ""
             try:
                 # Check if it is a mmCIF-like dictionary with datablock id
                 # Expecting
                 #   {
                 #       DATABLOCK_ID: { CATEGORY: { ITEM: VALUE } }
                 #   }
-                (datablock_id, datablock) = list(__dictionary.items())[0] # arbitrarily take the first datablock
+                (datablock_id, datablock) = list(__dictionary.items())[
+                    0
+                ]  # arbitrarily take the first datablock
                 category = list(datablock.values())[0]
                 item = list(category.values())[0]
                 # Extract data block id from dictionary
@@ -224,8 +200,12 @@ class CIFWrapper(object):
                 if isinstance(v2, list):
                     j[k2] = v2
                 else:
-                    j[k2] = [v2, ]
-            self._DATA.update({k: CIFWrapperTable(j, preserve_token_order=self._preserve_order)})
+                    j[k2] = [
+                        v2,
+                    ]
+            self._DATA.update(
+                {k: CIFWrapperTable(j, preserve_token_order=self._preserve_order)}
+            )
 
     def unwrap(self):
         """Extract encapsulated data to return an mmCIF-like python dictionary
@@ -236,7 +216,7 @@ class CIFWrapper(object):
             cleaned_map.setdefault(k, OrderedDict() if self._preserve_order else {})
             for k2, v2 in list(v._DATA.items()):
                 cleaned_map[k][k2] = v2
-        if self.data_id is not None and self.data_id != '':
+        if self.data_id is not None and self.data_id != "":
             return {self.data_id: cleaned_map}
         else:
             return {str(id(self)): cleaned_map}
@@ -249,13 +229,13 @@ class CIFWrapper(object):
     def __getitem__(self, tableNameIn):
         return self._DATA.get(tableNameIn)
 
-#    def __setitem__(self, tableName, tableValue):
-#        if not isinstance(tableValue, list):
-#            tableValue = [tableValue, ]
-#        if tableName not in self._DATA:
-#            self._DATA.setdefault(tableName, tableValue)
-#        else:
-#            self._DATA[tableName] = tableValue
+    #    def __setitem__(self, tableName, tableValue):
+    #        if not isinstance(tableValue, list):
+    #            tableValue = [tableValue, ]
+    #        if tableName not in self._DATA:
+    #            self._DATA.setdefault(tableName, tableValue)
+    #        else:
+    #            self._DATA[tableName] = tableValue
 
     def __delitem__(self, tableName):
         if tableName in self._DATA:
@@ -289,12 +269,14 @@ class Item(object):
         """"""
         return self.id
 
-    def setValue(self, item_value, item_type='DEFAULTSTRING'):
+    def setValue(self, item_value, item_type="DEFAULTSTRING"):
         """"""
         if self.value is None and self.isColumn is False:
             if isinstance(item_value, list) and len(item_value) == 1:
                 self.value = item_value[0]
-                self.type = [item_type,]
+                self.type = [
+                    item_type,
+                ]
             elif isinstance(item_value, list) and len(item_value) > 1:
                 self.value = item_value
                 self.isColumn = True
@@ -341,11 +323,11 @@ class Item(object):
 
     def __repr__(self):
         """"""
-        return '<%s "%s": %s>' % \
-            (
-             self.__class__.__name__, self.id, 'COLUMN'
-             if self.isColumn else ''
-             )
+        return '<%s "%s": %s>' % (
+            self.__class__.__name__,
+            self.id,
+            "COLUMN" if self.isColumn else "",
+        )
 
 
 class Category(object):
@@ -370,7 +352,6 @@ class Category(object):
         self.preserve_order = self.parent.preserve_order
         self.items = OrderedDict() if self.preserve_order else {}
 
-
     def getId(self):
         """"""
         return self.id
@@ -379,18 +360,24 @@ class Category(object):
         """"""
         try:
             item.isalnum()  # duck typing
-            item = Item(item, self) if item not in self.items else \
-                self.items.get(item)
+            item = Item(item, self) if item not in self.items else self.items.get(item)
         except AttributeError:
             pass
         try:
-            self._maxTagLength = len("_" + self.id + item.id) if len("_" + self.id + item.id) > self._maxTagLength else self._maxTagLength
+            self._maxTagLength = (
+                len("_" + self.id + item.id)
+                if len("_" + self.id + item.id) > self._maxTagLength
+                else self._maxTagLength
+            )
         except AttributeError:
             # TODO: Raise appropriate exception as it is neither string nor
             # Item
             return None
-        if item.value is not None and isinstance(item.value, list) and \
-                self.isTable is False:
+        if (
+            item.value is not None
+            and isinstance(item.value, list)
+            and self.isTable is False
+        ):
             self.isTable = True
         return self.items.setdefault(item.id, item)
 
@@ -428,12 +415,14 @@ class Category(object):
         #    self.remove()
 
     def __repr__(self):
-        return '<%s "_%s" with items %s>' % \
-            (self.__class__.__name__, self.id, str(self.getItemNames()))
+        return '<%s "_%s" with items %s>' % (
+            self.__class__.__name__,
+            self.id,
+            str(self.getItemNames()),
+        )
 
 
 class SaveFrame(object):
-
     """
     SaveFrame objects store and manage Category objects (Dictionary CIF only).
     SaveFrame objects are stored and managed by DataBlock objects.
@@ -462,14 +451,18 @@ class SaveFrame(object):
         """"""
         try:
             category.isalnum()  # duck typing
-            category = Category(category.lstrip('_'), self) if category.lstrip('_') not in self.categories else self.categories.get(category.lstrip('_'))
+            category = (
+                Category(category.lstrip("_"), self)
+                if category.lstrip("_") not in self.categories
+                else self.categories.get(category.lstrip("_"))
+            )
         except AttributeError:
             pass
         return self.categories.setdefault(category.id, category)
 
     def getCategory(self, category):
         """"""
-        category = category.lstrip('_')
+        category = category.lstrip("_")
         return self.categories.get(category, None)
 
     def getCategoryIds(self):
@@ -503,7 +496,6 @@ class SaveFrame(object):
 
 
 class DataBlock(object):
-
     """
     DataBlock stores and manages SaveFrame and Category objects in CIF files.
     """
@@ -538,14 +530,18 @@ class DataBlock(object):
         """"""
         try:
             category.isalnum()  # duck typing
-            category = Category(category.lstrip('_'), self) if category.lstrip('_') not in self.categories else self.categories.get(category.lstrip('_'))
+            category = (
+                Category(category.lstrip("_"), self)
+                if category.lstrip("_") not in self.categories
+                else self.categories.get(category.lstrip("_"))
+            )
         except AttributeError:
             pass
         return self.categories.setdefault(category.id, category)
 
     def getCategory(self, category):
         """"""
-        category = category.lstrip('_')
+        category = category.lstrip("_")
         return self.categories.get(category, None)
 
     def getCategoryIds(self):
@@ -561,8 +557,11 @@ class DataBlock(object):
         """"""
         try:
             saveFrame.isalnum()  # duck typing
-            saveFrame = SaveFrame(saveFrame, self) if saveFrame not in \
-                self.saveFrames else self.saveFrames.get(saveFrame)
+            saveFrame = (
+                SaveFrame(saveFrame, self)
+                if saveFrame not in self.saveFrames
+                else self.saveFrames.get(saveFrame)
+            )
         except AttributeError:
             pass
         return self.saveFrames.setdefault(saveFrame.id, saveFrame)
@@ -593,25 +592,20 @@ class DataBlock(object):
         elif isinstance(child, SaveFrame) and child.id in self.saveFrames:
             self.recycleBin[child.id] = self.saveFrames.pop(child.id)
             return True
-        elif isinstance(child, str) and \
-                (
-                 child.lstrip('_') in self.categories
-                 or child in
-                 self.saveFrames
-                 ):
+        elif isinstance(child, str) and (
+            child.lstrip("_") in self.categories or child in self.saveFrames
+        ):
             removed = []
-            child_as_cat = child.lstrip('_')
+            child_as_cat = child.lstrip("_")
             if child_as_cat in self.categories:
-                self.recycleBin[child_as_cat] = \
-                    self.categories.pop(child_as_cat)
+                self.recycleBin[child_as_cat] = self.categories.pop(child_as_cat)
                 removed.append("categories")
             elif child in self.saveFrames:
                 self.recycleBin[child] = self.saveFrames.pop(child)
                 removed.append("saveFrames")
 
             if len(removed) > 0:
-                print("Warning: '%s' removed from %s" % \
-                    (child, " and ".join(removed)))
+                print("Warning: '%s' removed from %s" % (child, " and ".join(removed)))
                 return True
             else:
                 return False
@@ -623,7 +617,6 @@ class DataBlock(object):
 
 
 class CifFile(object):
-
     """
     CifFile represents all the objects contained/part of an mmCIF file or
     dictionary. It stores and manages DataBlock objects.
@@ -643,8 +636,11 @@ class CifFile(object):
         """"""
         try:
             datablock.isalnum()  # duck typing
-            datablock = DataBlock(datablock, self) if datablock not in \
-                self.data_blocks else self.data_blocks.get(datablock)
+            datablock = (
+                DataBlock(datablock, self)
+                if datablock not in self.data_blocks
+                else self.data_blocks.get(datablock)
+            )
         except AttributeError as attr_err:
             pass
         return self.data_blocks.setdefault(datablock.id, datablock)
@@ -664,22 +660,26 @@ class CifFile(object):
     def import_mmcif_data_map(self, mmcif_data_map):
         """Populates all objects necessary to represent mmCIF data files.
         mmcif_data_map is an mmCIF-like dictionary of the form
-        {
-            DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
-        }
+            {
+                DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
+            }
         """
         if isinstance(mmcif_data_map, dict) and mmcif_data_map != {}:
-            for datablock_id, categories_items_and_values in \
-                    list(mmcif_data_map.items()):
+            for datablock_id, categories_items_and_values in list(
+                mmcif_data_map.items()
+            ):
                 data_block_obj = self.setDataBlock(datablock_id)
-                for category, items_and_values in \
-                        list(categories_items_and_values.items()):
+                for category, items_and_values in list(
+                    categories_items_and_values.items()
+                ):
                     category_obj = data_block_obj.setCategory(category)
                     for item, value in list(items_and_values.items()):
                         item = category_obj.setItem(item).setValue(value)
         else:
             if not isinstance(mmcif_data_map, dict):
-                print("Data import was unsuccessful. Data was not supplied as mmCIF-like dictionary")
+                print(
+                    "Data import was unsuccessful. Data was not supplied as mmCIF-like dictionary"
+                )
             elif mmcif_data_map == {}:
                 pass
 
@@ -699,20 +699,20 @@ class CifFile(object):
         return False
 
     def __repr__(self):
-        return '<%s%s>' % (
-                           self.__class__.__name__, ' "' + self.file_path + '"'
-                           if self.file_path is not None else ''
-                           )
+        return "<%s%s>" % (
+            self.__class__.__name__,
+            ' "' + self.file_path + '"' if self.file_path is not None else "",
+        )
 
 
 # internal functions & classes
 def _formatVal(val):
     """Format any value as it would appear in a CIF file"""
-    reserved = ('_', '#', '$', "'", '"', '[', ']', ';')
-    
+    reserved = ("_", "#", "$", "'", '"', "[", "]", ";")
+
     val = str(val)
     has_space = " " in val and "\n" not in val
-    
+
     if "'" in val:
         val = '"%s"' % val
     elif '"' in val:
@@ -727,7 +727,11 @@ def _formatVal(val):
         if val[0] in ("'", '"'):
             val = val[1:-1]
         val = "\n;" + val + "\n;\n"
-    elif "\n" not in val and val[0] in ("'", '"') and ("'" in val[1:-1] and '"' in val[1:-1]):
+    elif (
+        "\n" not in val
+        and val[0] in ("'", '"')
+        and ("'" in val[1:-1] and '"' in val[1:-1])
+    ):
         val = "\n;" + val[1:-1] + "\n;\n"
 
     return val
