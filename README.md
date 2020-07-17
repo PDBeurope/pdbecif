@@ -13,9 +13,10 @@ This not only includes mmCIF data files but mmCIF dictionaries as well.
 The second mechanism is a highly optimised (algorithmic) mmCIF parser that
 currently has NO Reader and Writer objects. This module (fastCif) can only be
 used for accessing public mmCIF data files.
+
 The fastCif module also contains wrappers that emulate python objects from
 python dictionaries and so mmCIF categories and items are accessed using 'dot'
 notation. There are also convenience methods for searching rows in categories
 where items have a particular value.
 
-The documentation on how to use the toolkit can be found [here](https://github.com/PDBeurope/pdbecif).
+The documentation on how to use the toolkit can be found [here](https://pdbeurope.github.io/pdbecif/).
