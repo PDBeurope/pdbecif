@@ -99,7 +99,18 @@ class CIFWrapperTable(object):
             del self._DATA[itemName]
 
     def search(self, item, value):
-        """return list Rows in table where item contain has value"""
+        """Search for values of items in tables.
+
+        Args:
+            item (str): Name of the data item to be looked up.
+            value (str): Search key, can be also regular expression:
+                e.g. `re.compile(r'[A-Z][a-z]')`
+
+        Returns:
+            dict: This is effectivelly dictionary with row-like structure
+            `{row_id: {"category_name: "value"}}`.
+        """        
+        
         results = {}
         try:
             results.update(
@@ -120,12 +131,17 @@ class CIFWrapperTable(object):
         return results
 
     def searchiter(self, item, value):
-        """
-        Highly optimised search for values of items in tables
+        """Highly optimised search for values of items in tables.
 
-        return list Rows in table where item contain has value
+        Args:
+            item (str): Name of the data item to be looked up.
+            value (str): Search key, can be also regular expression:
+                e.g. `re.compile(r'[A-Z][a-z]')`
 
-        """
+        Returns:
+            dict: This is effectivelly dictionary with row-like structure
+            `{row_id: {"category_name: "value"}}`.
+        """        
         for idx, el in enumerate(self._DATA[item]):
             try:
                 if value.match(el):
@@ -659,10 +675,11 @@ class CifFile(object):
 
     def import_mmcif_data_map(self, mmcif_data_map):
         """Populates all objects necessary to represent mmCIF data files.
-        mmcif_data_map is an mmCIF-like dictionary of the form
-            {
-                DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
-            }
+        mmcif_data_map is an mmCIF-like dictionary of the form: 
+        \
+        {
+            DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }
+        }
         """
         if isinstance(mmcif_data_map, dict) and mmcif_data_map != {}:
             for datablock_id, categories_items_and_values in list(

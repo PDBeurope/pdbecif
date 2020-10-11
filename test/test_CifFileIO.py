@@ -1,16 +1,14 @@
 import unittest
 
 import os
-import pdbecif
 from pdbecif.mmcif import CIFWrapper, CifFile
 from pdbecif.mmcif_io import CifFileReader, CifFileWriter
 
-
 class CifFileIOTestCase(unittest.TestCase):
     def setUp(self):
-        self.FILE_ROOT = os.path.dirname(os.path.dirname(pdbecif.__file__))
-        self.TEST_CIF_FILE = os.path.join(self.FILE_ROOT, "data/usage-example.cif")
-        self.TEST_DIC_FILE = os.path.join(self.FILE_ROOT, "data/usage-example.dic")
+        self.FILE_ROOT = os.path.dirname(os.path.abspath(__file__))
+        self.TEST_CIF_FILE = os.path.join(self.FILE_ROOT, "test_data/usage-example.cif")
+        self.TEST_DIC_FILE = os.path.join(self.FILE_ROOT, "test_data/usage-example.dic")
         self.raw_dictionary = {
             "TEST_BLOCK_1": {
                 "_test_category_1": {

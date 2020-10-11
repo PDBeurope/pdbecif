@@ -61,5 +61,14 @@ setup(
         "Topic :: Scientific/Engineering :: Bio-Informatics",
     ],
     keywords="STAR CIF mmCIF PDB PDBe parsing parser API",
-    install_requires=[],
+    extras_require={
+        "tests": ["pytest", "pytest-cov", "tox"],
+        "docs": [
+            "sphinx",
+            "sphinx_rtd_theme",
+            "recommonmark",
+            "sphinx-autodoc-typehints",
+            "sphinx-markdown-tables",
+        ],
+    },
 )

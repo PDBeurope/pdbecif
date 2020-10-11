@@ -102,7 +102,17 @@ class CifFileWriter(object):
             self._handle = None
 
     def write(self, cifObjIn, compress=False, mode="wt", preserve_order=False):
+        """Write out object into a mmCIF file.
 
+        Args:
+            cifObjIn (object): Can be one of CifFile, CIFWrapper or dict
+            compress (bool, optional): Whether or not the result file.
+                should be gzipped. Defaults to False.
+            mode (str, optional): Mode used for file opening.
+                Defaults to "wt".
+            preserve_order (bool, optional): Preserve order of category
+                names in the input object. Defaults to False.
+        """        
         token_ordering = (
             self.preserve_token_order or preserve_order
         )  # preserve ordering of either flag is True
@@ -227,7 +237,7 @@ class CifFileReader(object):
 
     """
     CifFileReader takes a path to an mmCIF file location (data or dictionary
-    CIF and once read will return an mmcif.CifFile object
+    CIF and once read will return mmCIF file representation
     """
 
     def __init__(self, input="data", verbose=False, preserve_order=False):
@@ -245,6 +255,25 @@ class CifFileReader(object):
         preserve_order=False,
         only=None,
     ):
+        """Read in mmCIF file
+
+        Args:
+            file_path (str): Path to the mmCIF file
+            output (str, optional): Data type of an object the cif file
+                should be written to. should be one of: `cif_dictionary`
+                (plain python dictionary); `cif_wrapper` (CIFWrapper);
+                of `cif_file` (CifFile). Defaults to "cif_dictionary".
+            ignore (list, optional): List of category names to be ignored.
+                Defaults to [].
+            preserve_order (bool, optional): Whether the order of
+                categories should be kept. Defaults to False.
+            only (list, optional): List of category names to be retrieved.
+                Others are discarded. Defaults to None.
+
+        Returns:
+            object: In memory representation of the mmCIF file based on
+            the pased parameters.
+        """    
 
         token_ordering = (
             self.preserve_token_order or preserve_order
