@@ -1,7 +1,6 @@
 import os
 import unittest
 
-import pdbecif
 import pdbecif.mmcif_io as mmcif_IO
 from pdbecif.mmcif import CifFile, CIFWrapper
 
@@ -9,9 +8,9 @@ from pdbecif.mmcif import CifFile, CIFWrapper
 class CifFileReaderTestCase(unittest.TestCase):
     def setUp(self):
 
-        self.FILE_ROOT = os.path.dirname(os.path.dirname(pdbecif.__file__))
-        self.TEST_CIF_FILE = os.path.join(self.FILE_ROOT, "data/usage-example.cif")
-        self.TEST_DIC_FILE = os.path.join(self.FILE_ROOT, "data/usage-example.dic")
+        self.FILE_ROOT = os.path.dirname(os.path.abspath(__file__))
+        self.TEST_CIF_FILE = os.path.join(self.FILE_ROOT, "test_data/usage-example.cif")
+        self.TEST_DIC_FILE = os.path.join(self.FILE_ROOT, "test_data/usage-example.dic")
 
     def __assertEqual(self, l1, l2, msg):
         if isinstance(l1, list):
