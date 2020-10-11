@@ -311,14 +311,45 @@ notation.</p>
 <dl class="py method">
 <dt id="pdbecif.mmcif.CIFWrapperTable.search">
 <code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapperTable.search" title="Permalink to this definition">¶</a></dt>
-<dd><p>return list Rows in table where item contain has value</p>
+<dd><p>Search for values of items in tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<em>str</em>) – Name of the data item to be looked up.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – Search key, can be also regular expression:
+e.g. <cite>re.compile(r’[A-Z][a-z]’)</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>This is effectivelly dictionary with row-like structure
+<cite>{row_id: {“category_name: “value”}}</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pdbecif.mmcif.CIFWrapperTable.searchiter">
 <code class="sig-name descname">searchiter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CIFWrapperTable.searchiter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Highly optimised search for values of items in tables</p>
-<p>return list Rows in table where item contain has value</p>
+<dd><p>Highly optimised search for values of items in tables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<em>str</em>) – Name of the data item to be looked up.</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – Search key, can be also regular expression:
+e.g. <cite>re.compile(r’[A-Z][a-z]’)</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>This is effectivelly dictionary with row-like structure
+<cite>{row_id: {“category_name: “value”}}</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -379,14 +410,14 @@ dictionary. It stores and manages DataBlock objects.</p>
 <dt id="pdbecif.mmcif.CifFile.import_mmcif_data_map">
 <code class="sig-name descname">import_mmcif_data_map</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mmcif_data_map</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif.CifFile.import_mmcif_data_map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populates all objects necessary to represent mmCIF data files.
-mmcif_data_map is an mmCIF-like dictionary of the form</p>
+mmcif_data_map is an mmCIF-like dictionary of the form:</p>
 <blockquote>
-<div><dl class="simple">
-<dt>{</dt><dd><p>DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }</p>
-</dd>
-</dl>
-<p>}</p>
+<div><blockquote>
+<div><p>{</p>
 </div></blockquote>
+<p>DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }</p>
+</div></blockquote>
+<p>}</p>
 </dd></dl>
 
 <dl class="py method">
@@ -528,7 +559,37 @@ Category ID(string)</p>
 <dt id="pdbecif.mmcif_io.CifFileReader">
 <em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif_io.</code><code class="sig-name descname">CifFileReader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span><span class="o">=</span><span class="default_value">'data'</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">preserve_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_io.CifFileReader" title="Permalink to this definition">¶</a></dt>
 <dd><p>CifFileReader takes a path to an mmCIF file location (data or dictionary
-CIF and once read will return an mmcif.CifFile object</p>
+CIF and once read will return mmCIF file representation</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif_io.CifFileReader.read">
+<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em>, <em class="sig-param"><span class="n">output</span><span class="o">=</span><span class="default_value">'cif_dictionary'</span></em>, <em class="sig-param"><span class="n">ignore</span><span class="o">=</span><span class="default_value">[]</span></em>, <em class="sig-param"><span class="n">preserve_order</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">only</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_io.CifFileReader.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in mmCIF file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<em>str</em>) – Path to the mmCIF file</p></li>
+<li><p><strong>output</strong> (<em>str</em><em>, </em><em>optional</em>) – Data type of an object the cif file
+should be written to. should be one of: <cite>cif_dictionary</cite>
+(plain python dictionary); <cite>cif_wrapper</cite> (CIFWrapper);
+of <cite>cif_file</cite> (CifFile). Defaults to “cif_dictionary”.</p></li>
+<li><p><strong>ignore</strong> (<em>list</em><em>, </em><em>optional</em>) – List of category names to be ignored.
+Defaults to [].</p></li>
+<li><p><strong>preserve_order</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether the order of
+categories should be kept. Defaults to False.</p></li>
+<li><p><strong>only</strong> (<em>list</em><em>, </em><em>optional</em>) – List of category names to be retrieved.
+Others are discarded. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>In memory representation of the mmCIF file based on
+the pased parameters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -536,6 +597,25 @@ CIF and once read will return an mmcif.CifFile object</p>
 <em class="property">class </em><code class="sig-prename descclassname">pdbecif.mmcif_io.</code><code class="sig-name descname">CifFileWriter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">compress</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'wt'</span></em>, <em class="sig-param"><span class="n">preserve_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_io.CifFileWriter" title="Permalink to this definition">¶</a></dt>
 <dd><p>CifFileWriter writes mmCIF formatted files and accepts mmCIF-like dictionary
 files, CIFWrapper objects, and CifFile objects.</p>
+<dl class="py method">
+<dt id="pdbecif.mmcif_io.CifFileWriter.write">
+<code class="sig-name descname">write</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cifObjIn</span></em>, <em class="sig-param"><span class="n">compress</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'wt'</span></em>, <em class="sig-param"><span class="n">preserve_order</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.mmcif_io.CifFileWriter.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write out object into a mmCIF file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cifObjIn</strong> (<em>object</em>) – Can be one of CifFile, CIFWrapper or dict</p></li>
+<li><p><strong>compress</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether or not the result file.
+should be gzipped. Defaults to False.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em>, </em><em>optional</em>) – Mode used for file opening.
+Defaults to “wt”.</p></li>
+<li><p><strong>preserve_order</strong> (<em>bool</em><em>, </em><em>optional</em>) – Preserve order of category
+names in the input object. Defaults to False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
