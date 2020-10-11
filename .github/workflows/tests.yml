@@ -26,7 +26,5 @@ jobs:
           with:
             python-version: ${{ matrix.python-version }}    
         - run: |
-            pip install -e .    
-            pip install -r requirements.txt
-            pip install pytest-cov
+            pip install -e ".[tests]"
             make test
