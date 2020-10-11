@@ -1,8 +1,0 @@
-sphinx
-sphinx_rtd_theme
-setuptools
-recommonmark
-sphinx_markdown_tables
-tox
-pytest
-pytest-cov
