@@ -288,7 +288,7 @@ class CifFileReader(object):
             )
             if output == "cif_dictionary":
                 return mmcif_dict
-            elif output == "cif_wrapper":
+            if output == "cif_wrapper":
                 return dict(
                     (
                         (

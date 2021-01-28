@@ -71,6 +71,3 @@ upload:
   #   PYPI_USERNAME: $CI_BUILD_ID
   only:
     - /^v\d+\.\d+(?:.\d+)?(?:-\d+)?$/ # use regexp
-  only:
-    - tags
-
