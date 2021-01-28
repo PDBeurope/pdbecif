@@ -42,7 +42,6 @@ class MultipleLoopCategoriesError(Exception):
 
 
 class MMCIF2Dict:
-
     """
     MMCIF2Dict is a purely algorithmic parser that takes as input public
     mmCIF files and creates a python dictionary from them.

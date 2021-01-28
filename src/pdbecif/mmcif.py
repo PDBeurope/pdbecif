@@ -109,8 +109,8 @@ class CIFWrapperTable(object):
         Returns:
             dict: This is effectivelly dictionary with row-like structure
             `{row_id: {"category_name: "value"}}`.
-        """        
-        
+        """
+
         results = {}
         try:
             results.update(
@@ -141,7 +141,7 @@ class CIFWrapperTable(object):
         Returns:
             dict: This is effectivelly dictionary with row-like structure
             `{row_id: {"category_name: "value"}}`.
-        """        
+        """
         for idx, el in enumerate(self._DATA[item]):
             try:
                 if value.match(el):
@@ -224,8 +224,7 @@ class CIFWrapper(object):
             )
 
     def unwrap(self):
-        """Extract encapsulated data to return an mmCIF-like python dictionary
-        """
+        """Extract encapsulated data to return an mmCIF-like python dictionary"""
         # TODO: Might have to copy.deepcopy to ensure clean references
         cleaned_map = OrderedDict() if self._preserve_order else {}
         for k, v in list(self._DATA.items()):
@@ -238,8 +237,7 @@ class CIFWrapper(object):
             return {str(id(self)): cleaned_map}
 
     def __contains__(self, tableNameIn):
-        """Support for the 'in' operator to check the existence of categoties
-        """
+        """Support for the 'in' operator to check the existence of categoties"""
         return tableNameIn in self._DATA
 
     def __getitem__(self, tableNameIn):
@@ -324,8 +322,7 @@ class Item(object):
         return formatted_value
 
     def remove(self):
-        """Remove Item from Category and add Item to the Category recycle bin
-        """
+        """Remove Item from Category and add Item to the Category recycle bin"""
         self.parent.removeChild(self)
 
     def reset(self):
