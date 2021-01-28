@@ -303,14 +303,14 @@ class CifFileReader(object):
                     )
                 )
                 # return CIFWrapper(mmcif_dict, data_id=datablock_id)
-            elif output == "cif_file":
+            if output == "cif_file":
                 return CifFile(
                     file_path,
                     mmcif_data_map=mmcif_dict,
                     preserve_token_order=token_ordering,
                 )
-            else:
-                return
+
+            return
         else:
             return self._exportCifFile(file_path, token_ordering)
 

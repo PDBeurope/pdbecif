@@ -1,4 +1,4 @@
-![GitHub](https://img.shields.io/github/license/pdbeurope/pdbecif) ![tests](https://github.com/PDBeurope/pdbecif/workflows/pdbecif%20tests/badge.svg) ![documentation](https://github.com/PDBeurope/pdbecif/workflows/pdbecif%20documentation/badge.svg)
+[![CodeFactor](https://www.codefactor.io/repository/github/pdbeurope/pdbecif/badge/dev)](https://www.codefactor.io/repository/github/pdbeurope/pdbecif/overview/master) ![GitHub](https://img.shields.io/github/license/pdbeurope/pdbecif) ![tests](https://github.com/PDBeurope/pdbecif/workflows/pdbecif%20tests/badge.svg) ![documentation](https://github.com/PDBeurope/pdbecif/workflows/pdbecif%20documentation/badge.svg)
 # PDBeCIF
 
 PDBeCIF is a package that is used to work with mmCIF formatted files. The package
