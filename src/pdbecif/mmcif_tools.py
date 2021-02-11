@@ -69,8 +69,9 @@ class MMCIF2Dict:
     # commentsRE = re.compile(r'(.*?)\s#.*$')
     dataRE = re.compile(r"^\s*[D|d][A|a][T|t][A|a]_(?P<data_heading>.*)\s*")
     saveRE = re.compile(r"^\s*[S|s][A|a][V|v][E|e]_(?P<save_heading>.*)\s*")
-    dataNameRE = re.compile(
-        r"^\s*(?P<data_category>_[\S]+)(?:\.)(?P<category_item>\S+)(?P<remainder>.*)"
+    dataNameRE = re.compile(r"^\s*(?P<data_category>_[\S]+)(?P<remainder>.*)")
+    dataCategoryItem = re.compile(
+        r"^\s*(?P<data_category>_[\S]+)(?:\.)(?P<category_item>\S+)"
     )
     dataValueRE = re.compile(r'\s*(\'[\S\s]+?\'(?=\s)|"[\S\s]+?"(?=\s)|[\S]+)', re.M)
     header = ""
@@ -259,10 +260,18 @@ class MMCIF2Dict:
                         # Stores values of items in a loop as a single row
                         table_values = []
                     elif self.dataNameRE.match(line):
-                        # Match category and item simultaneously
+                        # Two step process STAR does not know contept of categories
                         m = self.dataNameRE.match(line)
-                        category = m.group("data_category")
-                        item = m.group("category_item")
+                        flag = m.group("data_category")
+
+                        tmp_category = self.dataCategoryItem.match(flag)
+                        if tmp_category:
+                            category = tmp_category.group("data_category")
+                            item = tmp_category.group("category_item")
+                        else:
+                            category = ""
+                            item = flag
+
                         remainder = m.group("remainder")
                         value = None
                         if isLoop and remainder != "":

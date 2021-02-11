@@ -30,8 +30,7 @@ test:
 	tox --skip-missing-interpreters -r
 
 clean:
-  $(shell cat .gitignore | xargs rm -rf)
+    $(shell cat .gitignore | xargs rm -rf)
 
 package:
 	$(PYTHON) setup.py sdist bdist_wheel
-
