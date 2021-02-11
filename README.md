@@ -1,6 +1,8 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/pdbeurope/pdbecif/badge/dev)](https://www.codefactor.io/repository/github/pdbeurope/pdbecif/overview/master) ![GitHub](https://img.shields.io/github/license/pdbeurope/pdbecif) ![tests](https://github.com/PDBeurope/pdbecif/workflows/pdbecif%20tests/badge.svg) ![documentation](https://github.com/PDBeurope/pdbecif/workflows/pdbecif%20documentation/badge.svg)
 # PDBeCIF
 
+[Documentation](https://pdbeurope.github.io/pdbecif/)
+
 PDBeCIF is a package that is used to work with mmCIF formatted files. The package
 contains modules for accessing mmCIF data in different ways depending
 on the type of task required.
@@ -18,5 +20,3 @@ The fastCif module also contains wrappers that emulate python objects from
 python dictionaries and so mmCIF categories and items are accessed using 'dot'
 notation. There are also convenience methods for searching rows in categories
 where items have a particular value.
-
-The documentation on how to use the toolkit can be found [here](https://pdbeurope.github.io/pdbecif/).
