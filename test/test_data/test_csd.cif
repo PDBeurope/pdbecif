@@ -1,0 +1,35 @@
+#######################################################################
+#
+# This file contains crystal structure data downloaded from the
+# Cambridge Structural Database (CSD) hosted by the Cambridge
+# Crystallographic Data Centre (CCDC).
+#
+# Full information about CCDC data access policies and citation
+# guidelines are available at http://www.ccdc.cam.ac.uk/access/V1
+#
+# Audit and citation data items may have been added by the CCDC.
+# Please retain this information to preserve the provenance of
+# this file and to allow appropriate attribution of the data.
+#
+#######################################################################
+
+data_shelx
+_audit_block_doi                 10.5517/ccdc.csd.cc1jqy4b
+_database_code_depnum_ccdc_archive 'CCDC 1422222'
+loop_
+_citation_id
+_citation_doi
+_citation_year
+1 10.1080/00958972.2016.1146257 2016
+_audit_update_record
+;
+2015-09-03 deposited with the CCDC.	2021-01-28 downloaded from the CCDC.
+;
+
+_audit_creation_method           SHELXL-2014/6
+_chemical_name_systematic        ?
+_chemical_name_common            ?
+_chemical_melting_point          ?
+_chemical_formula_moiety         ?
+_chemical_formula_sum            'C16 H20 Cl6 K N8 O4 Pt2'
+_chemical_formula_weight         1030.38

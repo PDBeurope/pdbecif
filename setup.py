@@ -8,13 +8,14 @@ from setuptools import setup, find_packages
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
+
 def get_version(rel_path):
     for line in read(rel_path).splitlines():
-        if line.startswith('__version__'):
+        if line.startswith("__version__"):
             delim = '"' if '"' in line else "'"
             return line.split(delim)[1]
-    else:
-        raise RuntimeError("Unable to find version string.")
+
+    raise RuntimeError("Unable to find version string.")
 
 
 setup(
@@ -27,10 +28,18 @@ setup(
     setup_requires=["pytest-runner"],
     tests_require=["tox", "pytest>=3.2", "pytest-cov"],
     package_dir={"": "src"},
-    packages=find_packages("src", exclude=["*.test", "*.test.*", "test.*", "test",]),
+    packages=find_packages(
+        "src",
+        exclude=[
+            "*.test",
+            "*.test.*",
+            "test.*",
+            "test",
+        ],
+    ),
     scripts=[],
     url="http://pypi.python.org/pypi/PDBeCIF/",
-    # license=read("LICENSE"),
+    license_file="LICENSE",
     description="A lightweight pure python package for reading, writing and manipulating mmCIF files distributed by the wwPDB.",
     project_urls={
         "Source code": "https://github.com/PDBeurope/pdbecif",

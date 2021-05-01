@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011, 2013 Global Phasing Ltd. All rights reserved.
-# 
+#
 # Author: Peter Keller
-# 
+#
 # This file forms part of the GPhL StarTools library.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -28,7 +28,7 @@
 #
 # This file contains the "GPhL StarTools regular expression",
 # which is used by the GPhL StarTools library to tokenise STAR data.
-# 
+#
 # Use of the GPhL StarTools regular expression separately from
 # other parts of the GPhL StarTools library, with or without
 # modification, in other libraries and applications, in any
@@ -60,7 +60,7 @@
 #  disclaimer apply only to the StarTools regular expression
 #  itself, not to any other code with which the regular
 #  expression is associated.
-#  
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 # "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 # LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
@@ -75,11 +75,11 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-'''
+"""
 Created on 22 Nov 2013
 
 @author: pkeller
-'''
+"""
 
 REGEX = r"""(?xmi) # $Revision: 1.2 $  # No 'u' flag for perl 5.8.8/RHEL5 compatibility
 ^;([\S\s]*?)(?:\r\n|\s)^;(?:(?=\s)|$)  # Multi-line string
@@ -102,4 +102,3 @@ REGEX = r"""(?xmi) # $Revision: 1.2 $  # No 'u' flag for perl 5.8.8/RHEL5 compat
   |(\S+)                               # Catch-all bad token
 )
 (?:(?=\s)|$)"""
-

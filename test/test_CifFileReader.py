@@ -11,6 +11,7 @@ class CifFileReaderTestCase(unittest.TestCase):
         self.FILE_ROOT = os.path.dirname(os.path.abspath(__file__))
         self.TEST_CIF_FILE = os.path.join(self.FILE_ROOT, "test_data/usage-example.cif")
         self.TEST_DIC_FILE = os.path.join(self.FILE_ROOT, "test_data/usage-example.dic")
+        self.TEST_CSD_CIF_FILE = os.path.join(self.FILE_ROOT, "test_data/test_csd.cif")
 
     def __assertEqual(self, l1, l2, msg):
         if isinstance(l1, list):
@@ -95,6 +96,18 @@ class CifFileReaderTestCase(unittest.TestCase):
             "Three#Blind#Mice",
             "All levels of CIF file not translated to dictionary correctly",
         )
+
+    def test_cif_noCategory(self):
+        cfr = mmcif_IO.CifFileReader()
+        cif_dictionary = cfr.read(self.TEST_CSD_CIF_FILE, output="cif_dictionary")
+
+        self.assertIsInstance(cif_dictionary, dict)
+
+        first_key = list(cif_dictionary.keys())[0]
+        csd_content = cif_dictionary[first_key][""]
+
+        self.assertIsInstance(csd_content, dict)
+        self.assertEqual(len(csd_content), 13)
 
 
 if __name__ == "__main__":

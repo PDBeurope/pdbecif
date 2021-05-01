@@ -109,8 +109,8 @@ class CIFWrapperTable(object):
         Returns:
             dict: This is effectivelly dictionary with row-like structure
             `{row_id: {"category_name: "value"}}`.
-        """        
-        
+        """
+
         results = {}
         try:
             results.update(
@@ -141,7 +141,7 @@ class CIFWrapperTable(object):
         Returns:
             dict: This is effectivelly dictionary with row-like structure
             `{row_id: {"category_name: "value"}}`.
-        """        
+        """
         for idx, el in enumerate(self._DATA[item]):
             try:
                 if value.match(el):
@@ -224,8 +224,7 @@ class CIFWrapper(object):
             )
 
     def unwrap(self):
-        """Extract encapsulated data to return an mmCIF-like python dictionary
-        """
+        """Extract encapsulated data to return an mmCIF-like python dictionary"""
         # TODO: Might have to copy.deepcopy to ensure clean references
         cleaned_map = OrderedDict() if self._preserve_order else {}
         for k, v in list(self._DATA.items()):
@@ -234,12 +233,10 @@ class CIFWrapper(object):
                 cleaned_map[k][k2] = v2
         if self.data_id is not None and self.data_id != "":
             return {self.data_id: cleaned_map}
-        else:
-            return {str(id(self)): cleaned_map}
+        return {str(id(self)): cleaned_map}
 
     def __contains__(self, tableNameIn):
-        """Support for the 'in' operator to check the existence of categoties
-        """
+        """Support for the 'in' operator to check the existence of categoties"""
         return tableNameIn in self._DATA
 
     def __getitem__(self, tableNameIn):
@@ -324,8 +321,7 @@ class Item(object):
         return formatted_value
 
     def remove(self):
-        """Remove Item from Category and add Item to the Category recycle bin
-        """
+        """Remove Item from Category and add Item to the Category recycle bin"""
         self.parent.removeChild(self)
 
     def reset(self):
@@ -605,10 +601,12 @@ class DataBlock(object):
         if isinstance(child, Category) and child.id in self.categories:
             self.recycleBin[child.id] = self.categories.pop(child.id)
             return True
-        elif isinstance(child, SaveFrame) and child.id in self.saveFrames:
+
+        if isinstance(child, SaveFrame) and child.id in self.saveFrames:
             self.recycleBin[child.id] = self.saveFrames.pop(child.id)
             return True
-        elif isinstance(child, str) and (
+
+        if isinstance(child, str) and (
             child.lstrip("_") in self.categories or child in self.saveFrames
         ):
             removed = []
@@ -620,13 +618,12 @@ class DataBlock(object):
                 self.recycleBin[child] = self.saveFrames.pop(child)
                 removed.append("saveFrames")
 
-            if len(removed) > 0:
+            if removed:
                 print("Warning: '%s' removed from %s" % (child, " and ".join(removed)))
                 return True
-            else:
-                return False
-        else:
             return False
+
+        return False
 
     def __repr__(self):
         return '<%s "%s">' % (self.__class__.__name__, self.id)
@@ -675,7 +672,7 @@ class CifFile(object):
 
     def import_mmcif_data_map(self, mmcif_data_map):
         """Populates all objects necessary to represent mmCIF data files.
-        mmcif_data_map is an mmCIF-like dictionary of the form: 
+        mmcif_data_map is an mmCIF-like dictionary of the form:
         \
         {
             DATABLOCK_ID: { CATEGORY: { ITEM:  VALUE } }

@@ -112,7 +112,7 @@ class CifFileWriter(object):
                 Defaults to "wt".
             preserve_order (bool, optional): Preserve order of category
                 names in the input object. Defaults to False.
-        """        
+        """
         token_ordering = (
             self.preserve_token_order or preserve_order
         )  # preserve ordering of either flag is True
@@ -273,7 +273,7 @@ class CifFileReader(object):
         Returns:
             object: In memory representation of the mmCIF file based on
             the pased parameters.
-        """    
+        """
 
         token_ordering = (
             self.preserve_token_order or preserve_order
@@ -288,7 +288,7 @@ class CifFileReader(object):
             )
             if output == "cif_dictionary":
                 return mmcif_dict
-            elif output == "cif_wrapper":
+            if output == "cif_wrapper":
                 return dict(
                     (
                         (
@@ -303,20 +303,19 @@ class CifFileReader(object):
                     )
                 )
                 # return CIFWrapper(mmcif_dict, data_id=datablock_id)
-            elif output == "cif_file":
+            if output == "cif_file":
                 return CifFile(
                     file_path,
                     mmcif_data_map=mmcif_dict,
                     preserve_token_order=token_ordering,
                 )
-            else:
-                return
+
+            return
         else:
             return self._exportCifFile(file_path, token_ordering)
 
     def _processLoop(self, category, loopItems, loopValues):
-        """Create the Items in a category given an array of items and item values
-        """
+        """Create the Items in a category given an array of items and item values"""
 
         valNum = len(loopValues)
         itmNum = len(loopItems)

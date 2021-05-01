@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011, 2013 Global Phasing Ltd. All rights reserved.
-# 
+#
 # Author: Peter Keller
-# 
+#
 # This file forms part of the GPhL StarTools library.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -49,29 +49,29 @@ if PY3:
 
 _star_pattern = re.compile(star_regex.REGEX, flags=re.UNICODE)
 
+
 class StarTokeniser(object):
     """
     Simple wrapper around re.RegexObject.finditer() that emits StarToken instances
     """
-    
+
     def __init__(self):
         self.__map = None
         self.__iterator = None
-    
+
     def start_matching(self, cif):
         """
         Clear any existing state of this object, and prepare to start matching
         against the contents of a file.
         The parameter cif may be a string containing the pathname to a file
-        (in which case it is opened in read only mode) or a file object 
+        (in which case it is opened in read only mode) or a file object
         """
-        if PY3 and isinstance(cif, io.TextIOBase) or \
-                not PY3 and isinstance(cif, file):
+        if PY3 and isinstance(cif, io.TextIOBase) or not PY3 and isinstance(cif, file):
             f = cif
         else:
             f = open(cif, "r")
 
-        self.__map = mmap.mmap( f.fileno(), 0, access=mmap.ACCESS_READ )
+        self.__map = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
 
         if PY3:
             self.__iterator = _star_pattern.finditer(self.__map.read().decode("utf-8"))
@@ -81,7 +81,7 @@ class StarTokeniser(object):
     def __iter__(self):
         assert self.__map is not None
         return self
-    
+
     def next(self):
         return self.__next__()
 
@@ -92,17 +92,18 @@ class StarTokeniser(object):
         """
         assert self.__map is not None
         m = next(self.__iterator)
-        return StarToken( m.lastindex, m.group(m.lastindex) )
-        
-     
+        return StarToken(m.lastindex, m.group(m.lastindex))
+
+
 class StarToken(object):
     """
     Class representing a token from STAR data.
     """
+
     def __init__(self, token_type, token_value):
         self.__token_type = token_type
         self.__token_value = token_value
-        
+
     @property
     def type(self):
         """
@@ -110,7 +111,7 @@ class StarToken(object):
         to the matching group of the STAR regular expression that matched the value.
         """
         return self.__token_type
-    
+
     @property
     def value(self):
         """
@@ -120,13 +121,13 @@ class StarToken(object):
         the token type.
         """
         return self.__token_value
-    
+
     @property
     def type_string(self):
         """
         The type of this STAR token as a text mnemonic
         """
         return star_token_types._token_type_as_string(self.__token_type)
-    
+
     def __str__(self):
         return "Type: " + self.type_string + "; Value: >>>" + self.value + "<<<"

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 # Copyright © 2011, 2013 Global Phasing Ltd. All rights reserved.
-# 
+#
 # Author: Peter Keller
-# 
+#
 # This file forms part of the GPhL StarTools library.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
 # are met:
@@ -36,37 +36,54 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 
-'''
+"""
 Created on 25 Nov 2013
 
 @author: pkeller
-'''
+"""
 
 # These parameters must be kept consistent with the capturing groups
 # of the regular expression in star_regex.py
 
-TOKEN_MULTILINE        = 1
-TOKEN_COMMENT          = 2
-TOKEN_GLOBAL           = 3
-TOKEN_SAVE_FRAME       = 4
-TOKEN_SAVE_FRAME_REF   = 5
-TOKEN_LOOP_STOP        = 6
-TOKEN_DATA_BLOCK       = 7
-TOKEN_LOOP             = 8
-TOKEN_BAD_CONSTRUCT    = 9
-TOKEN_DATA_NAME        = 10
-TOKEN_SQUOTE_STRING    = 11
-TOKEN_DQUOTE_STRING    = 12
-TOKEN_NULL             = 13
-TOKEN_UNKNOWN          = 14
-TOKEN_SQUARE_BRACKET   = 15
-TOKEN_STRING           = 16
-TOKEN_BAD_TOKEN        = 17
+TOKEN_MULTILINE = 1
+TOKEN_COMMENT = 2
+TOKEN_GLOBAL = 3
+TOKEN_SAVE_FRAME = 4
+TOKEN_SAVE_FRAME_REF = 5
+TOKEN_LOOP_STOP = 6
+TOKEN_DATA_BLOCK = 7
+TOKEN_LOOP = 8
+TOKEN_BAD_CONSTRUCT = 9
+TOKEN_DATA_NAME = 10
+TOKEN_SQUOTE_STRING = 11
+TOKEN_DQUOTE_STRING = 12
+TOKEN_NULL = 13
+TOKEN_UNKNOWN = 14
+TOKEN_SQUARE_BRACKET = 15
+TOKEN_STRING = 16
+TOKEN_BAD_TOKEN = 17
 
 __DESCRIPTIVE_TOKEN_TYPES = [
-        "", "MULTILINE", "COMMENT", "GLOBAL", "SAVE_FRAME", "SAVE_FRAME_REF",
-        "LOOP_STOP", "DATA_BLOCK", "LOOP", "BAD_CONSTRUCT", "DATA_NAME", "SQUOTE_STRING",
-        "DQUOTE_STRING", "NULL", "UNKNOWN", "SQUARE_BRACKET", "STRING", "BAD_TOKEN" ]
+    "",
+    "MULTILINE",
+    "COMMENT",
+    "GLOBAL",
+    "SAVE_FRAME",
+    "SAVE_FRAME_REF",
+    "LOOP_STOP",
+    "DATA_BLOCK",
+    "LOOP",
+    "BAD_CONSTRUCT",
+    "DATA_NAME",
+    "SQUOTE_STRING",
+    "DQUOTE_STRING",
+    "NULL",
+    "UNKNOWN",
+    "SQUARE_BRACKET",
+    "STRING",
+    "BAD_TOKEN",
+]
+
 
 def _token_type_as_string(token_type):
     return __DESCRIPTIVE_TOKEN_TYPES[token_type]
