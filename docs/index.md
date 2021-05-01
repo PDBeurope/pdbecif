@@ -29,6 +29,7 @@ pip install git+https://github.com/PDBeurope/pdbecif.git@master#egg=pdbecif
    :maxdepth: 1
 
    documentation/quick
+   documentation/bio
    documentation/objects
    documentation/use_cases
 ```
