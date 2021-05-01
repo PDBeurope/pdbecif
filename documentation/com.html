@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Startools toolkit &mdash; PDBeCIF  documentation</title>
   
@@ -16,7 +16,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -29,7 +32,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -51,7 +53,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> PDBeCIF
+            <a href="../index.html" class="icon icon-home"> PDBeCIF
           
 
           
@@ -64,7 +66,7 @@
             
             
               <div class="version">
-                1.5
+                1.6
               </div>
             
           
@@ -94,6 +96,14 @@
 <li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-ciffilereader">Reading using CifFileReader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quick.html#reading-using-mmcif2dict">Reading using MMCIF2Dict</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quick.html#writing-data">Writing data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bio.html">Biological use cases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bio.html#reading-pdb-macromolecular-files-in-the-mmcif-format">Reading PDB macromolecular files in the mmCIF format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bio.html#speed-optimization-for-large-entires">Speed optimization for large entires</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bio.html#reading-wwpdb-biologically-interesting-molecule-reference-dictionary">Reading wwPDB Biologically Interesting molecule Reference Dictionary</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="objects.html">Objects description</a><ul>
@@ -223,6 +233,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -236,7 +248,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="../_sources/documentation/com.md.txt" rel="nofollow"> View page source</a>
           
         
@@ -257,24 +269,24 @@
 <span id="pdbecif-globalphasing-startools"></span><h2>pdbecif.globalphasing.startools<a class="headerlink" href="#module-pdbecif.globalphasing.startools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="pdbecif.globalphasing.startools.StarToken">
-<em class="property">class </em><code class="sig-prename descclassname">pdbecif.globalphasing.startools.</code><code class="sig-name descname">StarToken</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">token_type</span></em>, <em class="sig-param"><span class="n">token_value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pdbecif.globalphasing.startools.</span></code><code class="sig-name descname"><span class="pre">StarToken</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a token from STAR data.</p>
 <dl class="py method">
 <dt id="pdbecif.globalphasing.startools.StarToken.type">
-<em class="property">property </em><code class="sig-name descname">type</code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">type</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type" title="Permalink to this definition">¶</a></dt>
 <dd><p>An integer (&gt; 0) representing the type of this STAR token. It corresponds
 to the matching group of the STAR regular expression that matched the value.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pdbecif.globalphasing.startools.StarToken.type_string">
-<em class="property">property </em><code class="sig-name descname">type_string</code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type_string" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">type_string</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>The type of this STAR token as a text mnemonic</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="pdbecif.globalphasing.startools.StarToken.value">
-<em class="property">property </em><code class="sig-name descname">value</code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.value" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">value</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>The value of this STAR token. If it is a quoted data value, it will have
 had any enclosing quotation removed (including the trailing newline in the
 case of semi-colon delimited text). The type of quoting will be indicated by
@@ -285,11 +297,11 @@ the token type.</p>
 
 <dl class="py class">
 <dt id="pdbecif.globalphasing.startools.StarTokeniser">
-<em class="property">class </em><code class="sig-prename descclassname">pdbecif.globalphasing.startools.</code><code class="sig-name descname">StarTokeniser</code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pdbecif.globalphasing.startools.</span></code><code class="sig-name descname"><span class="pre">StarTokeniser</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple wrapper around re.RegexObject.finditer() that emits StarToken instances</p>
 <dl class="py method">
 <dt id="pdbecif.globalphasing.startools.StarTokeniser.start_matching">
-<code class="sig-name descname">start_matching</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cif</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser.start_matching" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">start_matching</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cif</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser.start_matching" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear any existing state of this object, and prepare to start matching
 against the contents of a file.
 The parameter cif may be a string containing the pathname to a file
@@ -306,37 +318,29 @@ The parameter cif may be a string containing the pathname to a file
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="mmcif.html" class="btn btn-neutral float-right" title="pdbecif" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="api.html" class="btn btn-neutral float-left" title="API documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="mmcif.html" class="btn btn-neutral float-right" title="pdbecif" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="api.html" class="btn btn-neutral float-left" title="API documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org)
+        &#169; Copyright 2020, Glen van Ginkel (Protein Data Bank in Europe; https://pdbe.org).
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 
