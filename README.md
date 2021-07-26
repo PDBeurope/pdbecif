@@ -15,6 +15,16 @@ The fastCif module also contains wrappers that emulate python objects from pytho
 
 Make sure you check out our extensive documentation. If in doubt on how to use the parser or would like to ask for a feature, just open a GH issue.
 
+## Cite PDBeCIF
+
+**PDBeCIF: an open‑source mmCIF/CIF parsing and processing package**
+
+Glen van Ginkel, Lukáš Pravda, José M. Dana, Mihaly Varadi, Peter Keller, Stephen Anyango and Sameer Velankar
+
+BMC Bioinformatics (2021) 22:383
+
+DOI: [10.1186/s12859-021-04271-9](https://doi.org/10.1186/s12859-021-04271-9)
+
 ## Useful links
 
 * wwPDB mmCIF reference dictionary: http://mmcif.wwpdb.org/
