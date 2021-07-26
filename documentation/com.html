@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -268,25 +271,25 @@
 <div class="section" id="module-pdbecif.globalphasing.startools">
 <span id="pdbecif-globalphasing-startools"></span><h2>pdbecif.globalphasing.startools<a class="headerlink" href="#module-pdbecif.globalphasing.startools" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="pdbecif.globalphasing.startools.StarToken">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pdbecif.globalphasing.startools.</span></code><code class="sig-name descname"><span class="pre">StarToken</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pdbecif.globalphasing.startools.StarToken">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pdbecif.globalphasing.startools.</span></span><span class="sig-name descname"><span class="pre">StarToken</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class representing a token from STAR data.</p>
-<dl class="py method">
-<dt id="pdbecif.globalphasing.startools.StarToken.type">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">type</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pdbecif.globalphasing.startools.StarToken.type">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type" title="Permalink to this definition">¶</a></dt>
 <dd><p>An integer (&gt; 0) representing the type of this STAR token. It corresponds
 to the matching group of the STAR regular expression that matched the value.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pdbecif.globalphasing.startools.StarToken.type_string">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">type_string</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type_string" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pdbecif.globalphasing.startools.StarToken.type_string">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">type_string</span></span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.type_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>The type of this STAR token as a text mnemonic</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="pdbecif.globalphasing.startools.StarToken.value">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">value</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.value" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="pdbecif.globalphasing.startools.StarToken.value">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarToken.value" title="Permalink to this definition">¶</a></dt>
 <dd><p>The value of this STAR token. If it is a quoted data value, it will have
 had any enclosing quotation removed (including the trailing newline in the
 case of semi-colon delimited text). The type of quoting will be indicated by
@@ -296,12 +299,12 @@ the token type.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="pdbecif.globalphasing.startools.StarTokeniser">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pdbecif.globalphasing.startools.</span></code><code class="sig-name descname"><span class="pre">StarTokeniser</span></code><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pdbecif.globalphasing.startools.StarTokeniser">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">pdbecif.globalphasing.startools.</span></span><span class="sig-name descname"><span class="pre">StarTokeniser</span></span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple wrapper around re.RegexObject.finditer() that emits StarToken instances</p>
 <dl class="py method">
-<dt id="pdbecif.globalphasing.startools.StarTokeniser.start_matching">
-<code class="sig-name descname"><span class="pre">start_matching</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cif</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser.start_matching" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pdbecif.globalphasing.startools.StarTokeniser.start_matching">
+<span class="sig-name descname"><span class="pre">start_matching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cif</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdbecif.globalphasing.startools.StarTokeniser.start_matching" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear any existing state of this object, and prepare to start matching
 against the contents of a file.
 The parameter cif may be a string containing the pathname to a file
