@@ -44,3 +44,9 @@ Comprehensive API documentation with information on every function, class and me
 
    documentation/api
 ```
+
+## Reference
+
+If you find this resource useful, please cite it as:
+
+* Glen van Ginkel, Lukáš Pravda, José M. Dana, Mihaly Varadi, Peter Keller, Stephen Anyango and Sameer Velankar. [PDBeCIF: an open‑source mmCIF/CIF parsing and processing package](https://doi.org/10.1186/s12859-021-04271-9) BMC Bioinformatics (2021) 22:383
