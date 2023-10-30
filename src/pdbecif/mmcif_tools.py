@@ -316,17 +316,13 @@ class MMCIF2Dict:
                             else:
                                 if category in data_block:
                                     data_block[category].update(
-                                        {item: value if len(value) > 1 else value[0]}
+                                        {item: value}
                                     )
                                 else:
                                     data_block.setdefault(
                                         category,
                                         _dict(
-                                            {
-                                                item: value
-                                                if len(value) > 1
-                                                else value[0]
-                                            }
+                                            {item: value}
                                         ),
                                     )  # OrderedDict here preserves item order
                         else:
